@@ -514,7 +514,7 @@ function Valores() {
 function AreaAluna() {
   return (
     <section className="px-6 pb-24">
-      <div className="relative max-w-5xl mx-auto overflow-hidden rounded-[48px] bg-gradient-to-br from-ocean via-deep to-ocean text-sand px-8 py-14 md:px-14 md:py-20 ring-1 ring-white/10 animate-shimmer-bg reveal">
+      <div className="theme-light-locked relative max-w-5xl mx-auto overflow-hidden rounded-[48px] bg-gradient-to-br from-ocean via-deep to-ocean text-sand px-8 py-14 md:px-14 md:py-20 ring-1 ring-white/10 animate-shimmer-bg reveal">
         <div className="absolute -top-20 -right-20 w-80 h-80 organic-blob bg-gold/20 blur-3xl animate-float-slow" />
         <div className="absolute -bottom-20 -left-20 w-72 h-72 organic-blob-2 bg-mist/30 blur-3xl animate-float-slow [animation-delay:2s]" />
         <div className="relative grid md:grid-cols-[1.4fr_1fr] gap-8 items-center">
@@ -625,7 +625,7 @@ function Footer() {
   return (
     <footer className="relative mt-10">
       <WaveDivider color="var(--color-deep)" />
-      <div className="bg-deep text-sand/80 px-6 pt-10 pb-10 -mt-px">
+      <div className="theme-light-locked bg-deep text-sand/80 px-6 pt-10 pb-10 -mt-px">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-3">
