@@ -59,7 +59,20 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Praiana brand */
+  --color-ocean: #266aae;
+  --color-mist: #5B8DB8;
+  --color-gold: #F5A623;
+  --color-sand: #FAF7F2;
+  --color-ink: #1e4266;
+  --color-deep: #11355c;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "Petit Formal Script", cursive;
 }
+
 
 :root {
   --radius: 0.625rem;
