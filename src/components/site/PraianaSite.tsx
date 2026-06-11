@@ -398,18 +398,6 @@ function Horarios() {
             </div>
           ))}
         </div>
-
-        <div className="mt-10 text-center reveal">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-ocean hover:text-deep transition-colors"
-          >
-            Reserve seu horário no WhatsApp
-            <span aria-hidden>→</span>
-          </a>
-        </div>
       </div>
     </section>
   );
