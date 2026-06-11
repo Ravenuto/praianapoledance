@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Instagram } from "lucide-react";
-import studioAsset from "@/assets/studio.png.asset.json";
-import logoAsset from "@/assets/logo-praiana.png.asset.json";
+import studioImg from "@/assets/studio.png";
+import logoImg from "@/assets/logo-praiana.png";
 
 const WHATSAPP_URL =
   "https://wa.me/5511999999999?text=Ol%C3%A1!%20Tenho%20interesse%20em%20uma%20aula%20na%20Praiana%20Pole%20Studio%20%F0%9F%8C%8A";
