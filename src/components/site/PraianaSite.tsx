@@ -520,11 +520,31 @@ function Contato() {
           <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">Contato</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
+          {/* 1. Endereço */}
+          <a
+            href="https://maps.google.com/?q=Rua+das+Ondas+123"
+            target="_blank"
+            rel="noreferrer"
+            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-mist/15 text-mist grid place-items-center mb-4 group-hover:bg-mist group-hover:text-sand transition-colors">
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+            </div>
+            <p className="text-xs uppercase tracking-widest text-mist">Endereço</p>
+            <p className="mt-1 font-serif text-xl text-ocean leading-snug">Rua das Ondas, 123</p>
+            <p className="mt-1 text-sm text-ink/60">Seg a Sáb · 08h – 21h</p>
+          </a>
+
+          {/* 2. WhatsApp */}
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
             className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            style={{ animationDelay: "120ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-ocean/10 text-ocean grid place-items-center mb-4 group-hover:bg-ocean group-hover:text-sand transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
@@ -535,35 +555,23 @@ function Contato() {
             <p className="mt-1 font-serif text-xl text-ocean">+55 11 99999-9999</p>
             <p className="mt-1 text-sm text-ink/60">Resposta rápida durante o dia.</p>
           </a>
+
+          {/* 3. Email */}
           <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noreferrer"
+            href={`mailto:${EMAIL}`}
             className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
-            style={{ animationDelay: "120ms" }}
+            style={{ animationDelay: "240ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3 7l9 6 9-6" />
               </svg>
             </div>
-            <p className="text-xs uppercase tracking-widest text-mist">Instagram</p>
-            <p className="mt-1 font-serif text-xl text-ocean">@praianapolestudio</p>
-            <p className="mt-1 text-sm text-ink/60">Bastidores e novidades.</p>
+            <p className="text-xs uppercase tracking-widest text-mist">E-mail</p>
+            <p className="mt-1 font-serif text-xl text-ocean break-all">{EMAIL}</p>
+            <p className="mt-1 text-sm text-ink/60">Para parcerias e dúvidas.</p>
           </a>
-          <div className="reveal rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all" style={{ animationDelay: "240ms" }}>
-            <div className="w-12 h-12 rounded-2xl bg-mist/15 text-mist grid place-items-center mb-4">
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z" />
-                <circle cx="12" cy="10" r="2.5" />
-              </svg>
-            </div>
-            <p className="text-xs uppercase tracking-widest text-mist">Endereço</p>
-            <p className="mt-1 font-serif text-xl text-ocean leading-snug">Rua das Ondas, 123</p>
-            <p className="mt-1 text-sm text-ink/60">Seg a Sáb · 08h – 21h</p>
-          </div>
         </div>
       </div>
     </section>
