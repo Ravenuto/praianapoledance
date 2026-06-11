@@ -629,7 +629,7 @@ function Footer() {
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-3">
-              <div className="h-14 w-14 rounded-full bg-sand/95 grid place-items-center p-2">
+              <div className="h-14 w-14 rounded-full bg-sand/95 dark:bg-white grid place-items-center p-2">
                 <Logo className="h-full w-full object-contain" />
               </div>
               <div>
