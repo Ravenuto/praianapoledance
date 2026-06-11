@@ -218,8 +218,8 @@
 .animate-marquee { animation: marquee 30s linear infinite; }
 
 @keyframes wave-move {
-  from { transform: translateX(0); }
-  to { transform: translateX(-25%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 .animate-wave-move { animation: wave-move 14s linear infinite; }
 
