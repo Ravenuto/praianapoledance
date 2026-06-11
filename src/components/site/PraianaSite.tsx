@@ -307,9 +307,6 @@ function Modalidades() {
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-14 max-w-xl reveal">
             <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Modalidades</span>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl italic leading-tight">
-              Três caminhos, um mesmo fluxo.
-            </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-5">
