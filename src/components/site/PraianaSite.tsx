@@ -515,7 +515,7 @@ function Contato() {
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">Vamos conversar</span>
           <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">Contato</h2>
         </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* 1. Endereço */}
           <a
             href="https://maps.google.com/?q=Rua+das+Ondas+123"
@@ -543,20 +543,34 @@ function Contato() {
             style={{ animationDelay: "120ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-ocean/10 text-ocean grid place-items-center mb-4 group-hover:bg-ocean group-hover:text-sand transition-colors">
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                <path d="M20.52 3.48A11.78 11.78 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.83a11.7 11.7 0 0 0 1.6 5.95L0 24l6.36-1.67a11.83 11.83 0 0 0 5.67 1.44h.01c6.54 0 11.84-5.3 11.84-11.83 0-3.16-1.23-6.13-3.46-8.46zM12.05 21.4a9.55 9.55 0 0 1-4.87-1.33l-.35-.21-3.78.99 1-3.68-.23-.38a9.45 9.45 0 0 1-1.46-5.06c0-5.24 4.28-9.5 9.55-9.5a9.5 9.5 0 0 1 9.5 9.5c-.01 5.24-4.28 9.5-9.36 9.67z" />
-              </svg>
+              <MessageCircle className="w-5 h-5" strokeWidth={2} />
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">WhatsApp</p>
             <p className="mt-1 font-serif text-xl text-ocean">+55 11 99999-9999</p>
             <p className="mt-1 text-sm text-ink/60">Resposta rápida durante o dia.</p>
           </a>
 
-          {/* 3. Email */}
+          {/* 3. Instagram */}
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            style={{ animationDelay: "240ms" }}
+          >
+            <div className="w-12 h-12 rounded-2xl bg-[#f4d8de] text-[#a04760] grid place-items-center mb-4 group-hover:bg-[#d97a8a] group-hover:text-sand transition-colors">
+              <Instagram className="w-5 h-5" strokeWidth={2} />
+            </div>
+            <p className="text-xs uppercase tracking-widest text-mist">Instagram</p>
+            <p className="mt-1 font-serif text-xl text-ocean">@praianapolestudio</p>
+            <p className="mt-1 text-sm text-ink/60">Bastidores, aulas e novidades.</p>
+          </a>
+
+          {/* 4. Email */}
           <a
             href={`mailto:${EMAIL}`}
             className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
-            style={{ animationDelay: "240ms" }}
+            style={{ animationDelay: "360ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
@@ -565,7 +579,7 @@ function Contato() {
               </svg>
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">E-mail</p>
-            <p className="mt-1 font-serif text-xl text-ocean break-all">{EMAIL}</p>
+            <p className="mt-1 font-serif text-lg text-ocean break-all">{EMAIL}</p>
             <p className="mt-1 text-sm text-ink/60">Para parcerias e dúvidas.</p>
           </a>
         </div>
