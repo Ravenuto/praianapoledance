@@ -284,7 +284,7 @@ function Hero() {
         <div className="flex whitespace-nowrap animate-marquee w-max will-change-transform">
           {Array.from({ length: 2 }).map((_, k) => (
             <div key={k} className="flex items-center shrink-0">
-              {["Força", "Fluidez", "Expressão", "Comunidade", "Movimento", "Liberdade", "Arte", "Flexibilidade"].map((w, i) => (
+              {["Força", "Liberdade", "Empoderamento", "Flexibilidade", "Dança", "Arte", "Comunidade", "Movimento"].map((w, i) => (
                 <span key={i} className="flex items-center">
                   <span className="font-serif italic text-3xl leading-none text-ocean/80 px-6">{w}</span>
                   <span className="text-gold text-2xl leading-none">✦</span>
