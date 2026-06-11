@@ -600,8 +600,8 @@ function Footer() {
                 <Logo className="h-full w-full object-contain" />
               </div>
               <div>
-                <p className="font-serif text-3xl italic text-sand leading-none">Praiana</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">Pole & Artes</p>
+                <p className="font-serif text-2xl italic text-sand leading-tight">Praiana Pole Dance e Artes</p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">Studio</p>
               </div>
             </div>
             <p className="mt-5 text-sm leading-relaxed max-w-xs text-sand/65">
