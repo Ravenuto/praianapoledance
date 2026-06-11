@@ -191,16 +191,21 @@ function Navbar() {
 function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
   return (
     <div className={`relative h-20 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
-      <svg
-        className="absolute inset-x-0 bottom-0 w-[200%] h-full animate-wave-move"
-        viewBox="0 0 2400 120"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,60 C300,120 600,0 1200,60 C1800,120 2100,0 2400,60 L2400,120 L0,120 Z"
-          fill={color}
-        />
-      </svg>
+      <div className="absolute inset-x-0 bottom-0 h-full flex w-[200%] animate-wave-move will-change-transform">
+        {[0, 1].map((k) => (
+          <svg
+            key={k}
+            className="block h-full w-1/2 shrink-0"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,60 C300,120 600,0 1200,60 L1200,120 L0,120 Z"
+              fill={color}
+            />
+          </svg>
+        ))}
+      </div>
     </div>
   );
 }
