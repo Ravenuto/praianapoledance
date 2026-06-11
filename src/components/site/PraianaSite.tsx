@@ -250,12 +250,15 @@ function Hero() {
         </div>
 
         <div className="relative animate-fade-up [animation-delay:200ms]">
-          {/* Floating logo */}
-          <div className="absolute -top-6 -left-4 md:-top-10 md:-left-10 z-20 animate-float-y">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gold/30 blur-2xl rounded-full" />
-              <div className="relative h-28 w-28 md:h-36 md:w-36 rounded-full bg-sand/90 backdrop-blur ring-1 ring-ocean/10 shadow-xl grid place-items-center p-3">
+          {/* Static logo at top-right of image */}
+          <div className="flex justify-end mb-4">
+            <div className="flex items-center gap-3 rounded-full bg-white/80 backdrop-blur ring-1 ring-ocean/10 pl-2 pr-5 py-2 shadow-md">
+              <div className="h-14 w-14 rounded-full bg-sand grid place-items-center p-1.5">
                 <Logo className="h-full w-full object-contain" />
+              </div>
+              <div className="leading-tight">
+                <p className="font-serif text-xl italic text-ocean">Praiana</p>
+                <p className="text-[9px] uppercase tracking-[0.3em] text-gold">Pole & Artes</p>
               </div>
             </div>
           </div>
