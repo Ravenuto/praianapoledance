@@ -8,15 +8,6 @@ const INSTAGRAM_URL = "https://instagram.com/praianapolestudio";
 const EMAIL = "contato@praianapolestudio.com";
 const APP_URL = "#";
 
-const fullDayNames: Record<Day, string> = {
-  Seg: "Segunda",
-  Ter: "Terça",
-  Qua: "Quarta",
-  Qui: "Quinta",
-  Sex: "Sexta",
-  Sáb: "Sábado",
-};
-
 const NAV = [
   { label: "Início", href: "#home" },
   { label: "Modalidades", href: "#modalidades" },
