@@ -1,29 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
+import PraianaSite from "@/components/site/PraianaSite";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Praiana Pole Studio · Pole Dance & Artes" },
+      {
+        name: "description",
+        content:
+          "Studio de Pole Dance, Pole Coreográfico e Flex Flow. Aulas para todos os níveis em um espaço acolhedor — venha se mover na Praiana.",
+      },
+      { property: "og:title", content: "Praiana Pole Studio" },
+      {
+        property: "og:description",
+        content:
+          "Pole Dance, Pole Coreográfico e Flex Flow para todos os níveis. Aulas, horários, planos e área da aluna.",
+      },
+      { property: "og:type", content: "website" },
     ],
   }),
-  component: Index,
+  component: PraianaSite,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
