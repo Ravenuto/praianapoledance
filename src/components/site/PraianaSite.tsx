@@ -386,7 +386,7 @@ function Horarios() {
           {(Object.keys(typeMeta) as ClassType[]).map((k) => (
             <span
               key={k}
-              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ring-1 ring-ocean/10 bg-white/70 backdrop-blur ${typeMeta[k].text}`}
+              className={`theme-light-locked inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ring-1 ring-ocean/10 bg-white/70 dark:bg-white backdrop-blur ${typeMeta[k].text}`}
             >
               <span className={`w-2 h-2 rounded-full ${typeMeta[k].dot}`} />
               {typeMeta[k].label}
