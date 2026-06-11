@@ -320,10 +320,9 @@ function Modalidades() {
                 className="reveal group relative rounded-[32px] bg-white/5 backdrop-blur-sm ring-1 ring-white/10 p-7 transition-all duration-500 hover:bg-white/10 hover:-translate-y-2 hover:ring-gold/30"
                 style={{ animationDelay: `${i * 120}ms` }}
               >
-                <span className="font-script text-gold text-4xl md:text-5xl leading-none block mb-4 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-[-2deg] origin-left">
+                <h3 className="font-script text-gold text-4xl md:text-5xl leading-none mb-4 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-[-2deg] origin-left inline-block">
                   {m.title}
-                </span>
-                <h3 className="font-serif text-2xl italic mb-3 text-sand/90">{m.title}</h3>
+                </h3>
                 <p className="text-sand/75 text-sm leading-relaxed">{m.desc}</p>
                 <div className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold/80">
                   Todos os níveis
