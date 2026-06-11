@@ -254,7 +254,7 @@ function Hero() {
           <div className="absolute -inset-4 bg-gradient-to-br from-mist/30 via-transparent to-gold/20 blur-2xl rounded-[60px] animate-shimmer-bg" />
           <div className="relative overflow-hidden animate-blob-morph shadow-[0_30px_80px_-20px_rgba(17,53,92,0.35)] ring-1 ring-white/40">
             <img
-              src={studioAsset.url}
+              src={studioImg}
               alt="Estúdio Praiana — sala com barras de pole"
               className="w-full h-[440px] md:h-[560px] object-cover scale-105 hover:scale-110 transition-transform duration-[2.5s]"
             />
