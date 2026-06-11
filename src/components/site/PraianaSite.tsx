@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Instagram } from "lucide-react";
-import studioAsset from "@/assets/studio.png.asset.json";
-import logoAsset from "@/assets/logo-praiana.png.asset.json";
+import studioImg from "@/assets/studio.png";
+import logoImg from "@/assets/logo-praiana.png";
 
 const WHATSAPP_URL =
   "https://wa.me/5511999999999?text=Ol%C3%A1!%20Tenho%20interesse%20em%20uma%20aula%20na%20Praiana%20Pole%20Studio%20%F0%9F%8C%8A";
@@ -112,7 +112,7 @@ function useReveal() {
 function Logo({ className = "" }: { className?: string }) {
   return (
     <img
-      src={logoAsset.url}
+      src={logoImg}
       alt="Praiana Pole Studio"
       className={className}
       loading="eager"
@@ -191,16 +191,21 @@ function Navbar() {
 function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
   return (
     <div className={`relative h-20 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
-      <svg
-        className="absolute inset-x-0 bottom-0 w-[200%] h-full animate-wave-move"
-        viewBox="0 0 2400 120"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,60 C300,120 600,0 1200,60 C1800,120 2100,0 2400,60 L2400,120 L0,120 Z"
-          fill={color}
-        />
-      </svg>
+      <div className="absolute inset-x-0 bottom-0 h-full flex w-[200%] animate-wave-move will-change-transform">
+        {[0, 1].map((k) => (
+          <svg
+            key={k}
+            className="block h-full w-1/2 shrink-0"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,60 C300,120 600,0 1200,60 L1200,120 L0,120 Z"
+              fill={color}
+            />
+          </svg>
+        ))}
+      </div>
     </div>
   );
 }
@@ -254,7 +259,7 @@ function Hero() {
           <div className="absolute -inset-4 bg-gradient-to-br from-mist/30 via-transparent to-gold/20 blur-2xl rounded-[60px] animate-shimmer-bg" />
           <div className="relative overflow-hidden animate-blob-morph shadow-[0_30px_80px_-20px_rgba(17,53,92,0.35)] ring-1 ring-white/40">
             <img
-              src={studioAsset.url}
+              src={studioImg}
               alt="Estúdio Praiana — sala com barras de pole"
               className="w-full h-[440px] md:h-[560px] object-cover scale-105 hover:scale-110 transition-transform duration-[2.5s]"
             />
@@ -276,13 +281,13 @@ function Hero() {
 
       {/* Marquee strip */}
       <div className="mt-24 relative overflow-hidden border-y border-ocean/10 py-5 bg-gradient-to-r from-sand via-mist/10 to-sand">
-        <div className="flex gap-12 whitespace-nowrap animate-marquee w-max">
+        <div className="flex whitespace-nowrap animate-marquee w-max will-change-transform">
           {Array.from({ length: 2 }).map((_, k) => (
-            <div key={k} className="flex items-center gap-12 pr-12">
+            <div key={k} className="flex items-center shrink-0">
               {["Força", "Fluidez", "Expressão", "Comunidade", "Movimento", "Liberdade", "Arte", "Flexibilidade"].map((w, i) => (
-                <span key={i} className="flex items-center gap-12">
-                  <span className="font-serif italic text-3xl text-ocean/80">{w}</span>
-                  <span className="text-gold text-2xl">✦</span>
+                <span key={i} className="flex items-center">
+                  <span className="font-serif italic text-3xl leading-none text-ocean/80 px-6">{w}</span>
+                  <span className="text-gold text-2xl leading-none">✦</span>
                 </span>
               ))}
             </div>
