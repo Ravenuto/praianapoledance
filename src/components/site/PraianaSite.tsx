@@ -497,7 +497,7 @@ function Valores() {
 
         <div className="mt-8 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {extras.map((e) => (
-            <div key={e.name} className="reveal flex items-center justify-between rounded-2xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 px-5 py-4 hover:bg-white transition-colors">
+            <div key={e.name} className="theme-light-locked reveal flex items-center justify-between rounded-2xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 px-5 py-4 hover:bg-white transition-colors">
               <div>
                 <p className="font-semibold text-ink">{e.name}</p>
                 <p className="text-xs text-ink/50 mt-0.5">{e.desc}</p>
