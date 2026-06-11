@@ -140,7 +140,7 @@ function Navbar() {
       >
         <a href="#home" className="flex items-center gap-2 group min-w-0">
           <Logo className="h-11 w-11 shrink-0 object-contain transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110" />
-          <span className="hidden sm:inline font-serif text-base md:text-lg italic tracking-tight text-ocean truncate">Praiana Pole Dance e Artes</span>
+          <span className="hidden sm:inline font-serif text-base md:text-lg italic tracking-tight text-ocean truncate">Praiana Pole Dance & Artes</span>
         </a>
         <div className="hidden md:flex items-center gap-7 text-sm">
           {NAV.map((n) => (
@@ -600,8 +600,8 @@ function Footer() {
                 <Logo className="h-full w-full object-contain" />
               </div>
               <div>
-                <p className="font-serif text-2xl italic text-sand leading-tight">Praiana Pole Dance e Artes</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">Studio</p>
+                <p className="font-serif text-2xl italic text-sand leading-tight">Praiana Pole Dance & Artes</p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">{"\n"}</p>
               </div>
             </div>
             <p className="mt-5 text-sm leading-relaxed max-w-xs text-sand/65">
