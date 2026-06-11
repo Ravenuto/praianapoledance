@@ -179,22 +179,26 @@ function Navbar() {
             </a>
           ))}
         </div>
-        <a
-          href={APP_URL}
-          className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105"
-        >
-          Área da Aluna
-        </a>
-        <button
-          aria-label="Abrir menu"
-          onClick={() => setOpen((o) => !o)}
-          className="md:hidden h-9 w-9 rounded-full bg-ocean/10 grid place-items-center text-ocean"
-        >
-          <span className="space-y-1.5">
-            <span className="block w-4 h-0.5 bg-current" />
-            <span className="block w-4 h-0.5 bg-current" />
-          </span>
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle className="hidden md:inline-flex" />
+          <a
+            href={APP_URL}
+            className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105"
+          >
+            Área da Aluna
+          </a>
+          <ThemeToggle className="md:hidden" />
+          <button
+            aria-label="Abrir menu"
+            onClick={() => setOpen((o) => !o)}
+            className="md:hidden h-9 w-9 rounded-full bg-ocean/10 grid place-items-center text-ocean"
+          >
+            <span className="space-y-1.5">
+              <span className="block w-4 h-0.5 bg-current" />
+              <span className="block w-4 h-0.5 bg-current" />
+            </span>
+          </button>
+        </div>
       </div>
       {open && (
         <div className="md:hidden mx-auto mt-2 max-w-5xl rounded-3xl bg-sand/95 backdrop-blur-xl ring-1 ring-ocean/10 p-6 shadow-xl animate-fade-up">
