@@ -165,16 +165,12 @@ function Navbar() {
             : "bg-sand/40 backdrop-blur-md"
         }`}
       >
-        <a href="#home" className="flex min-w-0 items-center gap-2 group">
-          <span className="shrink-0 flex h-10 w-10 items-center justify-center transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110 dark:h-[3.2rem] dark:w-[3.2rem] dark:rounded-full dark:bg-white dark:p-1.5 dark:shadow-[0_0_0_4px_white] sm:h-11 sm:w-11 dark:sm:h-[3.4rem] dark:sm:w-[3.4rem]">
-            <Logo className="h-10 w-10 object-contain sm:h-11 sm:w-11" />
+        <a href="#home" className="flex min-w-0 items-center gap-2.5 group">
+          <span className="shrink-0 relative flex h-11 w-11 items-center justify-center rounded-full p-1 transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110 dark:bg-white dark:shadow-[0_0_0_2px_white]">
+            <Logo className="h-full w-full object-contain" />
           </span>
-          <span className="min-w-0 font-serif italic tracking-tight text-ocean text-[13px] leading-[1.05] sm:text-base md:text-lg">
-            <span className="flex flex-col sm:hidden">
-              <span className="block">Praiana</span>
-              <span className="block text-[11px] leading-none opacity-80">Pole & Artes</span>
-            </span>
-            <span className="hidden sm:inline">Praiana Pole Dance & Artes</span>
+          <span className="min-w-0 truncate font-serif italic tracking-tight text-ocean text-[15px] sm:text-base md:text-lg">
+            Praiana Pole Dance & Artes
           </span>
         </a>
         <div className="hidden md:flex items-center gap-7 text-sm">
@@ -189,13 +185,12 @@ function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-self-end">
-          <ThemeToggle className="h-8 w-8 sm:h-9 sm:w-9" />
+          <ThemeToggle className="h-9 w-9" />
           <a
             href={APP_URL}
-            className="inline-flex h-8 items-center gap-2 rounded-full bg-ocean px-2.5 py-2 sm:h-auto sm:px-4 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-widest text-sand hover:bg-deep transition-all hover:scale-105 whitespace-nowrap"
+            className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105 whitespace-nowrap"
           >
-            <span className="sm:hidden">Aluna</span>
-            <span className="hidden sm:inline">Área da Aluna</span>
+            Área da Aluna
           </a>
           <button
             aria-label="Abrir menu"
