@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, Instagram } from "lucide-react";
+import { MessageCircle, Instagram, Sun, Moon } from "lucide-react";
 import studioImg from "@/assets/studio.png";
 import logoImg from "@/assets/logo-praiana.png";
 
@@ -120,6 +120,32 @@ function Logo({ className = "" }: { className?: string }) {
   );
 }
 
+function ThemeToggle({ className = "" }: { className?: string }) {
+  const [dark, setDark] = useState(false);
+  useEffect(() => {
+    const stored = localStorage.getItem("praiana-theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = stored ? stored === "dark" : prefersDark;
+    setDark(isDark);
+    document.documentElement.classList.toggle("dark", isDark);
+  }, []);
+  const toggle = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("praiana-theme", next ? "dark" : "light");
+  };
+  return (
+    <button
+      onClick={toggle}
+      aria-label={dark ? "Ativar tema claro" : "Ativar tema escuro"}
+      className={`h-9 w-9 rounded-full bg-ocean/10 text-ocean grid place-items-center hover:bg-ocean/20 transition-colors ${className}`}
+    >
+      {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+    </button>
+  );
+}
+
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -153,22 +179,26 @@ function Navbar() {
             </a>
           ))}
         </div>
-        <a
-          href={APP_URL}
-          className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105"
-        >
-          Área da Aluna
-        </a>
-        <button
-          aria-label="Abrir menu"
-          onClick={() => setOpen((o) => !o)}
-          className="md:hidden h-9 w-9 rounded-full bg-ocean/10 grid place-items-center text-ocean"
-        >
-          <span className="space-y-1.5">
-            <span className="block w-4 h-0.5 bg-current" />
-            <span className="block w-4 h-0.5 bg-current" />
-          </span>
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle className="hidden md:inline-flex" />
+          <a
+            href={APP_URL}
+            className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105"
+          >
+            Área da Aluna
+          </a>
+          <ThemeToggle className="md:hidden" />
+          <button
+            aria-label="Abrir menu"
+            onClick={() => setOpen((o) => !o)}
+            className="md:hidden h-9 w-9 rounded-full bg-ocean/10 grid place-items-center text-ocean"
+          >
+            <span className="space-y-1.5">
+              <span className="block w-4 h-0.5 bg-current" />
+              <span className="block w-4 h-0.5 bg-current" />
+            </span>
+          </button>
+        </div>
       </div>
       {open && (
         <div className="md:hidden mx-auto mt-2 max-w-5xl rounded-3xl bg-sand/95 backdrop-blur-xl ring-1 ring-ocean/10 p-6 shadow-xl animate-fade-up">
