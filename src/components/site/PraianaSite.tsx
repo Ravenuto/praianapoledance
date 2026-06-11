@@ -333,7 +333,7 @@ function Modalidades() {
   return (
     <section id="modalidades" className="relative mt-10">
       <WaveDivider />
-      <div className="bg-ocean text-sand py-24 px-6 relative overflow-hidden -mt-px">
+      <div className="theme-light-locked bg-ocean text-sand py-24 px-6 relative overflow-hidden -mt-px">
         <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-mist/20 blur-3xl animate-float-slow pointer-events-none" />
         <div className="absolute bottom-10 right-0 w-80 h-80 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:3s] pointer-events-none" />
 
@@ -386,7 +386,7 @@ function Horarios() {
           {(Object.keys(typeMeta) as ClassType[]).map((k) => (
             <span
               key={k}
-              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ring-1 ring-ocean/10 bg-white/70 backdrop-blur ${typeMeta[k].text}`}
+              className={`theme-light-locked inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ring-1 ring-ocean/10 bg-white/70 dark:bg-white backdrop-blur ${typeMeta[k].text}`}
             >
               <span className={`w-2 h-2 rounded-full ${typeMeta[k].dot}`} />
               {typeMeta[k].label}
@@ -399,7 +399,7 @@ function Horarios() {
           {days.map((d, i) => (
             <div
               key={d}
-              className="reveal rounded-3xl bg-white/70 backdrop-blur-xl ring-1 ring-ocean/10 p-4 hover:-translate-y-1 hover:shadow-[0_20px_50px_-25px_rgba(38,106,174,0.4)] transition-all duration-500"
+              className="theme-light-locked reveal rounded-3xl bg-white/70 dark:bg-white backdrop-blur-xl ring-1 ring-ocean/10 p-4 hover:-translate-y-1 hover:shadow-[0_20px_50px_-25px_rgba(38,106,174,0.4)] transition-all duration-500"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="text-center pb-3 mb-3 border-b border-ocean/10">
@@ -448,8 +448,8 @@ function Valores() {
               key={p.name}
               className={`reveal relative rounded-[36px] p-8 flex flex-col transition-all duration-500 hover:-translate-y-3 ${
                 p.highlight
-                  ? "bg-ocean text-sand shadow-[0_30px_80px_-20px_rgba(38,106,174,0.55)] ring-1 ring-ocean md:scale-105"
-                  : "bg-white/80 backdrop-blur ring-1 ring-ocean/10 shadow-[0_10px_40px_-20px_rgba(38,106,174,0.2)]"
+                  ? "theme-light-locked bg-ocean text-sand shadow-[0_30px_80px_-20px_rgba(38,106,174,0.55)] ring-1 ring-ocean md:scale-105"
+                  : "theme-light-locked bg-white/80 dark:bg-white backdrop-blur ring-1 ring-ocean/10 shadow-[0_10px_40px_-20px_rgba(38,106,174,0.2)]"
               }`}
               style={{ animationDelay: `${i * 120}ms` }}
             >
@@ -497,7 +497,7 @@ function Valores() {
 
         <div className="mt-8 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {extras.map((e) => (
-            <div key={e.name} className="reveal flex items-center justify-between rounded-2xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 px-5 py-4 hover:bg-white transition-colors">
+            <div key={e.name} className="theme-light-locked reveal flex items-center justify-between rounded-2xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 px-5 py-4 hover:bg-white transition-colors">
               <div>
                 <p className="font-semibold text-ink">{e.name}</p>
                 <p className="text-xs text-ink/50 mt-0.5">{e.desc}</p>
@@ -554,7 +554,7 @@ function Contato() {
             href="https://maps.google.com/?q=Rua+das+Ondas+123"
             target="_blank"
             rel="noreferrer"
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
           >
             <div className="w-12 h-12 rounded-2xl bg-mist/15 text-mist grid place-items-center mb-4 group-hover:bg-mist group-hover:text-sand transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
@@ -572,7 +572,7 @@ function Contato() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "120ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-[#dcf5e3] text-[#1f9d55] grid place-items-center mb-4 group-hover:bg-[#25D366] group-hover:text-white transition-colors">
@@ -588,7 +588,7 @@ function Contato() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noreferrer"
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "240ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-[#f4d8de] text-[#a04760] grid place-items-center mb-4 group-hover:bg-[#d97a8a] group-hover:text-sand transition-colors">
@@ -602,7 +602,7 @@ function Contato() {
           {/* 4. Email */}
           <a
             href={`mailto:${EMAIL}`}
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "360ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
