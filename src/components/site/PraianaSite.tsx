@@ -79,9 +79,9 @@ const modalities = [
 ];
 
 const plans = [
-  { name: "4 Aulas", price: "R$ 230", per: "R$ 57,50 por aula", desc: "Perfeito para começar com consistência.", highlight: false },
-  { name: "8 Aulas", price: "R$ 370", per: "R$ 46,25 por aula", desc: "O mais escolhido pelas nossas alunas.", highlight: true },
-  { name: "12 Aulas", price: "R$ 480", per: "R$ 40,00 por aula", desc: "Para quem quer evolução acelerada.", highlight: false },
+  { name: "4 Aulas", price: "R$ 230", per: "R$ 57,50 por aula", desc: "Perfeito para começar com consistência", highlight: false },
+  { name: "8 Aulas", price: "R$ 370", per: "R$ 46,25 por aula", desc: "O mais escolhido pelas nossas alunas", highlight: true },
+  { name: "12 Aulas", price: "R$ 480", per: "R$ 40,00 por aula", desc: "Para quem quer evolução acelerada", highlight: false },
 ];
 
 const extras = [
@@ -229,7 +229,7 @@ function Hero() {
             já existe em você.
           </h1>
           <p className="mt-6 max-w-md text-base md:text-lg text-ink/70 leading-relaxed">
-            Um espaço para você descobrir sua força, se mover com fluidez e se expressar — entre giros, danças e respiração.
+            Venha descobrir toda a sua força com o Pole Dance.{"\n"}Um espaço para você se movimentar, se amar e se expressar.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
@@ -238,7 +238,7 @@ function Hero() {
               rel="noreferrer"
               className="group inline-flex items-center gap-2 justify-center rounded-full bg-ocean px-7 py-4 text-sm font-semibold text-sand hover:bg-deep transition-all hover:-translate-y-0.5 shadow-[0_12px_40px_-12px_rgba(38,106,174,0.5)]"
             >
-              Agende sua aula
+              Comece agora{"\n\n"}
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <a
@@ -272,7 +272,7 @@ function Hero() {
           </div>
 
           <div className="absolute -bottom-6 left-6 right-10 rounded-2xl bg-white/85 backdrop-blur-md ring-1 ring-ocean/10 px-5 py-4 shadow-xl animate-float-y [animation-delay:1s]">
-            <p className="font-serif italic text-ocean text-lg">"Um lugar para se amar em movimento."</p>
+            <p className="font-serif italic text-ocean text-lg">{"\n"}</p>
           </div>
         </div>
       </div>
@@ -282,7 +282,7 @@ function Hero() {
         <div className="flex gap-12 whitespace-nowrap animate-marquee w-max">
           {Array.from({ length: 2 }).map((_, k) => (
             <div key={k} className="flex items-center gap-12 pr-12">
-              {["Força", "Fluidez", "Expressão", "Comunidade", "Movimento", "Liberdade", "Arte", "Praiana"].map((w, i) => (
+              {["Força", "Fluidez", "Expressão", "Comunidade", "Movimento", "Liberdade", "Arte", "Flexibilidade"].map((w, i) => (
                 <span key={i} className="flex items-center gap-12">
                   <span className="font-serif italic text-3xl text-ocean/80">{w}</span>
                   <span className="text-gold text-2xl">✦</span>
@@ -343,9 +343,9 @@ function Horarios() {
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-10 reveal">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">Planeje sua semana</span>
-          <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">Calendário Semanal</h2>
+          <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">Grade de Horários</h2>
           <p className="mt-3 text-ink/60 max-w-md mx-auto">
-            Escolha o dia, escolha o horário — sua próxima aula te espera.
+            {"\n\n\n\n"}
           </p>
         </div>
 
@@ -531,7 +531,7 @@ function Contato() {
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">Endereço</p>
             <p className="mt-1 font-serif text-xl text-ocean leading-snug">Rua das Ondas, 123</p>
-            <p className="mt-1 text-sm text-ink/60">Seg a Sáb · 08h – 21h</p>
+            <p className="mt-1 text-sm text-ink/60">{"\n"}</p>
           </a>
 
           {/* 2. WhatsApp */}
