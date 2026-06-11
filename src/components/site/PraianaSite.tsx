@@ -5,7 +5,17 @@ import logoAsset from "@/assets/logo-praiana.png.asset.json";
 const WHATSAPP_URL =
   "https://wa.me/5511999999999?text=Ol%C3%A1!%20Tenho%20interesse%20em%20uma%20aula%20na%20Praiana%20Pole%20Studio%20%F0%9F%8C%8A";
 const INSTAGRAM_URL = "https://instagram.com/praianapolestudio";
+const EMAIL = "contato@praianapolestudio.com";
 const APP_URL = "#";
+
+const fullDayNames: Record<Day, string> = {
+  Seg: "Segunda",
+  Ter: "Terça",
+  Qua: "Quarta",
+  Qui: "Quinta",
+  Sex: "Sexta",
+  Sáb: "Sábado",
+};
 
 const NAV = [
   { label: "Início", href: "#home" },
