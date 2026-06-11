@@ -181,7 +181,7 @@ function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <ThemeToggle className="hidden md:inline-flex" />
+          <ThemeToggle className="hidden md:flex" />
           <a
             href={APP_URL}
             className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105"
