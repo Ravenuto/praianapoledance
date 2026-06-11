@@ -76,6 +76,15 @@
 
 :root {
   --radius: 0.625rem;
+
+  /* Praiana brand — light */
+  --brand-ocean: #266aae;
+  --brand-mist: #5B8DB8;
+  --brand-gold: #F5A623;
+  --brand-sand: #FAF7F2;
+  --brand-ink: #1e4266;
+  --brand-deep: #11355c;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
