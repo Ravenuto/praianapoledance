@@ -169,8 +169,11 @@ function Navbar() {
           <span className="shrink-0 flex h-10 w-10 items-center justify-center transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110 dark:h-[3.2rem] dark:w-[3.2rem] dark:rounded-full dark:bg-white dark:p-1.5 dark:shadow-[0_0_0_4px_white] sm:h-11 sm:w-11 dark:sm:h-[3.4rem] dark:sm:w-[3.4rem]">
             <Logo className="h-10 w-10 object-contain sm:h-11 sm:w-11" />
           </span>
-          <span className="min-w-0 font-serif italic tracking-tight text-ocean text-[13px] leading-tight sm:text-base md:text-lg">
-            <span className="block truncate sm:hidden">Praiana Pole</span>
+          <span className="min-w-0 font-serif italic tracking-tight text-ocean text-[13px] leading-[1.05] sm:text-base md:text-lg">
+            <span className="flex flex-col sm:hidden">
+              <span className="block">Praiana</span>
+              <span className="block text-[11px] leading-none opacity-80">Pole & Artes</span>
+            </span>
             <span className="hidden sm:inline">Praiana Pole Dance & Artes</span>
           </span>
         </a>
