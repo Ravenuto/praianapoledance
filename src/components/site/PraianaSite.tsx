@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, Instagram } from "lucide-react";
+import { MessageCircle, Instagram, Sun, Moon } from "lucide-react";
 import studioImg from "@/assets/studio.png";
 import logoImg from "@/assets/logo-praiana.png";
 
