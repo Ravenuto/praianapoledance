@@ -121,7 +121,7 @@ function Logo({ className = "" }: { className?: string }) {
 }
 
 function ThemeToggle({ className = "" }: { className?: string }) {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState<boolean | null>(null);
   useEffect(() => {
     const stored = localStorage.getItem("praiana-theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -137,9 +137,10 @@ function ThemeToggle({ className = "" }: { className?: string }) {
   };
   return (
     <button
+      type="button"
       onClick={toggle}
       aria-label={dark ? "Ativar tema claro" : "Ativar tema escuro"}
-      className={`h-9 w-9 rounded-full bg-ocean/10 text-ocean grid place-items-center hover:bg-ocean/20 transition-colors ${className}`}
+      className={`h-9 w-9 rounded-full bg-ocean/10 text-ocean hover:bg-ocean/20 transition-colors flex items-center justify-center ${className}`}
     >
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
