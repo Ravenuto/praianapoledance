@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { MessageCircle, Instagram } from "lucide-react";
 import studioAsset from "@/assets/studio.png.asset.json";
 import logoAsset from "@/assets/logo-praiana.png.asset.json";
 
@@ -68,7 +69,7 @@ const calendar: Record<Day, Slot[]> = {
 const typeMeta: Record<ClassType, { label: string; short: string; bg: string; ring: string; text: string; dot: string }> = {
   pole: { label: "Pole Dance", short: "Pole", bg: "bg-ocean/10", ring: "ring-ocean/30", text: "text-ocean", dot: "bg-ocean" },
   coreo: { label: "Pole Coreográfico", short: "Coreo", bg: "bg-gold/15", ring: "ring-gold/40", text: "text-[#9c5a00]", dot: "bg-gold" },
-  flex: { label: "Flex Flow", short: "Flex", bg: "bg-mist/15", ring: "ring-mist/30", text: "text-[#3a5e7f]", dot: "bg-mist" },
+  flex: { label: "Flex Flow", short: "Flex", bg: "bg-[#f4d8de]", ring: "ring-[#d97a8a]/40", text: "text-[#a04760]", dot: "bg-[#d97a8a]" },
 };
 
 const modalities = [
@@ -137,9 +138,9 @@ function Navbar() {
             : "bg-sand/40 backdrop-blur-md"
         }`}
       >
-        <a href="#home" className="flex items-center gap-2 group">
-          <Logo className="h-11 w-11 object-contain transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110" />
-          <span className="hidden sm:inline font-serif text-xl italic tracking-tight text-ocean">Praiana</span>
+        <a href="#home" className="flex items-center gap-2 group min-w-0">
+          <Logo className="h-11 w-11 shrink-0 object-contain transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110" />
+          <span className="hidden sm:inline font-serif text-base md:text-lg italic tracking-tight text-ocean truncate">Praiana Pole Dance e Artes</span>
         </a>
         <div className="hidden md:flex items-center gap-7 text-sm">
           {NAV.map((n) => (
@@ -250,19 +251,6 @@ function Hero() {
         </div>
 
         <div className="relative animate-fade-up [animation-delay:200ms]">
-          {/* Static logo at top-right of image */}
-          <div className="flex justify-end mb-4">
-            <div className="flex items-center gap-3 rounded-full bg-white/80 backdrop-blur ring-1 ring-ocean/10 pl-2 pr-5 py-2 shadow-md">
-              <div className="h-14 w-14 rounded-full bg-sand grid place-items-center p-1.5">
-                <Logo className="h-full w-full object-contain" />
-              </div>
-              <div className="leading-tight">
-                <p className="font-serif text-xl italic text-ocean">Praiana</p>
-                <p className="text-[9px] uppercase tracking-[0.3em] text-gold">Pole & Artes</p>
-              </div>
-            </div>
-          </div>
-
           <div className="absolute -inset-4 bg-gradient-to-br from-mist/30 via-transparent to-gold/20 blur-2xl rounded-[60px] animate-shimmer-bg" />
           <div className="relative overflow-hidden animate-blob-morph shadow-[0_30px_80px_-20px_rgba(17,53,92,0.35)] ring-1 ring-white/40">
             <img
@@ -272,6 +260,17 @@ function Hero() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ocean/30 via-transparent to-transparent" />
           </div>
+
+          {/* Floating logo */}
+          <div className="absolute -top-6 -right-4 md:-right-8 z-10 animate-float-y">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-gold/30 blur-2xl animate-pulse-ring" />
+              <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-sand/95 backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3">
+                <Logo className="h-full w-full object-contain" />
+              </div>
+            </div>
+          </div>
+
           <div className="absolute -bottom-6 left-6 right-10 rounded-2xl bg-white/85 backdrop-blur-md ring-1 ring-ocean/10 px-5 py-4 shadow-xl animate-float-y [animation-delay:1s]">
             <p className="font-serif italic text-ocean text-lg">"Um lugar para se amar em movimento."</p>
           </div>
@@ -308,9 +307,6 @@ function Modalidades() {
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-14 max-w-xl reveal">
             <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Modalidades</span>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl italic leading-tight">
-              Três caminhos, um mesmo fluxo.
-            </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-5">
@@ -320,7 +316,7 @@ function Modalidades() {
                 className="reveal group relative rounded-[32px] bg-white/5 backdrop-blur-sm ring-1 ring-white/10 p-7 transition-all duration-500 hover:bg-white/10 hover:-translate-y-2 hover:ring-gold/30"
                 style={{ animationDelay: `${i * 120}ms` }}
               >
-                <h3 className="font-script text-gold text-4xl md:text-5xl leading-none mb-4 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-[-2deg] origin-left inline-block">
+                <h3 className="font-serif italic text-gold text-3xl md:text-4xl leading-tight mb-4 transition-transform duration-500 group-hover:translate-x-1">
                   {m.title}
                 </h3>
                 <p className="text-sand/75 text-sm leading-relaxed">{m.desc}</p>
@@ -519,7 +515,7 @@ function Contato() {
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">Vamos conversar</span>
           <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">Contato</h2>
         </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* 1. Endereço */}
           <a
             href="https://maps.google.com/?q=Rua+das+Ondas+123"
@@ -547,20 +543,34 @@ function Contato() {
             style={{ animationDelay: "120ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-ocean/10 text-ocean grid place-items-center mb-4 group-hover:bg-ocean group-hover:text-sand transition-colors">
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                <path d="M20.52 3.48A11.78 11.78 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.83a11.7 11.7 0 0 0 1.6 5.95L0 24l6.36-1.67a11.83 11.83 0 0 0 5.67 1.44h.01c6.54 0 11.84-5.3 11.84-11.83 0-3.16-1.23-6.13-3.46-8.46zM12.05 21.4a9.55 9.55 0 0 1-4.87-1.33l-.35-.21-3.78.99 1-3.68-.23-.38a9.45 9.45 0 0 1-1.46-5.06c0-5.24 4.28-9.5 9.55-9.5a9.5 9.5 0 0 1 9.5 9.5c-.01 5.24-4.28 9.5-9.36 9.67z" />
-              </svg>
+              <MessageCircle className="w-5 h-5" strokeWidth={2} />
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">WhatsApp</p>
             <p className="mt-1 font-serif text-xl text-ocean">+55 11 99999-9999</p>
             <p className="mt-1 text-sm text-ink/60">Resposta rápida durante o dia.</p>
           </a>
 
-          {/* 3. Email */}
+          {/* 3. Instagram */}
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            style={{ animationDelay: "240ms" }}
+          >
+            <div className="w-12 h-12 rounded-2xl bg-[#f4d8de] text-[#a04760] grid place-items-center mb-4 group-hover:bg-[#d97a8a] group-hover:text-sand transition-colors">
+              <Instagram className="w-5 h-5" strokeWidth={2} />
+            </div>
+            <p className="text-xs uppercase tracking-widest text-mist">Instagram</p>
+            <p className="mt-1 font-serif text-xl text-ocean">@praianapolestudio</p>
+            <p className="mt-1 text-sm text-ink/60">Bastidores, aulas e novidades.</p>
+          </a>
+
+          {/* 4. Email */}
           <a
             href={`mailto:${EMAIL}`}
             className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
-            style={{ animationDelay: "240ms" }}
+            style={{ animationDelay: "360ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
@@ -569,7 +579,7 @@ function Contato() {
               </svg>
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">E-mail</p>
-            <p className="mt-1 font-serif text-xl text-ocean break-all">{EMAIL}</p>
+            <p className="mt-1 font-serif text-lg text-ocean break-all">{EMAIL}</p>
             <p className="mt-1 text-sm text-ink/60">Para parcerias e dúvidas.</p>
           </a>
         </div>
@@ -590,8 +600,8 @@ function Footer() {
                 <Logo className="h-full w-full object-contain" />
               </div>
               <div>
-                <p className="font-serif text-3xl italic text-sand leading-none">Praiana</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">Pole & Artes</p>
+                <p className="font-serif text-2xl italic text-sand leading-tight">Praiana Pole Dance e Artes</p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">Studio</p>
               </div>
             </div>
             <p className="mt-5 text-sm leading-relaxed max-w-xs text-sand/65">
@@ -668,8 +678,8 @@ function FloatingWhats() {
       <span className="relative">
         <span className="absolute inset-0 rounded-full animate-pulse-ring" />
         <span className="relative w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-[0_18px_40px_-12px_rgba(37,211,102,0.65)] hover:scale-110 transition-transform">
-          <svg viewBox="0 0 24 24" className="w-7 h-7" fill="currentColor">
-            <path d="M20.52 3.48A11.78 11.78 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.83a11.7 11.7 0 0 0 1.6 5.95L0 24l6.36-1.67a11.83 11.83 0 0 0 5.67 1.44h.01c6.54 0 11.84-5.3 11.84-11.83 0-3.16-1.23-6.13-3.46-8.46zM17.4 15.5c-.3.83-1.46 1.52-2.4 1.72-.64.13-1.47.24-4.27-.92-3.58-1.48-5.88-5.12-6.06-5.36-.18-.24-1.46-1.94-1.46-3.7 0-1.76.92-2.62 1.25-2.98.32-.36.7-.45.94-.45.24 0 .47 0 .68.01.22.01.51-.08.8.61.3.71 1.02 2.47 1.11 2.65.09.18.15.39.03.62-.12.24-.18.39-.36.6-.18.21-.38.47-.54.63-.18.18-.37.38-.16.74.21.36.94 1.55 2.02 2.5 1.39 1.22 2.55 1.6 2.91 1.78.36.18.57.15.78-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.81-.18.33.12 2.09.98 2.45 1.16.36.18.6.27.69.42.09.15.09.87-.21 1.7z" />
+          <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
           </svg>
         </span>
       </span>
