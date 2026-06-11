@@ -20,6 +20,15 @@ const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
 type Day = (typeof days)[number];
 type ClassType = "pole" | "coreo" | "flex";
 
+const fullDayNames: Record<Day, string> = {
+  Seg: "Segunda",
+  Ter: "Terça",
+  Qua: "Quarta",
+  Qui: "Quinta",
+  Sex: "Sexta",
+  Sáb: "Sábado",
+};
+
 type Slot = { time: string; type: ClassType };
 const calendar: Record<Day, Slot[]> = {
   Seg: [
