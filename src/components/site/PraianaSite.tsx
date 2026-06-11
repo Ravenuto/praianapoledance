@@ -251,19 +251,6 @@ function Hero() {
         </div>
 
         <div className="relative animate-fade-up [animation-delay:200ms]">
-          {/* Static logo at top-right of image */}
-          <div className="flex justify-end mb-4">
-            <div className="flex items-center gap-3 rounded-full bg-white/80 backdrop-blur ring-1 ring-ocean/10 pl-2 pr-5 py-2 shadow-md">
-              <div className="h-14 w-14 rounded-full bg-sand grid place-items-center p-1.5">
-                <Logo className="h-full w-full object-contain" />
-              </div>
-              <div className="leading-tight">
-                <p className="font-serif text-xl italic text-ocean">Praiana</p>
-                <p className="text-[9px] uppercase tracking-[0.3em] text-gold">Pole & Artes</p>
-              </div>
-            </div>
-          </div>
-
           <div className="absolute -inset-4 bg-gradient-to-br from-mist/30 via-transparent to-gold/20 blur-2xl rounded-[60px] animate-shimmer-bg" />
           <div className="relative overflow-hidden animate-blob-morph shadow-[0_30px_80px_-20px_rgba(17,53,92,0.35)] ring-1 ring-white/40">
             <img
@@ -273,6 +260,17 @@ function Hero() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ocean/30 via-transparent to-transparent" />
           </div>
+
+          {/* Floating logo */}
+          <div className="absolute -top-6 -right-4 md:-right-8 z-10 animate-float-y">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-gold/30 blur-2xl animate-pulse-ring" />
+              <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-sand/95 backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3 animate-spin-slow [animation-duration:60s]">
+                <Logo className="h-full w-full object-contain animate-spin-slow [animation-duration:60s] [animation-direction:reverse]" />
+              </div>
+            </div>
+          </div>
+
           <div className="absolute -bottom-6 left-6 right-10 rounded-2xl bg-white/85 backdrop-blur-md ring-1 ring-ocean/10 px-5 py-4 shadow-xl animate-float-y [animation-delay:1s]">
             <p className="font-serif italic text-ocean text-lg">"Um lugar para se amar em movimento."</p>
           </div>
