@@ -112,7 +112,7 @@ function useReveal() {
 function Logo({ className = "" }: { className?: string }) {
   return (
     <img
-      src={logoAsset.url}
+      src={logoImg}
       alt="Praiana Pole Studio"
       className={className}
       loading="eager"
