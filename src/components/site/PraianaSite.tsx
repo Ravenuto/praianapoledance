@@ -265,8 +265,8 @@ function Hero() {
           <div className="absolute -top-6 -right-4 md:-right-8 z-10 animate-float-y">
             <div className="relative">
               <div className="absolute inset-0 rounded-full bg-gold/30 blur-2xl animate-pulse-ring" />
-              <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-sand/95 backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3 animate-spin-slow [animation-duration:60s]">
-                <Logo className="h-full w-full object-contain animate-spin-slow [animation-duration:60s] [animation-direction:reverse]" />
+              <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-sand/95 backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3">
+                <Logo className="h-full w-full object-contain" />
               </div>
             </div>
           </div>
