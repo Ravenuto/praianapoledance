@@ -114,7 +114,7 @@ function Logo({ className = "" }: { className?: string }) {
     <img
       src={logoImg}
       alt="Praiana Pole Studio"
-      className={`${className} dark:bg-white dark:rounded-full dark:p-0.5`}
+      className={className}
       loading="eager"
     />
   );
@@ -301,7 +301,7 @@ function Hero() {
           <div className="absolute -top-6 -right-4 md:-right-8 z-10 animate-float-y">
             <div className="relative">
               <div className="absolute inset-0 rounded-full bg-gold/30 blur-2xl animate-pulse-ring" />
-              <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-sand/95 backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3">
+              <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-sand/95 dark:bg-white backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3">
                 <Logo className="h-full w-full object-contain" />
               </div>
             </div>
@@ -629,7 +629,7 @@ function Footer() {
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-3">
-              <div className="h-14 w-14 rounded-full bg-sand/95 grid place-items-center p-2">
+              <div className="h-14 w-14 rounded-full bg-sand/95 dark:bg-white grid place-items-center p-2">
                 <Logo className="h-full w-full object-contain" />
               </div>
               <div>
