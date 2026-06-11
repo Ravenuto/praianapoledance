@@ -69,7 +69,7 @@ const calendar: Record<Day, Slot[]> = {
 const typeMeta: Record<ClassType, { label: string; short: string; bg: string; ring: string; text: string; dot: string }> = {
   pole: { label: "Pole Dance", short: "Pole", bg: "bg-ocean/10", ring: "ring-ocean/30", text: "text-ocean", dot: "bg-ocean" },
   coreo: { label: "Pole Coreográfico", short: "Coreo", bg: "bg-gold/15", ring: "ring-gold/40", text: "text-[#9c5a00]", dot: "bg-gold" },
-  flex: { label: "Flex Flow", short: "Flex", bg: "bg-mist/15", ring: "ring-mist/30", text: "text-[#3a5e7f]", dot: "bg-mist" },
+  flex: { label: "Flex Flow", short: "Flex", bg: "bg-[#f4d8de]", ring: "ring-[#d97a8a]/40", text: "text-[#a04760]", dot: "bg-[#d97a8a]" },
 };
 
 const modalities = [
