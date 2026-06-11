@@ -374,8 +374,7 @@ function Horarios() {
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="text-center pb-3 mb-3 border-b border-ocean/10">
-                <p className="text-[10px] uppercase tracking-[0.25em] text-mist">{d === "Sáb" ? "Sábado" : ["Segunda","Terça","Quarta","Quinta","Sexta"][i]}</p>
-                <p className="font-serif text-3xl italic text-ocean leading-none mt-1">{d}</p>
+                <p className="font-serif text-xl md:text-2xl italic text-ocean leading-tight">{fullDayNames[d]}</p>
               </div>
               <div className="space-y-2">
                 {calendar[d].map((s) => (
