@@ -448,8 +448,8 @@ function Valores() {
               key={p.name}
               className={`reveal relative rounded-[36px] p-8 flex flex-col transition-all duration-500 hover:-translate-y-3 ${
                 p.highlight
-                  ? "bg-ocean text-sand shadow-[0_30px_80px_-20px_rgba(38,106,174,0.55)] ring-1 ring-ocean md:scale-105"
-                  : "bg-white/80 backdrop-blur ring-1 ring-ocean/10 shadow-[0_10px_40px_-20px_rgba(38,106,174,0.2)]"
+                  ? "theme-light-locked bg-ocean text-sand shadow-[0_30px_80px_-20px_rgba(38,106,174,0.55)] ring-1 ring-ocean md:scale-105"
+                  : "theme-light-locked bg-white/80 dark:bg-white backdrop-blur ring-1 ring-ocean/10 shadow-[0_10px_40px_-20px_rgba(38,106,174,0.2)]"
               }`}
               style={{ animationDelay: `${i * 120}ms` }}
             >
