@@ -625,7 +625,7 @@ function Footer() {
   return (
     <footer className="relative mt-10">
       <WaveDivider color="var(--color-deep)" />
-      <div className="bg-deep text-sand/80 px-6 pt-10 pb-10 -mt-px">
+      <div className="theme-light-locked bg-deep text-sand/80 px-6 pt-10 pb-10 -mt-px">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-3">
