@@ -138,9 +138,9 @@ function Navbar() {
             : "bg-sand/40 backdrop-blur-md"
         }`}
       >
-        <a href="#home" className="flex items-center gap-2 group">
-          <Logo className="h-11 w-11 object-contain transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110" />
-          <span className="hidden sm:inline font-serif text-xl italic tracking-tight text-ocean">Praiana</span>
+        <a href="#home" className="flex items-center gap-2 group min-w-0">
+          <Logo className="h-11 w-11 shrink-0 object-contain transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110" />
+          <span className="hidden sm:inline font-serif text-base md:text-lg italic tracking-tight text-ocean truncate">Praiana Pole Dance e Artes</span>
         </a>
         <div className="hidden md:flex items-center gap-7 text-sm">
           {NAV.map((n) => (
