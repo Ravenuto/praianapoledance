@@ -554,7 +554,7 @@ function Contato() {
             href="https://maps.google.com/?q=Rua+das+Ondas+123"
             target="_blank"
             rel="noreferrer"
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
           >
             <div className="w-12 h-12 rounded-2xl bg-mist/15 text-mist grid place-items-center mb-4 group-hover:bg-mist group-hover:text-sand transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
@@ -572,7 +572,7 @@ function Contato() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "120ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-[#dcf5e3] text-[#1f9d55] grid place-items-center mb-4 group-hover:bg-[#25D366] group-hover:text-white transition-colors">
@@ -588,7 +588,7 @@ function Contato() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noreferrer"
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "240ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-[#f4d8de] text-[#a04760] grid place-items-center mb-4 group-hover:bg-[#d97a8a] group-hover:text-sand transition-colors">
@@ -602,7 +602,7 @@ function Contato() {
           {/* 4. Email */}
           <a
             href={`mailto:${EMAIL}`}
-            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "360ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
