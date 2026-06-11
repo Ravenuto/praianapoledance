@@ -5,6 +5,7 @@ import logoAsset from "@/assets/logo-praiana.png.asset.json";
 const WHATSAPP_URL =
   "https://wa.me/5511999999999?text=Ol%C3%A1!%20Tenho%20interesse%20em%20uma%20aula%20na%20Praiana%20Pole%20Studio%20%F0%9F%8C%8A";
 const INSTAGRAM_URL = "https://instagram.com/praianapolestudio";
+const EMAIL = "contato@praianapolestudio.com";
 const APP_URL = "#";
 
 const NAV = [
@@ -18,6 +19,15 @@ const NAV = [
 const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
 type Day = (typeof days)[number];
 type ClassType = "pole" | "coreo" | "flex";
+
+const fullDayNames: Record<Day, string> = {
+  Seg: "Segunda",
+  Ter: "Terça",
+  Qua: "Quarta",
+  Qui: "Quinta",
+  Sex: "Sexta",
+  Sáb: "Sábado",
+};
 
 type Slot = { time: string; type: ClassType };
 const calendar: Record<Day, Slot[]> = {
@@ -240,12 +250,15 @@ function Hero() {
         </div>
 
         <div className="relative animate-fade-up [animation-delay:200ms]">
-          {/* Floating logo */}
-          <div className="absolute -top-6 -left-4 md:-top-10 md:-left-10 z-20 animate-float-y">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gold/30 blur-2xl rounded-full" />
-              <div className="relative h-28 w-28 md:h-36 md:w-36 rounded-full bg-sand/90 backdrop-blur ring-1 ring-ocean/10 shadow-xl grid place-items-center p-3">
+          {/* Static logo at top-right of image */}
+          <div className="flex justify-end mb-4">
+            <div className="flex items-center gap-3 rounded-full bg-white/80 backdrop-blur ring-1 ring-ocean/10 pl-2 pr-5 py-2 shadow-md">
+              <div className="h-14 w-14 rounded-full bg-sand grid place-items-center p-1.5">
                 <Logo className="h-full w-full object-contain" />
+              </div>
+              <div className="leading-tight">
+                <p className="font-serif text-xl italic text-ocean">Praiana</p>
+                <p className="text-[9px] uppercase tracking-[0.3em] text-gold">Pole & Artes</p>
               </div>
             </div>
           </div>
@@ -294,7 +307,7 @@ function Modalidades() {
 
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-14 max-w-xl reveal">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">O que praticamos</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Modalidades</span>
             <h2 className="mt-3 font-serif text-4xl md:text-5xl italic leading-tight">
               Três caminhos, um mesmo fluxo.
             </h2>
@@ -307,10 +320,9 @@ function Modalidades() {
                 className="reveal group relative rounded-[32px] bg-white/5 backdrop-blur-sm ring-1 ring-white/10 p-7 transition-all duration-500 hover:bg-white/10 hover:-translate-y-2 hover:ring-gold/30"
                 style={{ animationDelay: `${i * 120}ms` }}
               >
-                <span className="font-script text-gold text-7xl leading-none block mb-2 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-4deg] origin-left" aria-hidden>
-                  {m.n}
-                </span>
-                <h3 className="font-serif text-2xl italic mb-3">{m.title}</h3>
+                <h3 className="font-script text-gold text-4xl md:text-5xl leading-none mb-4 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-[-2deg] origin-left inline-block">
+                  {m.title}
+                </h3>
                 <p className="text-sand/75 text-sm leading-relaxed">{m.desc}</p>
                 <div className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold/80">
                   Todos os níveis
@@ -362,8 +374,7 @@ function Horarios() {
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="text-center pb-3 mb-3 border-b border-ocean/10">
-                <p className="text-[10px] uppercase tracking-[0.25em] text-mist">{d === "Sáb" ? "Sábado" : ["Segunda","Terça","Quarta","Quinta","Sexta"][i]}</p>
-                <p className="font-serif text-3xl italic text-ocean leading-none mt-1">{d}</p>
+                <p className="font-serif text-xl md:text-2xl italic text-ocean leading-tight">{fullDayNames[d]}</p>
               </div>
               <div className="space-y-2">
                 {calendar[d].map((s) => (
@@ -386,18 +397,6 @@ function Horarios() {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="mt-10 text-center reveal">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-ocean hover:text-deep transition-colors"
-          >
-            Reserve seu horário no WhatsApp
-            <span aria-hidden>→</span>
-          </a>
         </div>
       </div>
     </section>
@@ -521,11 +520,31 @@ function Contato() {
           <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">Contato</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
+          {/* 1. Endereço */}
+          <a
+            href="https://maps.google.com/?q=Rua+das+Ondas+123"
+            target="_blank"
+            rel="noreferrer"
+            className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-mist/15 text-mist grid place-items-center mb-4 group-hover:bg-mist group-hover:text-sand transition-colors">
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+            </div>
+            <p className="text-xs uppercase tracking-widest text-mist">Endereço</p>
+            <p className="mt-1 font-serif text-xl text-ocean leading-snug">Rua das Ondas, 123</p>
+            <p className="mt-1 text-sm text-ink/60">Seg a Sáb · 08h – 21h</p>
+          </a>
+
+          {/* 2. WhatsApp */}
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
             className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            style={{ animationDelay: "120ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-ocean/10 text-ocean grid place-items-center mb-4 group-hover:bg-ocean group-hover:text-sand transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
@@ -536,35 +555,23 @@ function Contato() {
             <p className="mt-1 font-serif text-xl text-ocean">+55 11 99999-9999</p>
             <p className="mt-1 text-sm text-ink/60">Resposta rápida durante o dia.</p>
           </a>
+
+          {/* 3. Email */}
           <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noreferrer"
+            href={`mailto:${EMAIL}`}
             className="reveal group rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
-            style={{ animationDelay: "120ms" }}
+            style={{ animationDelay: "240ms" }}
           >
             <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3 7l9 6 9-6" />
               </svg>
             </div>
-            <p className="text-xs uppercase tracking-widest text-mist">Instagram</p>
-            <p className="mt-1 font-serif text-xl text-ocean">@praianapolestudio</p>
-            <p className="mt-1 text-sm text-ink/60">Bastidores e novidades.</p>
+            <p className="text-xs uppercase tracking-widest text-mist">E-mail</p>
+            <p className="mt-1 font-serif text-xl text-ocean break-all">{EMAIL}</p>
+            <p className="mt-1 text-sm text-ink/60">Para parcerias e dúvidas.</p>
           </a>
-          <div className="reveal rounded-3xl bg-white/70 backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all" style={{ animationDelay: "240ms" }}>
-            <div className="w-12 h-12 rounded-2xl bg-mist/15 text-mist grid place-items-center mb-4">
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z" />
-                <circle cx="12" cy="10" r="2.5" />
-              </svg>
-            </div>
-            <p className="text-xs uppercase tracking-widest text-mist">Endereço</p>
-            <p className="mt-1 font-serif text-xl text-ocean leading-snug">Rua das Ondas, 123</p>
-            <p className="mt-1 text-sm text-ink/60">Seg a Sáb · 08h – 21h</p>
-          </div>
         </div>
       </div>
     </section>
@@ -610,8 +617,21 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="max-w-5xl mx-auto mt-12 pt-6 border-t border-sand/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-sand/40">
+        <div className="max-w-5xl mx-auto mt-12 pt-6 border-t border-sand/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] uppercase tracking-widest text-sand/40">
           <span>© {new Date().getFullYear()} Praiana Pole Studio</span>
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Instagram"
+            className="group w-11 h-11 rounded-full bg-sand/10 hover:bg-gold text-sand hover:text-ocean grid place-items-center transition-all hover:scale-110"
+          >
+            <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+            </svg>
+          </a>
           <span>Feito com fluidez</span>
         </div>
       </div>
