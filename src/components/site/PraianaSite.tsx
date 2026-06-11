@@ -276,13 +276,13 @@ function Hero() {
 
       {/* Marquee strip */}
       <div className="mt-24 relative overflow-hidden border-y border-ocean/10 py-5 bg-gradient-to-r from-sand via-mist/10 to-sand">
-        <div className="flex gap-12 whitespace-nowrap animate-marquee w-max">
+        <div className="flex whitespace-nowrap animate-marquee w-max will-change-transform">
           {Array.from({ length: 2 }).map((_, k) => (
-            <div key={k} className="flex items-center gap-12 pr-12">
+            <div key={k} className="flex items-center shrink-0">
               {["Força", "Fluidez", "Expressão", "Comunidade", "Movimento", "Liberdade", "Arte", "Flexibilidade"].map((w, i) => (
-                <span key={i} className="flex items-center gap-12">
-                  <span className="font-serif italic text-3xl text-ocean/80">{w}</span>
-                  <span className="text-gold text-2xl">✦</span>
+                <span key={i} className="flex items-center">
+                  <span className="font-serif italic text-3xl leading-none text-ocean/80 px-6">{w}</span>
+                  <span className="text-gold text-2xl leading-none">✦</span>
                 </span>
               ))}
             </div>
