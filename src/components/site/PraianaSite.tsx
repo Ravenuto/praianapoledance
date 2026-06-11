@@ -617,8 +617,21 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="max-w-5xl mx-auto mt-12 pt-6 border-t border-sand/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-sand/40">
+        <div className="max-w-5xl mx-auto mt-12 pt-6 border-t border-sand/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] uppercase tracking-widest text-sand/40">
           <span>© {new Date().getFullYear()} Praiana Pole Studio</span>
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Instagram"
+            className="group w-11 h-11 rounded-full bg-sand/10 hover:bg-gold text-sand hover:text-ocean grid place-items-center transition-all hover:scale-110"
+          >
+            <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+            </svg>
+          </a>
           <span>Feito com fluidez</span>
         </div>
       </div>
