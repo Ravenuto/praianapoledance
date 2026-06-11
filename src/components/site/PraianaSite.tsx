@@ -114,7 +114,7 @@ function Logo({ className = "" }: { className?: string }) {
     <img
       src={logoImg}
       alt="Praiana Pole Studio"
-      className={`${className} dark:bg-white dark:rounded-full dark:p-0.5`}
+      className={className}
       loading="eager"
     />
   );
