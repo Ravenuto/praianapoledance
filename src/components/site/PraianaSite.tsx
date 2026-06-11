@@ -399,7 +399,7 @@ function Horarios() {
           {days.map((d, i) => (
             <div
               key={d}
-              className="reveal rounded-3xl bg-white/70 backdrop-blur-xl ring-1 ring-ocean/10 p-4 hover:-translate-y-1 hover:shadow-[0_20px_50px_-25px_rgba(38,106,174,0.4)] transition-all duration-500"
+              className="theme-light-locked reveal rounded-3xl bg-white/70 dark:bg-white backdrop-blur-xl ring-1 ring-ocean/10 p-4 hover:-translate-y-1 hover:shadow-[0_20px_50px_-25px_rgba(38,106,174,0.4)] transition-all duration-500"
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="text-center pb-3 mb-3 border-b border-ocean/10">
