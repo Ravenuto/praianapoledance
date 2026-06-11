@@ -154,11 +154,11 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 
   /* Praiana brand — dark theme overrides */
-  --color-sand: #0b1a2b;
-  --color-ink: #e8eef6;
-  --color-deep: #cfe1f3;
-  --color-ocean: #5fa6e3;
-  --color-mist: #7fb2dc;
+  --brand-sand: #0b1a2b;
+  --brand-ink: #e8eef6;
+  --brand-deep: #cfe1f3;
+  --brand-ocean: #5fa6e3;
+  --brand-mist: #7fb2dc;
 }
 
 @layer base {
