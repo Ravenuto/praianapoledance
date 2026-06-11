@@ -121,7 +121,7 @@ function Logo({ className = "" }: { className?: string }) {
 }
 
 function ThemeToggle({ className = "" }: { className?: string }) {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState<boolean | null>(null);
   useEffect(() => {
     const stored = localStorage.getItem("praiana-theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -137,9 +137,10 @@ function ThemeToggle({ className = "" }: { className?: string }) {
   };
   return (
     <button
+      type="button"
       onClick={toggle}
       aria-label={dark ? "Ativar tema claro" : "Ativar tema escuro"}
-      className={`h-9 w-9 rounded-full bg-ocean/10 text-ocean grid place-items-center hover:bg-ocean/20 transition-colors ${className}`}
+      className={`h-9 w-9 rounded-full bg-ocean/10 text-ocean hover:bg-ocean/20 transition-colors flex items-center justify-center ${className}`}
     >
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
@@ -180,7 +181,7 @@ function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <ThemeToggle className="hidden md:inline-flex" />
+          <ThemeToggle className="hidden md:flex" />
           <a
             href={APP_URL}
             className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105"
