@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { MessageCircle, Instagram } from "lucide-react";
 import studioAsset from "@/assets/studio.png.asset.json";
 import logoAsset from "@/assets/logo-praiana.png.asset.json";
 
