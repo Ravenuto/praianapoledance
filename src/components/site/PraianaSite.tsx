@@ -307,7 +307,7 @@ function Modalidades() {
 
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-14 max-w-xl reveal">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">O que praticamos</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Modalidades</span>
             <h2 className="mt-3 font-serif text-4xl md:text-5xl italic leading-tight">
               Três caminhos, um mesmo fluxo.
             </h2>
@@ -320,10 +320,10 @@ function Modalidades() {
                 className="reveal group relative rounded-[32px] bg-white/5 backdrop-blur-sm ring-1 ring-white/10 p-7 transition-all duration-500 hover:bg-white/10 hover:-translate-y-2 hover:ring-gold/30"
                 style={{ animationDelay: `${i * 120}ms` }}
               >
-                <span className="font-script text-gold text-7xl leading-none block mb-2 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-4deg] origin-left" aria-hidden>
-                  {m.n}
+                <span className="font-script text-gold text-4xl md:text-5xl leading-none block mb-4 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-[-2deg] origin-left">
+                  {m.title}
                 </span>
-                <h3 className="font-serif text-2xl italic mb-3">{m.title}</h3>
+                <h3 className="font-serif text-2xl italic mb-3 text-sand/90">{m.title}</h3>
                 <p className="text-sand/75 text-sm leading-relaxed">{m.desc}</p>
                 <div className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold/80">
                   Todos os níveis
