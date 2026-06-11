@@ -625,8 +625,8 @@ function Footer() {
           </div>
         </div>
         <div className="max-w-5xl mx-auto mt-12 pt-6 border-t border-sand/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] uppercase tracking-widest text-sand/40">
-          <span>© {new Date().getFullYear()} Praiana Pole Studio</span>
-          <span>Feito com fluidez</span>
+          <span>© 2024&nbsp;PRAIANA POLE STUDIO</span>
+          <span>FEITO COM AMOR</span>
         </div>
       </div>
     </footer>
