@@ -166,7 +166,7 @@ function Navbar() {
         }`}
       >
         <a href="#home" className="flex items-center gap-2 group min-w-0">
-          <Logo className="h-11 w-11 shrink-0 object-contain transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110 dark:bg-white dark:rounded-full dark:p-1" />
+          <Logo className="h-11 w-11 shrink-0 object-contain transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110 dark:bg-white dark:rounded-full" />
           <span className="hidden sm:inline font-serif text-base md:text-lg italic tracking-tight text-ocean truncate">Praiana Pole Dance & Artes</span>
         </a>
         <div className="hidden md:flex items-center gap-7 text-sm">
