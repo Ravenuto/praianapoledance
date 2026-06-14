@@ -348,7 +348,7 @@ function Modalidades() {
 
 function Horarios() {
   return (
-    <section id="horarios" className="py-24 px-6 relative overflow-hidden">
+    <section id="horarios" className="py-24 px-6 relative overflow-hidden bg-gradient-to-b from-transparent via-transparent to-gold/[0.08]">
       <div className="absolute top-0 right-0 w-80 h-80 organic-blob bg-mist/15 blur-3xl animate-float-slow pointer-events-none" />
       <div className="absolute bottom-10 left-0 w-72 h-72 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:2s] pointer-events-none" />
 
