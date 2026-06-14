@@ -314,8 +314,8 @@ function Hero() {
 
 function Modalidades() {
   return (
-    <section id="modalidades" className="relative mt-10">
-      <WaveDivider />
+    <section id="modalidades" className="relative">
+      <GradientFade from="var(--color-sand)" to="var(--color-ocean)" />
       <div className="theme-light-locked bg-ocean text-sand py-24 px-6 relative overflow-hidden -mt-px">
         <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-mist/20 blur-3xl animate-float-slow pointer-events-none" />
         <div className="absolute bottom-10 right-0 w-80 h-80 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:3s] pointer-events-none" />
