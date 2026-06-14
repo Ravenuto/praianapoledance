@@ -222,21 +222,17 @@ function Navbar() {
   );
 }
 
-function GradientFade({
-  from = "var(--color-sand)",
-  to = "var(--color-ocean)",
-  height = "h-24",
-}: {
-  from?: string;
-  to?: string;
-  height?: string;
-}) {
+function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
   return (
-    <div
-      className={`${height} w-full pointer-events-none`}
-      style={{ background: `linear-gradient(to bottom, ${from}, ${to})` }}
-      aria-hidden
-    />
+    <div className={`relative h-20 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
+      <div className="absolute inset-x-0 bottom-0 h-full flex w-[200%] animate-wave-move will-change-transform">
+        {[0, 1].map((k) => (
+          <svg key={k} className="block h-full w-1/2 shrink-0" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,60 C300,120 600,0 1200,60 L1200,120 L0,120 Z" fill={color} />
+          </svg>
+        ))}
+      </div>
+    </div>
   );
 }
 
