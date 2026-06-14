@@ -222,41 +222,37 @@ function Navbar() {
   );
 }
 
-function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
+function GradientFade({
+  from = "var(--color-sand)",
+  to = "var(--color-ocean)",
+  height = "h-24",
+}: {
+  from?: string;
+  to?: string;
+  height?: string;
+}) {
   return (
-    <div className={`relative h-20 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
-      <div className="absolute inset-x-0 bottom-0 h-full flex w-[200%] animate-wave-move will-change-transform">
-        {[0, 1].map((k) => (
-          <svg
-            key={k}
-            className="block h-full w-1/2 shrink-0"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,60 C300,120 600,0 1200,60 L1200,120 L0,120 Z"
-              fill={color}
-            />
-          </svg>
-        ))}
-      </div>
-    </div>
+    <div
+      className={`${height} w-full pointer-events-none`}
+      style={{ background: `linear-gradient(to bottom, ${from}, ${to})` }}
+      aria-hidden
+    />
   );
 }
 
 function Hero() {
   return (
-    <section id="home" className="relative pt-28 pb-20 px-6 overflow-hidden">
+    <section id="home" className="relative pt-24 pb-10 sm:pt-28 sm:pb-16 px-6 overflow-hidden">
       <div className="absolute -top-24 -right-32 w-[420px] h-[420px] organic-blob bg-mist/25 blur-3xl animate-float-slow pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-[360px] h-[360px] organic-blob-2 bg-gold/20 blur-3xl animate-float-slow pointer-events-none [animation-delay:2s]" />
       <div className="absolute top-1/3 left-1/2 w-[260px] h-[260px] organic-blob bg-ocean/10 blur-3xl animate-float-y pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
         <div className="animate-fade-up">
           <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-mist mb-6">
             <span className="h-px w-8 bg-gold" /> Pole Studio & Artes
           </span>
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-ocean text-balance">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-ocean text-balance">
             Sinta o{" "}
             <span className="relative inline-block italic text-gold">
               movimento
@@ -267,22 +263,22 @@ function Hero() {
             que <br className="hidden md:block" />
             já existe em você.
           </h1>
-          <p className="mt-6 max-w-md text-base md:text-lg text-ink/70 leading-relaxed">
+          <p className="mt-5 max-w-md text-sm sm:text-base md:text-lg text-ink/70 leading-relaxed">
             Venha descobrir toda a sua força com o Pole Dance.{"\n"}Um espaço para você se movimentar, se amar e se expressar.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-7 flex flex-wrap gap-3">
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
-              className="group inline-flex items-center gap-2 justify-center rounded-full bg-ocean px-7 py-4 text-sm font-semibold text-sand hover:bg-deep transition-all hover:-translate-y-0.5 shadow-[0_12px_40px_-12px_rgba(38,106,174,0.5)]"
+              className="group inline-flex items-center gap-2 justify-center rounded-full bg-ocean px-6 py-3.5 text-sm font-semibold text-sand hover:bg-deep transition-all hover:-translate-y-0.5 shadow-[0_12px_40px_-12px_rgba(38,106,174,0.5)]"
             >
-              Comece agora{"\n\n"}
+              Comece agora{" "}
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <a
               href="#modalidades"
-              className="inline-flex items-center justify-center rounded-full border border-ocean/30 px-7 py-4 text-sm font-semibold text-ocean hover:bg-ocean/5 transition-colors"
+              className="inline-flex items-center justify-center rounded-full border border-ocean/30 px-6 py-3.5 text-sm font-semibold text-ocean hover:bg-ocean/5 transition-colors"
             >
               Ver modalidades
             </a>
@@ -295,7 +291,7 @@ function Hero() {
             <img
               src={studioImg}
               alt="Estúdio Praiana — sala com barras de pole"
-              className="w-full h-[440px] md:h-[560px] object-cover scale-105 hover:scale-110 transition-transform duration-[2.5s]"
+              className="w-full h-[320px] sm:h-[440px] md:h-[560px] object-cover scale-105 hover:scale-110 transition-transform duration-[2.5s]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ocean/30 via-transparent to-transparent" />
           </div>
@@ -304,28 +300,12 @@ function Hero() {
           <div className="absolute -top-6 -right-4 md:-right-8 z-10 animate-float-y">
             <div className="relative">
               <div className="absolute inset-0 rounded-full bg-gold/30 blur-2xl animate-pulse-ring" />
-              <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-sand/95 dark:bg-white backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3">
+              <div className="relative h-20 w-20 md:h-32 md:w-32 rounded-full bg-sand/95 dark:bg-white backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3">
                 <Logo className="h-full w-full object-contain" />
               </div>
             </div>
           </div>
 
-        </div>
-      </div>
-
-      {/* Marquee strip */}
-      <div className="mt-24 relative overflow-hidden border-y border-ocean/10 py-5 bg-gradient-to-r from-sand via-mist/10 to-sand">
-        <div className="flex whitespace-nowrap animate-marquee w-max will-change-transform">
-          {Array.from({ length: 2 }).map((_, k) => (
-            <div key={k} className="flex items-center shrink-0">
-              {["Força", "Liberdade", "Empoderamento", "Flexibilidade", "Dança", "Arte", "Comunidade", "Movimento"].map((w, i) => (
-                <span key={i} className="flex items-center">
-                  <span className="font-serif italic text-3xl leading-none text-ocean/80 px-6">{w}</span>
-                  <span className="text-gold text-2xl leading-none">✦</span>
-                </span>
-              ))}
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -334,8 +314,8 @@ function Hero() {
 
 function Modalidades() {
   return (
-    <section id="modalidades" className="relative mt-10">
-      <WaveDivider />
+    <section id="modalidades" className="relative">
+      <GradientFade from="var(--color-sand)" to="var(--color-ocean)" />
       <div className="theme-light-locked bg-ocean text-sand py-24 px-6 relative overflow-hidden -mt-px">
         <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-mist/20 blur-3xl animate-float-slow pointer-events-none" />
         <div className="absolute bottom-10 right-0 w-80 h-80 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:3s] pointer-events-none" />
@@ -365,7 +345,7 @@ function Modalidades() {
           </div>
         </div>
       </div>
-      <WaveDivider flip />
+      <GradientFade from="var(--color-ocean)" to="var(--color-sand)" />
     </section>
   );
 }
@@ -626,8 +606,8 @@ function Contato() {
 
 function Footer() {
   return (
-    <footer className="relative mt-10">
-      <WaveDivider color="var(--color-deep)" />
+    <footer className="relative">
+      <GradientFade from="var(--color-sand)" to="var(--color-deep)" height="h-20" />
       <div className="theme-light-locked bg-deep text-sand/80 px-6 pt-10 pb-10 -mt-px">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
