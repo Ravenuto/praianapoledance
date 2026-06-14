@@ -413,7 +413,7 @@ function Horarios() {
 
 function Valores() {
   return (
-    <section id="valores" className="relative py-24 px-6 overflow-hidden">
+    <section id="valores" className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-gold/[0.08] via-transparent to-mist/[0.06]">
       <div className="absolute -top-20 -left-20 w-72 h-72 organic-blob-2 bg-gold/15 blur-3xl animate-float-slow pointer-events-none" />
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-14 reveal">
