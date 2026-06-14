@@ -602,8 +602,8 @@ function Contato() {
 
 function Footer() {
   return (
-    <footer className="relative">
-      <GradientFade from="var(--color-sand)" to="var(--color-deep)" height="h-20" />
+    <footer className="relative mt-10">
+      <WaveDivider color="var(--color-deep)" />
       <div className="theme-light-locked bg-deep text-sand/80 px-6 pt-10 pb-10 -mt-px">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
