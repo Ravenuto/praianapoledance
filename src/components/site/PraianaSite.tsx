@@ -222,21 +222,17 @@ function Navbar() {
   );
 }
 
-function GradientFade({
-  from = "var(--color-sand)",
-  to = "var(--color-ocean)",
-  height = "h-24",
-}: {
-  from?: string;
-  to?: string;
-  height?: string;
-}) {
+function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
   return (
-    <div
-      className={`${height} w-full pointer-events-none`}
-      style={{ background: `linear-gradient(to bottom, ${from}, ${to})` }}
-      aria-hidden
-    />
+    <div className={`relative h-20 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
+      <div className="absolute inset-x-0 bottom-0 h-full flex w-[200%] animate-wave-move will-change-transform">
+        {[0, 1].map((k) => (
+          <svg key={k} className="block h-full w-1/2 shrink-0" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,60 C300,120 600,0 1200,60 L1200,120 L0,120 Z" fill={color} />
+          </svg>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -314,8 +310,8 @@ function Hero() {
 
 function Modalidades() {
   return (
-    <section id="modalidades" className="relative">
-      <GradientFade from="var(--color-sand)" to="var(--color-ocean)" />
+    <section id="modalidades" className="relative mt-10">
+      <WaveDivider />
       <div className="theme-light-locked bg-ocean text-sand py-24 px-6 relative overflow-hidden -mt-px">
         <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-mist/20 blur-3xl animate-float-slow pointer-events-none" />
         <div className="absolute bottom-10 right-0 w-80 h-80 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:3s] pointer-events-none" />
@@ -345,14 +341,14 @@ function Modalidades() {
           </div>
         </div>
       </div>
-      <GradientFade from="var(--color-ocean)" to="var(--color-sand)" />
+      <WaveDivider flip />
     </section>
   );
 }
 
 function Horarios() {
   return (
-    <section id="horarios" className="py-24 px-6 relative overflow-hidden">
+    <section id="horarios" className="py-24 px-6 relative overflow-hidden bg-gradient-to-b from-transparent via-transparent to-gold/[0.08]">
       <div className="absolute top-0 right-0 w-80 h-80 organic-blob bg-mist/15 blur-3xl animate-float-slow pointer-events-none" />
       <div className="absolute bottom-10 left-0 w-72 h-72 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:2s] pointer-events-none" />
 
@@ -417,7 +413,7 @@ function Horarios() {
 
 function Valores() {
   return (
-    <section id="valores" className="relative py-24 px-6 overflow-hidden">
+    <section id="valores" className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-gold/[0.08] via-transparent to-mist/[0.06]">
       <div className="absolute -top-20 -left-20 w-72 h-72 organic-blob-2 bg-gold/15 blur-3xl animate-float-slow pointer-events-none" />
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-14 reveal">
@@ -606,8 +602,8 @@ function Contato() {
 
 function Footer() {
   return (
-    <footer className="relative">
-      <GradientFade from="var(--color-sand)" to="var(--color-deep)" height="h-20" />
+    <footer className="relative mt-10">
+      <WaveDivider color="var(--color-deep)" />
       <div className="theme-light-locked bg-deep text-sand/80 px-6 pt-10 pb-10 -mt-px">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
