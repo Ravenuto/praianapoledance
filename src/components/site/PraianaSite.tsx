@@ -341,7 +341,7 @@ function Modalidades() {
           </div>
         </div>
       </div>
-      <GradientFade from="var(--color-ocean)" to="var(--color-sand)" />
+      <WaveDivider flip />
     </section>
   );
 }
