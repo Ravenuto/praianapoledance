@@ -236,6 +236,14 @@ function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: bo
   );
 }
 
+function SectionBlend({
+  background,
+}: {
+  background: string;
+}) {
+  return <div className="absolute inset-0 -z-10" style={{ background }} aria-hidden />;
+}
+
 function Hero() {
   return (
     <section id="home" className="relative pt-24 pb-10 sm:pt-28 sm:pb-16 px-6 overflow-hidden">
@@ -348,7 +356,8 @@ function Modalidades() {
 
 function Horarios() {
   return (
-    <section id="horarios" className="py-24 px-6 relative overflow-hidden bg-gradient-to-b from-transparent via-transparent to-gold/[0.08]">
+    <section id="horarios" className="py-24 px-6 relative overflow-hidden">
+      <SectionBlend background="linear-gradient(180deg, rgba(250,247,242,1) 0%, rgba(250,247,242,0.98) 42%, rgba(245,166,35,0.08) 100%)" />
       <div className="absolute top-0 right-0 w-80 h-80 organic-blob bg-mist/15 blur-3xl animate-float-slow pointer-events-none" />
       <div className="absolute bottom-10 left-0 w-72 h-72 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:2s] pointer-events-none" />
 
@@ -413,7 +422,8 @@ function Horarios() {
 
 function Valores() {
   return (
-    <section id="valores" className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-gold/[0.08] via-transparent to-mist/[0.06]">
+    <section id="valores" className="relative py-24 px-6 overflow-hidden">
+      <SectionBlend background="linear-gradient(180deg, rgba(245,166,35,0.08) 0%, rgba(250,247,242,0.96) 30%, rgba(91,141,184,0.07) 100%)" />
       <div className="absolute -top-20 -left-20 w-72 h-72 organic-blob-2 bg-gold/15 blur-3xl animate-float-slow pointer-events-none" />
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-14 reveal">
@@ -492,7 +502,8 @@ function Valores() {
 
 function AreaAluna() {
   return (
-    <section className="px-6 pb-24">
+    <section className="relative px-6 pb-24 overflow-hidden">
+      <SectionBlend background="linear-gradient(180deg, rgba(91,141,184,0.07) 0%, rgba(250,247,242,0.98) 22%, rgba(250,247,242,1) 100%)" />
       <div className="theme-light-locked relative max-w-5xl mx-auto overflow-hidden rounded-[48px] bg-gradient-to-br from-ocean via-deep to-ocean text-sand px-8 py-14 md:px-14 md:py-20 ring-1 ring-white/10 animate-shimmer-bg reveal">
         <div className="absolute -top-20 -right-20 w-80 h-80 organic-blob bg-gold/20 blur-3xl animate-float-slow" />
         <div className="absolute -bottom-20 -left-20 w-72 h-72 organic-blob-2 bg-mist/30 blur-3xl animate-float-slow [animation-delay:2s]" />
@@ -521,7 +532,8 @@ function AreaAluna() {
 
 function Contato() {
   return (
-    <section id="contato" className="px-6 pb-24">
+    <section id="contato" className="relative px-6 pb-24 overflow-hidden">
+      <SectionBlend background="linear-gradient(180deg, rgba(250,247,242,1) 0%, rgba(250,247,242,0.99) 72%, rgba(17,53,92,0.06) 100%)" />
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12 reveal">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">Vamos conversar</span>
