@@ -236,6 +236,14 @@ function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: bo
   );
 }
 
+function SectionBlend({
+  background,
+}: {
+  background: string;
+}) {
+  return <div className="absolute inset-0 -z-10" style={{ background }} aria-hidden />;
+}
+
 function Hero() {
   return (
     <section id="home" className="relative pt-24 pb-10 sm:pt-28 sm:pb-16 px-6 overflow-hidden">
