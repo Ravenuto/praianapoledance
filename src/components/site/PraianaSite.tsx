@@ -223,15 +223,31 @@ function Navbar() {
 }
 
 function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
+  // Three layered, smoother waves moving at different speeds for a fluid, organic feel.
+  const paths = [
+    "M0,70 C150,110 350,30 600,60 C850,90 1050,40 1200,70 L1200,120 L0,120 Z",
+    "M0,80 C200,40 400,100 600,75 C800,50 1000,95 1200,70 L1200,120 L0,120 Z",
+    "M0,90 C180,70 360,110 600,90 C840,70 1020,105 1200,85 L1200,120 L0,120 Z",
+  ];
+  const layers = [
+    { d: paths[0], opacity: 0.35, anim: "animate-wave-move-slow" },
+    { d: paths[1], opacity: 0.55, anim: "animate-wave-move-reverse" },
+    { d: paths[2], opacity: 1, anim: "animate-wave-move" },
+  ];
   return (
-    <div className={`relative h-20 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
-      <div className="absolute inset-x-0 bottom-0 h-full flex w-[200%] animate-wave-move will-change-transform">
-        {[0, 1].map((k) => (
-          <svg key={k} className="block h-full w-1/2 shrink-0" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,60 C300,120 600,0 1200,60 L1200,120 L0,120 Z" fill={color} />
-          </svg>
-        ))}
-      </div>
+    <div className={`relative h-24 sm:h-28 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
+      {layers.map((l, i) => (
+        <div
+          key={i}
+          className={`absolute inset-x-0 bottom-0 h-full flex w-[200%] ${l.anim} will-change-transform`}
+        >
+          {[0, 1].map((k) => (
+            <svg key={k} className="block h-full w-1/2 shrink-0" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d={l.d} fill={color} fillOpacity={l.opacity} />
+            </svg>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
