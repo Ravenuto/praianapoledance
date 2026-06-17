@@ -224,10 +224,12 @@ function Navbar() {
 
 function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
   // Three layered, smoother waves moving at different speeds for a fluid, organic feel.
+  // Endpoints (start Y == end Y) and mirrored control points so the tiled
+  // copies connect seamlessly without visible "steps" at the repeat seam.
   const paths = [
-    "M0,70 C150,110 350,30 600,60 C850,90 1050,40 1200,70 L1200,120 L0,120 Z",
-    "M0,80 C200,40 400,100 600,75 C800,50 1000,95 1200,70 L1200,120 L0,120 Z",
-    "M0,90 C180,70 360,110 600,90 C840,70 1020,105 1200,85 L1200,120 L0,120 Z",
+    "M0,70 C200,30 400,110 600,70 C800,30 1000,110 1200,70 L1200,120 L0,120 Z",
+    "M0,80 C200,50 400,110 600,80 C800,50 1000,110 1200,80 L1200,120 L0,120 Z",
+    "M0,90 C200,70 400,110 600,90 C800,70 1000,110 1200,90 L1200,120 L0,120 Z",
   ];
   const layers = [
     { d: paths[0], opacity: 0.35, anim: "animate-wave-move-slow" },
