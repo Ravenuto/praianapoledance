@@ -250,7 +250,13 @@
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
 }
-.animate-wave-move { animation: wave-move 14s linear infinite; }
+@keyframes wave-move-reverse {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.animate-wave-move { animation: wave-move 22s linear infinite; }
+.animate-wave-move-slow { animation: wave-move 38s linear infinite; }
+.animate-wave-move-reverse { animation: wave-move-reverse 30s linear infinite; }
 
 @keyframes reveal {
   from { opacity: 0; transform: translateY(40px); }
