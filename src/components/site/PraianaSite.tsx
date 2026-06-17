@@ -265,9 +265,6 @@ function SectionBlend({
 function Hero() {
   return (
     <section id="home" className="relative pt-24 pb-10 sm:pt-28 sm:pb-16 px-6 overflow-hidden">
-      <div className="absolute -top-24 -right-32 w-[420px] h-[420px] organic-blob bg-mist/25 blur-3xl animate-float-slow pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-[360px] h-[360px] organic-blob-2 bg-gold/20 blur-3xl animate-float-slow pointer-events-none [animation-delay:2s]" />
-      <div className="absolute top-1/3 left-1/2 w-[260px] h-[260px] organic-blob bg-ocean/10 blur-3xl animate-float-y pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
         <div className="animate-fade-up">
@@ -339,8 +336,6 @@ function Modalidades() {
     <section id="modalidades" className="relative mt-10">
       <WaveDivider />
       <div className="theme-light-locked bg-ocean text-sand py-24 px-6 relative overflow-hidden -mt-px">
-        <div className="absolute top-20 left-10 w-72 h-72 organic-blob bg-mist/20 blur-3xl animate-float-slow pointer-events-none" />
-        <div className="absolute bottom-10 right-0 w-80 h-80 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:3s] pointer-events-none" />
 
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-14 max-w-xl reveal">
@@ -376,8 +371,6 @@ function Horarios() {
   return (
     <section id="horarios" className="py-24 px-6 relative overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(250,247,242,1) 0%, rgba(250,247,242,0.98) 42%, rgba(245,166,35,0.08) 100%)" />
-      <div className="absolute top-0 right-0 w-80 h-80 organic-blob bg-mist/15 blur-3xl animate-float-slow pointer-events-none" />
-      <div className="absolute bottom-10 left-0 w-72 h-72 organic-blob-2 bg-gold/10 blur-3xl animate-float-slow [animation-delay:2s] pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-10 reveal">
@@ -442,7 +435,6 @@ function Valores() {
   return (
     <section id="valores" className="relative py-24 px-6 overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(245,166,35,0.08) 0%, rgba(250,247,242,0.96) 30%, rgba(91,141,184,0.07) 100%)" />
-      <div className="absolute -top-20 -left-20 w-72 h-72 organic-blob-2 bg-gold/15 blur-3xl animate-float-slow pointer-events-none" />
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-14 reveal">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">Invista em você</span>
@@ -523,8 +515,6 @@ function AreaAluna() {
     <section className="relative px-6 pb-24 overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(91,141,184,0.07) 0%, rgba(250,247,242,0.98) 22%, rgba(250,247,242,1) 100%)" />
       <div className="theme-light-locked relative max-w-5xl mx-auto overflow-hidden rounded-[48px] bg-gradient-to-br from-ocean via-deep to-ocean text-sand px-8 py-14 md:px-14 md:py-20 ring-1 ring-white/10 animate-shimmer-bg reveal">
-        <div className="absolute -top-20 -right-20 w-80 h-80 organic-blob bg-gold/20 blur-3xl animate-float-slow" />
-        <div className="absolute -bottom-20 -left-20 w-72 h-72 organic-blob-2 bg-mist/30 blur-3xl animate-float-slow [animation-delay:2s]" />
         <div className="relative grid md:grid-cols-[1.4fr_1fr] gap-8 items-center">
           <div>
             <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Exclusivo</span>
