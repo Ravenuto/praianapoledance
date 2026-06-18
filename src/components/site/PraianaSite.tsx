@@ -223,16 +223,34 @@ function Navbar() {
 }
 
 function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
-  // Smooth, seamless gradient transition — no wave shapes, no visible break.
-  const gradient = flip
-    ? `linear-gradient(to bottom, ${color} 0%, var(--color-sand) 100%)`
-    : `linear-gradient(to bottom, var(--color-sand) 0%, ${color} 100%)`;
+  // Three layered, smoother waves moving at different speeds for a fluid, organic feel.
+  // Endpoints (start Y == end Y) and mirrored control points so the tiled
+  // copies connect seamlessly without visible "steps" at the repeat seam.
+  const paths = [
+    "M0,70 C200,30 400,110 600,70 C800,30 1000,110 1200,70 L1200,120 L0,120 Z",
+    "M0,80 C200,50 400,110 600,80 C800,50 1000,110 1200,80 L1200,120 L0,120 Z",
+    "M0,90 C200,70 400,110 600,90 C800,70 1000,110 1200,90 L1200,120 L0,120 Z",
+  ];
+  const layers = [
+    { d: paths[0], opacity: 0.35, anim: "animate-wave-move-slow" },
+    { d: paths[1], opacity: 0.55, anim: "animate-wave-move-reverse" },
+    { d: paths[2], opacity: 1, anim: "animate-wave-move" },
+  ];
   return (
-    <div
-      className="h-24 sm:h-32 w-full -mb-px"
-      style={{ background: gradient }}
-      aria-hidden
-    />
+    <div className={`relative h-24 sm:h-28 overflow-hidden ${flip ? "-scale-y-100" : ""}`} aria-hidden>
+      {layers.map((l, i) => (
+        <div
+          key={i}
+          className={`absolute inset-x-0 bottom-0 h-full flex w-[200%] ${l.anim} will-change-transform`}
+        >
+          {[0, 1].map((k) => (
+            <svg key={k} className="block h-full w-1/2 shrink-0" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d={l.d} fill={color} fillOpacity={l.opacity} />
+            </svg>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 }
 
