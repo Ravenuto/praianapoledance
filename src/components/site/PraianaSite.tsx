@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { MessageCircle, Instagram, Sun, Moon } from "lucide-react";
-import studioImg from "@/assets/studio.png";
-import logoImg from "@/assets/logo-praiana.png";
-
-const WHATSAPP_URL =
-  "https://wa.me/5511999999999?text=Ol%C3%A1!%20Tenho%20interesse%20em%20uma%20aula%20na%20Praiana%20Pole%20Studio%20%F0%9F%8C%8A";
-const INSTAGRAM_URL = "https://instagram.com/praianapolestudio";
-const EMAIL = "contato@praianapolestudio.com";
-const APP_URL = "#";
+import {
+  DEFAULT_CONTENT,
+  days,
+  fullDayNames,
+  useSiteContent,
+  type ClassType,
+  type SiteContent,
+} from "@/lib/site-content";
 
 const NAV = [
   { label: "Início", href: "#home" },
@@ -17,81 +18,20 @@ const NAV = [
   { label: "Contato", href: "#contato" },
 ];
 
-const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
-type Day = (typeof days)[number];
-type ClassType = "pole" | "coreo" | "flex";
+const ContentCtx = createContext<SiteContent>(DEFAULT_CONTENT);
+const useContent = () => useContext(ContentCtx);
 
-const fullDayNames: Record<Day, string> = {
-  Seg: "Segunda",
-  Ter: "Terça",
-  Qua: "Quarta",
-  Qui: "Quinta",
-  Sex: "Sexta",
-  Sáb: "Sábado",
-};
-
-type Slot = { time: string; type: ClassType };
-const calendar: Record<Day, Slot[]> = {
-  Seg: [
-    { time: "10:00", type: "flex" },
-    { time: "17:00", type: "pole" },
-    { time: "18:00", type: "coreo" },
-    { time: "19:00", type: "pole" },
-    { time: "20:00", type: "pole" },
-  ],
-  Ter: [
-    { time: "09:00", type: "pole" },
-    { time: "18:00", type: "pole" },
-    { time: "19:00", type: "flex" },
-  ],
-  Qua: [
-    { time: "10:00", type: "flex" },
-    { time: "17:00", type: "pole" },
-    { time: "19:00", type: "coreo" },
-    { time: "20:00", type: "pole" },
-  ],
-  Qui: [
-    { time: "09:00", type: "pole" },
-    { time: "18:00", type: "coreo" },
-    { time: "19:00", type: "pole" },
-  ],
-  Sex: [
-    { time: "17:00", type: "flex" },
-    { time: "18:00", type: "pole" },
-    { time: "19:00", type: "coreo" },
-  ],
-  Sáb: [
-    { time: "10:00", type: "pole" },
-    { time: "20:00", type: "coreo" },
-  ],
-};
-
-const typeMeta: Record<ClassType, { label: string; short: string; bg: string; ring: string; text: string; dot: string }> = {
+export const typeMeta: Record<
+  ClassType,
+  { label: string; short: string; bg: string; ring: string; text: string; dot: string }
+> = {
   pole: { label: "Pole Dance", short: "Pole", bg: "bg-ocean/10", ring: "ring-ocean/30", text: "text-ocean", dot: "bg-ocean" },
   coreo: { label: "Pole Coreográfico", short: "Coreo", bg: "bg-gold/15", ring: "ring-gold/40", text: "text-[#9c5a00]", dot: "bg-gold" },
   flex: { label: "Flex Flow", short: "Flex", bg: "bg-[#f4d8de]", ring: "ring-[#d97a8a]/40", text: "text-[#a04760]", dot: "bg-[#d97a8a]" },
 };
 
-const modalities = [
-  { n: "01", title: "Pole Dance", desc: "Desenvolva força, resistência e consciência corporal enquanto aprende giros, transições e acrobacias. Uma modalidade dinâmica para evoluir técnica e condicionamento físico." },
-  { n: "02", title: "Pole Coreográfico", desc: "A união entre o Pole e a Dança. Explore musicalidade, expressão corporal, fluidez e presença através de coreografias que conectam técnica e movimento." },
-  { n: "03", title: "Flex Flow", desc: "Movimento, mobilidade e flexibilidade em perfeita conexão. Uma prática fluida que convida o corpo a ganhar amplitude de forma natural e consciente." },
-];
-
-const plans = [
-  { name: "4 Aulas", price: "R$ 230", per: "R$ 57,50 por aula", desc: "Perfeito para começar com consistência", highlight: false },
-  { name: "8 Aulas", price: "R$ 370", per: "R$ 46,25 por aula", desc: "O mais escolhido pelas nossas alunas", highlight: true },
-  { name: "12 Aulas", price: "R$ 490", per: "R$ 40,83 por aula", desc: "Para quem quer evolução acelerada", highlight: false },
-];
-
-const extras = [
-  { name: "Aula Experimental", price: "R$ 30", desc: "Venha conhecer o studio" },
-  { name: "Aula Avulsa", price: "R$ 70", desc: "Sem compromisso de mensalidade" },
-  { name: "Aula Particular", price: "R$ 120", desc: "Atenção exclusiva da professora" },
-];
-
 // Scroll reveal hook
-function useReveal() {
+function useReveal(deps: unknown[] = []) {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver(
@@ -107,18 +47,13 @@ function useReveal() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 }
 
 function Logo({ className = "" }: { className?: string }) {
-  return (
-    <img
-      src={logoImg}
-      alt="Praiana Pole Studio"
-      className={className}
-      loading="eager"
-    />
-  );
+  const { images, studio } = useContent();
+  return <img src={images.logo} alt={studio.brandName} className={className} loading="eager" />;
 }
 
 function ThemeToggle({ className = "" }: { className?: string }) {
@@ -149,6 +84,7 @@ function ThemeToggle({ className = "" }: { className?: string }) {
 }
 
 function Navbar() {
+  const { studio } = useContent();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -171,7 +107,7 @@ function Navbar() {
             <Logo className="h-full w-full object-contain" />
           </span>
           <span className="min-w-0 truncate font-serif italic tracking-tight text-ocean text-[15px] sm:text-base md:text-lg">
-            Praiana Pole Dance & Artes
+            {studio.brandName}
           </span>
         </a>
         <div className="hidden md:flex items-center gap-7 text-sm">
@@ -188,7 +124,7 @@ function Navbar() {
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-self-end">
           <ThemeToggle className="h-9 w-9" />
           <a
-            href={APP_URL}
+            href={studio.appUrl}
             className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105 whitespace-nowrap"
           >
             Área da Aluna
@@ -213,7 +149,7 @@ function Navbar() {
                 {n.label}
               </a>
             ))}
-            <a href={APP_URL} className="mt-2 inline-flex items-center justify-center rounded-full bg-ocean px-4 py-3 text-xs font-semibold uppercase tracking-widest text-sand">
+            <a href={studio.appUrl} className="mt-2 inline-flex items-center justify-center rounded-full bg-ocean px-4 py-3 text-xs font-semibold uppercase tracking-widest text-sand">
               Área da Aluna
             </a>
           </div>
@@ -224,9 +160,6 @@ function Navbar() {
 }
 
 function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: boolean; color?: string }) {
-  // Three layered, smoother waves moving at different speeds for a fluid, organic feel.
-  // Endpoints (start Y == end Y) and mirrored control points so the tiled
-  // copies connect seamlessly without visible "steps" at the repeat seam.
   const paths = [
     "M0,70 C200,30 400,110 600,70 C800,30 1000,110 1200,70 L1200,120 L0,120 Z",
     "M0,80 C200,50 400,110 600,80 C800,50 1000,110 1200,80 L1200,120 L0,120 Z",
@@ -255,62 +188,54 @@ function WaveDivider({ flip = false, color = "var(--color-ocean)" }: { flip?: bo
   );
 }
 
-
-function SectionBlend({
-  background,
-}: {
-  background: string;
-}) {
+function SectionBlend({ background }: { background: string }) {
   return <div className="absolute inset-0 -z-10" style={{ background }} aria-hidden />;
 }
 
 function Hero() {
+  const { hero, studio, images } = useContent();
   return (
     <section id="home" className="relative pt-24 pb-10 sm:pt-28 sm:pb-16 px-6 overflow-hidden">
-
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
         <div className="animate-fade-up">
           <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-mist mb-6">
-            <span className="h-px w-8 bg-gold" /> Pole Studio & Artes
+            <span className="h-px w-8 bg-gold" /> {hero.eyebrow}
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] text-ocean text-balance">
-            Sinta o{" "}
+            {hero.titleLead}{" "}
             <span className="relative inline-block italic text-gold">
-              movimento
+              {hero.titleHighlight}
               <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
                 <path d="M2 8 Q50 -2 100 6 T198 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </span>{" "}
-            que <br className="hidden md:block" />
-            já existe em você.
+            {hero.titleRest}
           </h1>
-          <p className="mt-5 max-w-md text-sm sm:text-base md:text-lg text-ink/70 leading-relaxed">
-            Venha descobrir toda a sua força com o Pole Dance.{"\n"}Um espaço para você se movimentar, se amar e se expressar.
+          <p className="mt-5 max-w-md text-sm sm:text-base md:text-lg text-ink/70 leading-relaxed whitespace-pre-line">
+            {hero.description}
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href={WHATSAPP_URL}
+              href={studio.whatsappUrl}
               target="_blank"
               rel="noreferrer"
               className="group inline-flex items-center gap-2 justify-center rounded-full bg-ocean px-6 py-3.5 text-sm font-semibold text-sand hover:bg-deep transition-all hover:-translate-y-0.5 shadow-[0_12px_40px_-12px_rgba(38,106,174,0.5)]"
             >
-              Comece agora{" "}
-              <span className="transition-transform group-hover:translate-x-1">→</span>
+              {hero.ctaPrimary} <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <a
               href="#modalidades"
               className="inline-flex items-center justify-center rounded-full border border-ocean/30 px-6 py-3.5 text-sm font-semibold text-ocean hover:bg-ocean/5 transition-colors"
             >
-              Ver modalidades
+              {hero.ctaSecondary}
             </a>
           </div>
         </div>
 
         <div className="relative animate-fade-up [animation-delay:200ms]">
-          
           <div className="relative overflow-hidden animate-blob-morph shadow-[0_30px_80px_-20px_rgba(17,53,92,0.35)] ring-1 ring-white/40">
             <img
-              src={studioImg}
+              src={images.hero}
               alt="Estúdio Praiana — sala com barras de pole"
               className="w-full h-[320px] sm:h-[440px] md:h-[560px] object-cover scale-105 hover:scale-110 transition-transform duration-[2.5s]"
             />
@@ -320,13 +245,11 @@ function Hero() {
           {/* Floating logo */}
           <div className="absolute -top-6 -right-4 md:-right-8 z-10 animate-float-y">
             <div className="relative">
-              
               <div className="relative h-20 w-20 md:h-32 md:w-32 rounded-full bg-sand/95 dark:bg-white backdrop-blur ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center p-3">
                 <Logo className="h-full w-full object-contain" />
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -334,11 +257,11 @@ function Hero() {
 }
 
 function Modalidades() {
+  const { modalities } = useContent();
   return (
     <section id="modalidades" className="relative mt-10">
       <WaveDivider />
       <div className="theme-light-locked bg-ocean text-sand py-24 px-6 relative overflow-hidden -mt-px">
-
         <div className="relative max-w-5xl mx-auto">
           <div className="mb-14 max-w-xl reveal">
             <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Modalidades</span>
@@ -370,6 +293,7 @@ function Modalidades() {
 }
 
 function Horarios() {
+  const { schedule } = useContent();
   return (
     <section id="horarios" className="py-24 px-6 relative overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(250,247,242,1) 0%, rgba(250,247,242,0.98) 42%, rgba(245,166,35,0.08) 100%)" />
@@ -378,9 +302,6 @@ function Horarios() {
         <div className="text-center mb-10 reveal">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">Planeje sua semana</span>
           <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">Grade de Horários</h2>
-          <p className="mt-3 text-ink/60 max-w-md mx-auto">
-            {"\n\n\n\n"}
-          </p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-3 mb-10 reveal">
@@ -397,36 +318,37 @@ function Horarios() {
 
         {/* Calendar grid - 6 day columns */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-          {days.map((d, i) => (
-            <div
-              key={d}
-              className="theme-light-locked reveal rounded-3xl bg-white/70 dark:bg-white backdrop-blur-xl ring-1 ring-ocean/10 p-4 hover:-translate-y-1 hover:shadow-[0_20px_50px_-25px_rgba(38,106,174,0.4)] transition-all duration-500"
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
-              <div className="text-center pb-3 mb-3 border-b border-ocean/10">
-                <p className="font-serif text-xl md:text-2xl italic text-ocean leading-tight">{fullDayNames[d]}</p>
-              </div>
-              <div className="space-y-2">
-                {calendar[d].map((s) => (
-                  <div
-                    key={s.time + s.type}
-                    className={`group rounded-2xl ${typeMeta[s.type].bg} ring-1 ${typeMeta[s.type].ring} px-3 py-2.5 transition-all hover:scale-[1.03] cursor-default`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className={`font-semibold text-sm ${typeMeta[s.type].text}`}>{s.time}</span>
-                      <span className={`w-1.5 h-1.5 rounded-full ${typeMeta[s.type].dot}`} />
+          {days.map((d, i) => {
+            const slots = schedule[d] ?? [];
+            return (
+              <div
+                key={d}
+                className="theme-light-locked reveal rounded-3xl bg-white/70 dark:bg-white backdrop-blur-xl ring-1 ring-ocean/10 p-4 hover:-translate-y-1 hover:shadow-[0_20px_50px_-25px_rgba(38,106,174,0.4)] transition-all duration-500"
+                style={{ animationDelay: `${i * 80}ms` }}
+              >
+                <div className="text-center pb-3 mb-3 border-b border-ocean/10">
+                  <p className="font-serif text-xl md:text-2xl italic text-ocean leading-tight">{fullDayNames[d]}</p>
+                </div>
+                <div className="space-y-2">
+                  {slots.map((s) => (
+                    <div
+                      key={s.time + s.type}
+                      className={`group rounded-2xl ${typeMeta[s.type].bg} ring-1 ${typeMeta[s.type].ring} px-3 py-2.5 transition-all hover:scale-[1.03] cursor-default`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className={`font-semibold text-sm ${typeMeta[s.type].text}`}>{s.time}</span>
+                        <span className={`w-1.5 h-1.5 rounded-full ${typeMeta[s.type].dot}`} />
+                      </div>
+                      <p className={`text-[11px] font-medium mt-0.5 ${typeMeta[s.type].text} opacity-80`}>
+                        {typeMeta[s.type].short}
+                      </p>
                     </div>
-                    <p className={`text-[11px] font-medium mt-0.5 ${typeMeta[s.type].text} opacity-80`}>
-                      {typeMeta[s.type].short}
-                    </p>
-                  </div>
-                ))}
-                {calendar[d].length === 0 && (
-                  <p className="text-center text-xs text-ink/30 py-4">—</p>
-                )}
+                  ))}
+                  {slots.length === 0 && <p className="text-center text-xs text-ink/30 py-4">—</p>}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -434,6 +356,7 @@ function Horarios() {
 }
 
 function Valores() {
+  const { plans, extras, studio } = useContent();
   return (
     <section id="valores" className="relative py-24 px-6 overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(245,166,35,0.08) 0%, rgba(250,247,242,0.96) 30%, rgba(91,141,184,0.07) 100%)" />
@@ -485,7 +408,7 @@ function Valores() {
                 ))}
               </ul>
               <a
-                href={WHATSAPP_URL}
+                href={studio.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 className={`mt-7 inline-flex items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-semibold transition-all hover:scale-[1.02] ${p.highlight ? "bg-gold text-ocean" : "bg-ocean text-sand"}`}
@@ -513,24 +436,23 @@ function Valores() {
 }
 
 function AreaAluna() {
+  const { areaAluna, studio } = useContent();
   return (
     <section className="relative px-6 pb-24 overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(91,141,184,0.07) 0%, rgba(250,247,242,0.98) 22%, rgba(250,247,242,1) 100%)" />
       <div className="theme-light-locked relative max-w-5xl mx-auto overflow-hidden rounded-[48px] bg-gradient-to-br from-ocean via-deep to-ocean text-sand px-8 py-14 md:px-14 md:py-20 ring-1 ring-white/10 animate-shimmer-bg reveal">
         <div className="relative grid md:grid-cols-[1.4fr_1fr] gap-8 items-center">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Exclusivo</span>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl italic">Área da Aluna</h2>
-            <p className="mt-4 text-sand/80 max-w-md">
-              Veja sua agenda, marque presença, acompanhe sua evolução e acesse conteúdos exclusivos direto pelo app da Praiana.
-            </p>
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">{areaAluna.eyebrow}</span>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl italic">{areaAluna.title}</h2>
+            <p className="mt-4 text-sand/80 max-w-md">{areaAluna.desc}</p>
           </div>
           <div className="md:justify-self-end">
             <a
-              href={APP_URL}
+              href={studio.appUrl}
               className="group inline-flex items-center gap-3 rounded-full bg-gold text-ocean px-7 py-4 text-sm font-bold uppercase tracking-widest shadow-[0_20px_60px_-15px_rgba(245,166,35,0.6)] hover:scale-105 transition-transform"
             >
-              Acessar o app
+              {areaAluna.cta}
               <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
             </a>
           </div>
@@ -541,6 +463,7 @@ function AreaAluna() {
 }
 
 function Contato() {
+  const { studio } = useContent();
   return (
     <section id="contato" className="relative px-6 pb-24 overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(250,247,242,1) 0%, rgba(250,247,242,0.99) 72%, rgba(17,53,92,0.06) 100%)" />
@@ -552,7 +475,7 @@ function Contato() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* 1. Endereço */}
           <a
-            href="https://maps.google.com/?q=Rua+das+Ondas+123"
+            href={studio.addressUrl}
             target="_blank"
             rel="noreferrer"
             className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
@@ -564,13 +487,13 @@ function Contato() {
               </svg>
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">Endereço</p>
-            <p className="mt-1 font-serif text-xl text-ocean leading-snug">Rua das Ondas, 123</p>
-            <p className="mt-1 text-sm text-ink/60">{"\n"}</p>
+            <p className="mt-1 font-serif text-xl text-ocean leading-snug">{studio.addressLabel}</p>
+            <p className="mt-1 text-sm text-ink/60">{studio.addressNote}</p>
           </a>
 
           {/* 2. WhatsApp */}
           <a
-            href={WHATSAPP_URL}
+            href={studio.whatsappUrl}
             target="_blank"
             rel="noreferrer"
             className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
@@ -580,13 +503,13 @@ function Contato() {
               <MessageCircle className="w-5 h-5" strokeWidth={2} />
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">WhatsApp</p>
-            <p className="mt-1 font-serif text-xl text-ocean">+55 11 99999-9999</p>
-            <p className="mt-1 text-sm text-ink/60">Resposta rápida durante o dia.</p>
+            <p className="mt-1 font-serif text-xl text-ocean">{studio.whatsappLabel}</p>
+            <p className="mt-1 text-sm text-ink/60">{studio.whatsappNote}</p>
           </a>
 
           {/* 3. Instagram */}
           <a
-            href={INSTAGRAM_URL}
+            href={studio.instagramUrl}
             target="_blank"
             rel="noreferrer"
             className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
@@ -596,13 +519,13 @@ function Contato() {
               <Instagram className="w-5 h-5" strokeWidth={2} />
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">Instagram</p>
-            <p className="mt-1 font-serif text-xl text-ocean">@praianapolestudio</p>
-            <p className="mt-1 text-sm text-ink/60">Bastidores, aulas e novidades.</p>
+            <p className="mt-1 font-serif text-xl text-ocean">{studio.instagramLabel}</p>
+            <p className="mt-1 text-sm text-ink/60">{studio.instagramNote}</p>
           </a>
 
           {/* 4. Email */}
           <a
-            href={`mailto:${EMAIL}`}
+            href={`mailto:${studio.email}`}
             className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "360ms" }}
           >
@@ -613,8 +536,8 @@ function Contato() {
               </svg>
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">E-mail</p>
-            <p className="mt-1 font-serif text-lg text-ocean break-all">{EMAIL}</p>
-            <p className="mt-1 text-sm text-ink/60">Para parcerias e dúvidas.</p>
+            <p className="mt-1 font-serif text-lg text-ocean break-all">{studio.email}</p>
+            <p className="mt-1 text-sm text-ink/60">{studio.emailNote}</p>
           </a>
         </div>
       </div>
@@ -623,6 +546,7 @@ function Contato() {
 }
 
 function Footer() {
+  const { studio } = useContent();
   return (
     <footer className="relative mt-10">
       <WaveDivider color="var(--color-deep)" />
@@ -634,13 +558,10 @@ function Footer() {
                 <Logo className="h-full w-full object-contain" />
               </div>
               <div>
-                <p className="font-serif text-2xl italic text-sand leading-tight">Praiana Pole Dance & Artes</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">{"\n"}</p>
+                <p className="font-serif text-2xl italic text-sand leading-tight">{studio.brandName}</p>
               </div>
             </div>
-            <p className="mt-5 text-sm leading-relaxed max-w-xs text-sand/65">
-              Um espaço para você se movimentar, se amar e se expressar.
-            </p>
+            <p className="mt-5 text-sm leading-relaxed max-w-xs text-sand/65">{studio.tagline}</p>
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-sand/50 mb-4">Navegar</p>
@@ -655,9 +576,10 @@ function Footer() {
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-sand/50 mb-4">Conecte-se</p>
             <ul className="space-y-2 text-sm">
-              <li><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">WhatsApp</a></li>
-              <li><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">Instagram</a></li>
-              <li><a href={APP_URL} className="hover:text-gold transition-colors">Área da Aluna</a></li>
+              <li><a href={studio.whatsappUrl} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">WhatsApp</a></li>
+              <li><a href={studio.instagramUrl} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">Instagram</a></li>
+              <li><a href={studio.appUrl} className="hover:text-gold transition-colors">Área da Aluna</a></li>
+              <li><Link to="/admin" className="hover:text-gold transition-colors">Administração</Link></li>
             </ul>
           </div>
         </div>
@@ -671,6 +593,7 @@ function Footer() {
 }
 
 function FloatingWhats() {
+  const { studio } = useContent();
   const [expanded, setExpanded] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
@@ -683,7 +606,7 @@ function FloatingWhats() {
   }, []);
   return (
     <a
-      href={WHATSAPP_URL}
+      href={studio.whatsappUrl}
       target="_blank"
       rel="noreferrer"
       aria-label="Falar no WhatsApp"
@@ -694,13 +617,13 @@ function FloatingWhats() {
           expanded ? "scale-100 opacity-100" : "scale-90 opacity-0 pointer-events-none"
         } group-hover:scale-100 group-hover:opacity-100`}
       >
-        Bora marcar sua aula? 🌊
+        {studio.floatingWhatsText}
       </span>
       <span className="relative">
         <span className="absolute inset-0 rounded-full animate-pulse-ring" />
         <span className="relative w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-[0_18px_40px_-12px_rgba(37,211,102,0.65)] hover:scale-110 transition-transform">
           <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
           </svg>
         </span>
       </span>
@@ -709,20 +632,23 @@ function FloatingWhats() {
 }
 
 export default function PraianaSite() {
-  useReveal();
+  const { content } = useSiteContent();
+  useReveal([content]);
   return (
-    <div className="min-h-screen bg-sand text-ink font-sans selection:bg-gold/30 selection:text-ocean overflow-x-hidden">
-      <Navbar />
-      <main>
-        <Hero />
-        <Modalidades />
-        <Horarios />
-        <Valores />
-        <AreaAluna />
-        <Contato />
-      </main>
-      <Footer />
-      <FloatingWhats />
-    </div>
+    <ContentCtx.Provider value={content}>
+      <div className="min-h-screen bg-sand text-ink font-sans selection:bg-gold/30 selection:text-ocean overflow-x-hidden">
+        <Navbar />
+        <main>
+          <Hero />
+          <Modalidades />
+          <Horarios />
+          <Valores />
+          <AreaAluna />
+          <Contato />
+        </main>
+        <Footer />
+        <FloatingWhats />
+      </div>
+    </ContentCtx.Provider>
   );
 }
