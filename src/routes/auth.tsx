@@ -55,11 +55,25 @@ function AuthPage() {
         password,
         options: { emailRedirectTo: `${window.location.origin}/admin` },
       });
+      if (err) {
+        setLoading(false);
+        return setError(err.message);
+      }
+      if (!data.session) {
+        // fallback: já existe conta ou confirmação pendente — tenta entrar direto
+        const { error: signInErr } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+        setLoading(false);
+        if (signInErr) return setError(signInErr.message);
+        return;
+      }
       setLoading(false);
-      if (err) return setError(err.message);
-      if (!data.session) setMessage("Conta criada! Confirme o e-mail que enviamos para entrar.");
+      setMessage("Acesso criado! Entrando...");
       return;
     }
+
     const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
     setLoading(false);
     if (err) setError(err.message);
