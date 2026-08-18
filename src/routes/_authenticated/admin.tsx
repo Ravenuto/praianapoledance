@@ -143,12 +143,12 @@ function AdminPage() {
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-sand grid place-items-center text-ocean">Carregando painel…</div>;
+    return <div className="theme-light-locked min-h-screen bg-sand grid place-items-center text-ocean">Carregando painel…</div>;
   }
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-sand grid place-items-center px-6 text-center">
+      <div className="theme-light-locked min-h-screen bg-sand grid place-items-center px-6 text-center">
         <div className={card}>
           <h1 className="font-serif text-2xl italic text-ocean">Acesso restrito</h1>
           <p className="mt-2 max-w-sm text-sm text-ink/60">
@@ -161,7 +161,7 @@ function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-sand text-ink font-sans">
+    <div className="theme-light-locked min-h-screen bg-sand text-ink font-sans">
       <input
         ref={fileRef}
         type="file"
