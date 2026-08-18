@@ -600,6 +600,19 @@ function Contato() {
             </p>
           </a>
         </div>
+
+        {studio.addressLabel && (
+          <div className="theme-light-locked reveal mt-8 overflow-hidden rounded-3xl ring-1 ring-ocean/10 bg-white">
+            <iframe
+              title={`Mapa — ${studio.addressLabel}`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(studio.addressLabel)}&output=embed`}
+              className="w-full h-[300px] md:h-[380px] border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        )}
       </div>
     </section>
   );
