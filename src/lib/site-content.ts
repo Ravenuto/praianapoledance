@@ -184,7 +184,10 @@ export async function fetchSiteContent(): Promise<SiteContent> {
 export async function saveSiteContent(content: SiteContent) {
   const { error } = await supabase
     .from("site_content")
-    .upsert({ key: CONTENT_KEY, value: content as unknown as Record<string, unknown> }, { onConflict: "key" });
+    .upsert(
+      { key: CONTENT_KEY, value: JSON.parse(JSON.stringify(content)) },
+      { onConflict: "key" },
+    );
   if (error) throw error;
 }
 
