@@ -81,12 +81,13 @@ const modalities = [
 const plans = [
   { name: "4 Aulas", price: "R$ 230", per: "R$ 57,50 por aula", desc: "Perfeito para começar com consistência", highlight: false },
   { name: "8 Aulas", price: "R$ 370", per: "R$ 46,25 por aula", desc: "O mais escolhido pelas nossas alunas", highlight: true },
-  { name: "12 Aulas", price: "R$ 480", per: "R$ 40,00 por aula", desc: "Para quem quer evolução acelerada", highlight: false },
+  { name: "12 Aulas", price: "R$ 490", per: "R$ 40,83 por aula", desc: "Para quem quer evolução acelerada", highlight: false },
 ];
 
 const extras = [
+  { name: "Aula Experimental", price: "R$ 30", desc: "Venha conhecer o studio" },
   { name: "Aula Avulsa", price: "R$ 70", desc: "Sem compromisso de mensalidade" },
-  { name: "Aula Particular", price: "R$ 140", desc: "Atenção exclusiva da professora" },
+  { name: "Aula Particular", price: "R$ 120", desc: "Atenção exclusiva da professora" },
 ];
 
 // Scroll reveal hook
