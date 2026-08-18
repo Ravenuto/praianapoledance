@@ -1,11 +1,21 @@
+# Liberar seu acesso à área de administração
 
-Construir o site Praiana com **conteúdo idêntico ao repo GitHub** (modalidades Pole Dance / Pole Coreográfico / Flex Flow, grade completa Seg–Sáb com aulas por horário, planos R$230 · R$370 (popular) · R$480, avulsa R$70, particular R$140, área da aluna, contato WhatsApp/Instagram/endereço) num design **moderno e fluido**:
+Hoje o cadastro exige confirmação por e-mail antes de entrar, então ao criar a conta você fica travada na tela de login. Vamos destravar isso.
 
-- Foto do estúdio (a que você enviou) como hero, em moldura arredondada orgânica
-- Ondas SVG/border-radius separando seções
-- Tipografia serifada itálica (Cormorant Garamond) + Inter
-- Modalidades só em tipografia (sem fotos), com numerais em script dourado
-- Glassmorphism nos cards, blobs azul/dourado de fundo
-- Paleta: `#266aae` · `#5B8DB8` · `#F5A623` · `#FAF7F2`
+## O que será feito
 
-Placeholders de WhatsApp/Instagram/endereço/link do app ficam iguais ao repo até você mandar os reais.
+1. Ativar a confirmação automática de e-mail no login por e-mail/senha, para que a conta criada já entre direto (sem esperar e-mail).
+2. Você cria o acesso em `/auth` (aba "Criar acesso") com `raissa@admin.com` e uma senha de pelo menos 6 caracteres.
+3. Se por algum motivo a conta não receber o papel de administradora automaticamente, eu concedo o papel de admin a esse e-mail direto no banco.
+4. Adicionar um link discreto para a administração (no rodapé) para você acessar sem digitar a URL.
+
+## Observações
+
+- Como o e-mail `@admin.com` é fictício, recuperação de senha por e-mail não vai funcionar nele. Depois trocamos pelo seu e-mail real.
+- Só quem tiver o papel de administradora consegue salvar alterações; as regras de segurança do banco continuam iguais.
+
+## Detalhes técnicos
+
+- `configure_auth` com `auto_confirm_email` ativo.
+- O gatilho `grant_first_user_admin` já concede admin ao primeiro usuário; caso já exista outro admin, aplico um `INSERT` em `public.user_roles` para o `user_id` correspondente.
+- Nenhuma mudança nas políticas RLS de `site_content` ou `user_roles`.
