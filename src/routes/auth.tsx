@@ -88,26 +88,26 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-sand text-ink font-sans grid place-items-center px-6 py-16">
-      <div className="w-full max-w-md rounded-[32px] bg-white/80 backdrop-blur ring-1 ring-ocean/10 p-8 shadow-[0_30px_80px_-40px_rgba(38,106,174,0.5)]">
+    <div className="dark min-h-screen bg-sand text-ink font-sans grid place-items-center px-6 py-16">
+      <div className="w-full max-w-md rounded-[32px] bg-card/90 backdrop-blur ring-1 ring-ocean/20 p-8 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.45)]">
         <p className="text-xs uppercase tracking-[0.3em] text-mist">Praiana</p>
         <h1 className="mt-2 font-serif text-3xl italic text-ocean">
           {mode === "signin" ? "Entrar na administração" : "Criar acesso"}
         </h1>
-        <p className="mt-2 text-sm text-ink/60">
+        <p className="mt-2 text-sm text-ink/70">
           Área restrita para gerenciar o conteúdo do site.
         </p>
 
         <button
           type="button"
           onClick={google}
-          className="mt-6 w-full rounded-2xl border border-ocean/20 bg-white py-3 text-sm font-semibold text-ocean hover:bg-ocean/5 transition-colors"
+          className="mt-6 w-full rounded-2xl border border-ocean/20 bg-background py-3 text-sm font-semibold text-ocean hover:bg-ocean/10 transition-colors"
         >
           Continuar com Google
         </button>
 
         <div className="my-5 flex items-center gap-3 text-[11px] uppercase tracking-widest text-ink/40">
-          <span className="h-px flex-1 bg-ocean/10" /> ou <span className="h-px flex-1 bg-ocean/10" />
+          <span className="h-px flex-1 bg-ocean/20" /> ou <span className="h-px flex-1 bg-ocean/20" />
         </div>
 
         <form onSubmit={submit} className="space-y-3">
@@ -117,7 +117,7 @@ function AuthPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="seu@email.com"
             maxLength={255}
-            className="w-full rounded-2xl border border-ocean/15 bg-white px-4 py-3 text-sm outline-none focus:border-ocean"
+            className="w-full rounded-2xl border border-ocean/20 bg-background px-4 py-3 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-ocean"
           />
           <input
             type="password"
@@ -125,7 +125,7 @@ function AuthPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Sua senha"
             maxLength={72}
-            className="w-full rounded-2xl border border-ocean/15 bg-white px-4 py-3 text-sm outline-none focus:border-ocean"
+            className="w-full rounded-2xl border border-ocean/20 bg-background px-4 py-3 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-ocean"
           />
           <button
             type="submit"
@@ -136,7 +136,7 @@ function AuthPage() {
           </button>
         </form>
 
-        {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
         {message && <p className="mt-4 text-sm text-ocean">{message}</p>}
 
         <button
