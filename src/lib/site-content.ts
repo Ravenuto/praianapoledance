@@ -3,23 +3,37 @@ import { supabase } from "@/integrations/supabase/client";
 import studioImg from "@/assets/studio.png";
 import logoImg from "@/assets/logo-praiana.png";
 
-export const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
-export type Day = (typeof days)[number];
-export type ClassType = "pole" | "coreo" | "flex";
+export type Slot = { time: string; type: string };
+export type DaySchedule = { id: string; name: string; slots: Slot[] };
+export type ClassTypeDef = { id: string; label: string; short: string; color: ColorKey };
+export type Modality = { title: string; desc: string; level: string };
+export type Plan = {
+  name: string;
+  price: string;
+  per: string;
+  desc: string;
+  highlight: boolean;
+  benefits: string[];
+};
+export type Extra = { name: string; price: string; desc: string };
 
-export const fullDayNames: Record<Day, string> = {
-  Seg: "Segunda",
-  Ter: "Terça",
-  Qua: "Quarta",
-  Qui: "Quinta",
-  Sex: "Sexta",
-  Sáb: "Sábado",
+export type ColorKey = "ocean" | "gold" | "rose" | "green" | "violet" | "teal";
+
+export const PALETTE: Record<
+  ColorKey,
+  { label: string; bg: string; ring: string; text: string; dot: string; swatch: string }
+> = {
+  ocean: { label: "Azul", bg: "bg-ocean/10", ring: "ring-ocean/30", text: "text-ocean", dot: "bg-ocean", swatch: "#266aae" },
+  gold: { label: "Dourado", bg: "bg-gold/15", ring: "ring-gold/40", text: "text-[#9c5a00]", dot: "bg-gold", swatch: "#F5A623" },
+  rose: { label: "Rosé", bg: "bg-[#f4d8de]", ring: "ring-[#d97a8a]/40", text: "text-[#a04760]", dot: "bg-[#d97a8a]", swatch: "#d97a8a" },
+  green: { label: "Verde", bg: "bg-[#dcf5e3]", ring: "ring-[#1f9d55]/40", text: "text-[#1f7a45]", dot: "bg-[#1f9d55]", swatch: "#1f9d55" },
+  violet: { label: "Violeta", bg: "bg-[#e6dcf5]", ring: "ring-[#7a5bbd]/40", text: "text-[#5d43a0]", dot: "bg-[#7a5bbd]", swatch: "#7a5bbd" },
+  teal: { label: "Turquesa", bg: "bg-[#d5f0f0]", ring: "ring-[#178a8a]/40", text: "text-[#0f6d6d]", dot: "bg-[#178a8a]", swatch: "#178a8a" },
 };
 
-export type Slot = { time: string; type: ClassType };
-export type Modality = { title: string; desc: string };
-export type Plan = { name: string; price: string; per: string; desc: string; highlight: boolean };
-export type Extra = { name: string; price: string; desc: string };
+export function colorOf(key: string | undefined) {
+  return PALETTE[(key as ColorKey) in PALETTE ? (key as ColorKey) : "ocean"];
+}
 
 export type SiteContent = {
   hero: {
@@ -48,12 +62,35 @@ export type SiteContent = {
     addressNote: string;
     floatingWhatsText: string;
   };
+  sections: {
+    modalidadesEyebrow: string;
+    horariosEyebrow: string;
+    horariosTitle: string;
+    valoresEyebrow: string;
+    valoresTitle: string;
+    planCta: string;
+    contatoEyebrow: string;
+    contatoTitle: string;
+    footerCopyright: string;
+    footerNote: string;
+  };
   images: { hero: string; logo: string };
   modalities: Modality[];
-  schedule: Record<Day, Slot[]>;
+  classTypes: ClassTypeDef[];
+  schedule: DaySchedule[];
   plans: Plan[];
   extras: Extra[];
   areaAluna: { eyebrow: string; title: string; desc: string; cta: string };
+};
+
+const LEGACY_DAYS = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
+const LEGACY_FULL: Record<string, string> = {
+  Seg: "Segunda",
+  Ter: "Terça",
+  Qua: "Quarta",
+  Qui: "Quinta",
+  Sex: "Sexta",
+  Sáb: "Sábado",
 };
 
 export const DEFAULT_CONTENT: SiteContent = {
@@ -85,59 +122,124 @@ export const DEFAULT_CONTENT: SiteContent = {
     addressNote: "",
     floatingWhatsText: "Bora marcar sua aula? 🌊",
   },
+  sections: {
+    modalidadesEyebrow: "Modalidades",
+    horariosEyebrow: "Planeje sua semana",
+    horariosTitle: "Grade de Horários",
+    valoresEyebrow: "Invista em você",
+    valoresTitle: "Planos & Valores",
+    planCta: "Quero este plano",
+    contatoEyebrow: "Vamos conversar",
+    contatoTitle: "Contato",
+    footerCopyright: "© 2024 PRAIANA POLE STUDIO",
+    footerNote: "FEITO COM AMOR",
+  },
   images: { hero: studioImg, logo: logoImg },
   modalities: [
     {
       title: "Pole Dance",
       desc: "Desenvolva força, resistência e consciência corporal enquanto aprende giros, transições e acrobacias. Uma modalidade dinâmica para evoluir técnica e condicionamento físico.",
+      level: "Todos os níveis",
     },
     {
       title: "Pole Coreográfico",
       desc: "A união entre o Pole e a Dança. Explore musicalidade, expressão corporal, fluidez e presença através de coreografias que conectam técnica e movimento.",
+      level: "Todos os níveis",
     },
     {
       title: "Flex Flow",
       desc: "Movimento, mobilidade e flexibilidade em perfeita conexão. Uma prática fluida que convida o corpo a ganhar amplitude de forma natural e consciente.",
+      level: "Todos os níveis",
     },
   ],
-  schedule: {
-    Seg: [
-      { time: "10:00", type: "flex" },
-      { time: "17:00", type: "pole" },
-      { time: "18:00", type: "coreo" },
-      { time: "19:00", type: "pole" },
-      { time: "20:00", type: "pole" },
-    ],
-    Ter: [
-      { time: "09:00", type: "pole" },
-      { time: "18:00", type: "pole" },
-      { time: "19:00", type: "flex" },
-    ],
-    Qua: [
-      { time: "10:00", type: "flex" },
-      { time: "17:00", type: "pole" },
-      { time: "19:00", type: "coreo" },
-      { time: "20:00", type: "pole" },
-    ],
-    Qui: [
-      { time: "09:00", type: "pole" },
-      { time: "18:00", type: "coreo" },
-      { time: "19:00", type: "pole" },
-    ],
-    Sex: [
-      { time: "17:00", type: "flex" },
-      { time: "18:00", type: "pole" },
-      { time: "19:00", type: "coreo" },
-    ],
-    Sáb: [
-      { time: "10:00", type: "pole" },
-      { time: "20:00", type: "coreo" },
-    ],
-  },
+  classTypes: [
+    { id: "pole", label: "Pole Dance", short: "Pole", color: "ocean" },
+    { id: "coreo", label: "Pole Coreográfico", short: "Coreo", color: "gold" },
+    { id: "flex", label: "Flex Flow", short: "Flex", color: "rose" },
+  ],
+  schedule: [
+    {
+      id: "seg",
+      name: "Segunda",
+      slots: [
+        { time: "10:00", type: "flex" },
+        { time: "17:00", type: "pole" },
+        { time: "18:00", type: "coreo" },
+        { time: "19:00", type: "pole" },
+        { time: "20:00", type: "pole" },
+      ],
+    },
+    {
+      id: "ter",
+      name: "Terça",
+      slots: [
+        { time: "09:00", type: "pole" },
+        { time: "18:00", type: "pole" },
+        { time: "19:00", type: "flex" },
+      ],
+    },
+    {
+      id: "qua",
+      name: "Quarta",
+      slots: [
+        { time: "10:00", type: "flex" },
+        { time: "17:00", type: "pole" },
+        { time: "19:00", type: "coreo" },
+        { time: "20:00", type: "pole" },
+      ],
+    },
+    {
+      id: "qui",
+      name: "Quinta",
+      slots: [
+        { time: "09:00", type: "pole" },
+        { time: "18:00", type: "coreo" },
+        { time: "19:00", type: "pole" },
+      ],
+    },
+    {
+      id: "sex",
+      name: "Sexta",
+      slots: [
+        { time: "17:00", type: "flex" },
+        { time: "18:00", type: "pole" },
+        { time: "19:00", type: "coreo" },
+      ],
+    },
+    {
+      id: "sab",
+      name: "Sábado",
+      slots: [
+        { time: "10:00", type: "pole" },
+        { time: "20:00", type: "coreo" },
+      ],
+    },
+  ],
   plans: [
-    { name: "4 Aulas", price: "R$ 230", per: "R$ 57,50 por aula", desc: "Perfeito para começar com consistência", highlight: false },
-    { name: "8 Aulas", price: "R$ 370", per: "R$ 46,25 por aula", desc: "O mais escolhido pelas nossas alunas", highlight: true },
-    { name: "12 Aulas", price: "R$ 490", per: "R$ 40,83 por aula", desc: "Para quem quer evolução acelerada", highlight: false },
+    {
+      name: "4 Aulas",
+      price: "R$ 230",
+      per: "R$ 57,50 por aula",
+      desc: "Perfeito para começar com consistência",
+      highlight: false,
+      benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
+    },
+    {
+      name: "8 Aulas",
+      price: "R$ 370",
+      per: "R$ 46,25 por aula",
+      desc: "O mais escolhido pelas nossas alunas",
+      highlight: true,
+      benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
+    },
+    {
+      name: "12 Aulas",
+      price: "R$ 490",
+      per: "R$ 40,83 por aula",
+      desc: "Para quem quer evolução acelerada",
+      highlight: false,
+      benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
+    },
   ],
   extras: [
     { name: "Aula Experimental", price: "R$ 30", desc: "Venha conhecer o studio" },
@@ -158,6 +260,37 @@ function isObject(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
 }
 
+function normalizeSchedule(value: unknown): DaySchedule[] {
+  if (Array.isArray(value)) {
+    return value
+      .filter(isObject)
+      .map((d, i) => ({
+        id: typeof d['id'] === "string" ? (d['id'] as string) : `dia-${i}`,
+        name: typeof d['name'] === "string" ? (d['name'] as string) : `Dia ${i + 1}`,
+        slots: Array.isArray(d['slots'])
+          ? (d['slots'] as unknown[]).filter(isObject).map((s) => ({
+              time: String(s['time'] ?? "18:00"),
+              type: String(s['type'] ?? "pole"),
+            }))
+          : [],
+      }));
+  }
+  if (isObject(value)) {
+    // legacy Record<"Seg"|..., Slot[]>
+    return LEGACY_DAYS.map((d) => ({
+      id: d.toLowerCase(),
+      name: LEGACY_FULL[d] ?? d,
+      slots: Array.isArray(value[d])
+        ? (value[d] as unknown[]).filter(isObject).map((s) => ({
+            time: String(s['time'] ?? "18:00"),
+            type: String(s['type'] ?? "pole"),
+          }))
+        : [],
+    }));
+  }
+  return DEFAULT_CONTENT.schedule;
+}
+
 /** Shallow-per-section merge so novos campos ganham valor padrão. */
 export function mergeContent(stored: unknown): SiteContent {
   if (!isObject(stored)) return DEFAULT_CONTENT;
@@ -165,8 +298,37 @@ export function mergeContent(stored: unknown): SiteContent {
   for (const key of Object.keys(DEFAULT_CONTENT) as (keyof SiteContent)[]) {
     const value = stored[key];
     if (value === undefined) continue;
+    if (key === "schedule") {
+      out[key] = normalizeSchedule(value);
+      continue;
+    }
     const base = DEFAULT_CONTENT[key];
     out[key] = isObject(base) && isObject(value) ? { ...base, ...value } : value;
+  }
+  // garantias mínimas
+  const mods = out['modalities'];
+  if (Array.isArray(mods)) {
+    out['modalities'] = mods.filter(isObject).map((m) => ({
+      title: String(m['title'] ?? ""),
+      desc: String(m['desc'] ?? ""),
+      level: typeof m['level'] === "string" ? (m['level'] as string) : "Todos os níveis",
+    }));
+  }
+  const plans = out['plans'];
+  if (Array.isArray(plans)) {
+    out['plans'] = plans.filter(isObject).map((p) => ({
+      name: String(p['name'] ?? ""),
+      price: String(p['price'] ?? ""),
+      per: String(p['per'] ?? ""),
+      desc: String(p['desc'] ?? ""),
+      highlight: Boolean(p['highlight']),
+      benefits: Array.isArray(p['benefits'])
+        ? (p['benefits'] as unknown[]).map(String)
+        : ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
+    }));
+  }
+  if (!Array.isArray(out['classTypes']) || (out['classTypes'] as unknown[]).length === 0) {
+    out['classTypes'] = DEFAULT_CONTENT.classTypes;
   }
   return out as SiteContent;
 }
@@ -191,10 +353,11 @@ export async function saveSiteContent(content: SiteContent) {
   if (error) throw error;
 }
 
-export function useSiteContent() {
+export function useSiteContent(enabled = true) {
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(enabled);
   useEffect(() => {
+    if (!enabled) return;
     let active = true;
     fetchSiteContent()
       .then((c) => active && setContent(c))
@@ -202,6 +365,20 @@ export function useSiteContent() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [enabled]);
   return { content, loading, setContent };
+}
+
+/** Atualiza um caminho "a.b.c" de forma imutável. */
+export function setPath<T>(obj: T, path: string, value: unknown): T {
+  const keys = path.split(".");
+  const clone: any = Array.isArray(obj) ? [...(obj as any)] : { ...(obj as any) };
+  let cur = clone;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const k = keys[i]!;
+    cur[k] = Array.isArray(cur[k]) ? [...cur[k]] : { ...cur[k] };
+    cur = cur[k];
+  }
+  cur[keys[keys.length - 1]!] = value;
+  return clone as T;
 }
