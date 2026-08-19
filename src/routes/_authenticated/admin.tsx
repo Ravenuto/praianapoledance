@@ -99,7 +99,12 @@ function AccessTab({ onError }: { onError: (m: string | null) => void }) {
   const decide = async (userId: string, approve: boolean) => {
     setBusy(userId);
     onError(null);
-    const { error } = await supabase.rpc("admin_decide_access", { _user_id: userId, _approve: approve });
+    const { error } = await (
+      supabase.rpc as unknown as (
+        fn: string,
+        args: Record<string, unknown>,
+      ) => Promise<{ error: { message: string } | null }>
+    )("admin_decide_access", { _user_id: userId, _approve: approve });
     if (error) onError(error.message);
     await load();
     setBusy(null);
