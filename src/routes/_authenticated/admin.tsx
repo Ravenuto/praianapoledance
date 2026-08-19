@@ -287,10 +287,12 @@ function AdminPage() {
     return (
       <div className="theme-light-locked min-h-screen bg-sand grid place-items-center px-6 text-center">
         <div className={card}>
-          <h1 className="font-serif text-2xl italic text-ocean">Acesso restrito</h1>
+          <h1 className="font-serif text-2xl italic text-ocean">Acesso aguardando aprovação</h1>
           <p className="mt-2 max-w-sm text-sm text-ink/60">
-            Sua conta não tem permissão de administradora. Peça para a administradora do studio liberar seu acesso.
+            Seu pedido foi registrado e só a administradora principal do studio pode liberar o acesso. Assim que ela
+            aprovar, é só entrar de novo por aqui.
           </p>
+
           <button onClick={signOut} className={`${btn} mt-6`}>Sair</button>
         </div>
       </div>
