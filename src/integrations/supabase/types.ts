@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_requests: {
+        Row: {
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          email: string
+          id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          email: string
+          id?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          email?: string
+          id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       site_content: {
         Row: {
           key: string
@@ -58,6 +88,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_decide_access: {
+        Args: { _approve: boolean; _user_id: string }
+        Returns: undefined
+      }
+      admin_list_access: {
+        Args: never
+        Returns: {
+          created_at: string
+          email: string
+          is_admin: boolean
+          is_owner: boolean
+          status: string
+          user_id: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -65,6 +110,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      owner_email: { Args: never; Returns: string }
     }
     Enums: {
       app_role: "admin" | "user"
