@@ -95,8 +95,11 @@ function AuthPage() {
           {mode === "signin" ? "Entrar na administração" : "Criar acesso"}
         </h1>
         <p className="mt-2 text-sm text-ink/70">
-          Área restrita para gerenciar o conteúdo do site.
+          {mode === "signin"
+            ? "Área restrita para gerenciar o conteúdo do site."
+            : "Novos cadastros precisam ser aprovados pela administradora do studio."}
         </p>
+
 
         <button
           type="button"
