@@ -60,14 +60,146 @@ function Field({
   );
 }
 
-type TabKey = "preview" | "modalidades" | "horarios" | "planos" | "contato";
+type TabKey = "preview" | "modalidades" | "horarios" | "planos" | "contato" | "acessos";
 const TABS: { key: TabKey; label: string }[] = [
   { key: "preview", label: "Prévia do site" },
   { key: "modalidades", label: "Modalidades" },
   { key: "horarios", label: "Grade de horários" },
   { key: "planos", label: "Planos e valores" },
   { key: "contato", label: "Contato" },
+  { key: "acessos", label: "Acessos" },
 ];
+
+type AccessRow = {
+  user_id: string;
+  email: string;
+  status: string;
+  created_at: string;
+  is_admin: boolean;
+  is_owner: boolean;
+};
+
+function AccessTab({ onError }: { onError: (m: string | null) => void }) {
+  const [rows, setRows] = useState<AccessRow[]>([]);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = async () => {
+    const { data, error } = await supabase.rpc("admin_list_access");
+    if (error) onError(error.message);
+    else setRows((data as AccessRow[]) ?? []);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    void load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const decide = async (userId: string, approve: boolean) => {
+    setBusy(userId);
+    onError(null);
+    const { error } = await supabase.rpc("admin_decide_access", { _user_id: userId, _approve: approve });
+    if (error) onError(error.message);
+    await load();
+    setBusy(null);
+  };
+
+  const pending = rows.filter((r) => !r.is_admin && r.status !== "rejected");
+  const rejected = rows.filter((r) => !r.is_admin && r.status === "rejected");
+  const admins = rows.filter((r) => r.is_admin);
+
+  if (loading) return <section className={card}>Carregando acessos…</section>;
+
+  const Row = ({ r, actions }: { r: AccessRow; actions: React.ReactNode }) => (
+    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-ocean/5 p-4">
+      <div>
+        <p className="text-sm font-semibold text-ink">{r.email}</p>
+        <p className="text-[11px] uppercase tracking-widest text-mist">
+          {new Date(r.created_at).toLocaleDateString("pt-BR")}
+          {r.is_owner ? " · conta principal" : ""}
+        </p>
+      </div>
+      <div className="flex items-center gap-2">{actions}</div>
+    </div>
+  );
+
+  return (
+    <div className="space-y-6">
+      <section className={card}>
+        <h2 className="mb-1 font-serif text-xl italic text-ocean">Pedidos de acesso</h2>
+        <p className="mb-4 text-sm text-ink/60">
+          Quem criar uma conta fica aqui aguardando. Só entra na administração quem você aprovar.
+        </p>
+        {pending.length === 0 ? (
+          <p className="text-sm text-ink/50">Nenhum pedido pendente.</p>
+        ) : (
+          <div className="space-y-3">
+            {pending.map((r) => (
+              <Row
+                key={r.user_id}
+                r={r}
+                actions={
+                  <>
+                    <button disabled={busy === r.user_id} className={btn} onClick={() => decide(r.user_id, true)}>
+                      Aprovar
+                    </button>
+                    <button disabled={busy === r.user_id} className={btnGhost} onClick={() => decide(r.user_id, false)}>
+                      Recusar
+                    </button>
+                  </>
+                }
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className={card}>
+        <h2 className="mb-4 font-serif text-xl italic text-ocean">Com acesso liberado</h2>
+        <div className="space-y-3">
+          {admins.map((r) => (
+            <Row
+              key={r.user_id}
+              r={r}
+              actions={
+                r.is_owner ? (
+                  <span className="rounded-full bg-gold/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-ink/70">
+                    Principal
+                  </span>
+                ) : (
+                  <button disabled={busy === r.user_id} className={btnDanger} onClick={() => decide(r.user_id, false)}>
+                    Remover acesso
+                  </button>
+                )
+              }
+            />
+          ))}
+        </div>
+      </section>
+
+      {rejected.length > 0 && (
+        <section className={card}>
+          <h2 className="mb-4 font-serif text-xl italic text-ocean">Recusados</h2>
+          <div className="space-y-3">
+            {rejected.map((r) => (
+              <Row
+                key={r.user_id}
+                r={r}
+                actions={
+                  <button disabled={busy === r.user_id} className={btnGhost} onClick={() => decide(r.user_id, true)}>
+                    Liberar acesso
+                  </button>
+                }
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
+}
+
 
 function AdminPage() {
   const navigate = useNavigate();
