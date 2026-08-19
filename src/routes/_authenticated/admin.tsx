@@ -655,7 +655,10 @@ function AdminPage() {
           </section>
         )}
 
-        {tab !== "preview" && (
+        {tab === "acessos" && <AccessTab onError={setError} />}
+
+        {tab !== "preview" && tab !== "acessos" && (
+
           <div className="flex justify-end pb-16">
             <button onClick={save} disabled={saving} className={`${btn} disabled:opacity-60`}>
               {saving ? "Salvando…" : "Salvar alterações"}
