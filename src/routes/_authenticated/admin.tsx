@@ -85,7 +85,7 @@ function AccessTab({ onError }: { onError: (m: string | null) => void }) {
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
-    const { data, error } = await supabase.rpc("admin_list_access");
+    const { data, error } = await (supabase.rpc as unknown as (fn: string) => Promise<{ data: unknown; error: { message: string } | null }>)("admin_list_access");
     if (error) onError(error.message);
     else setRows((data as AccessRow[]) ?? []);
     setLoading(false);
