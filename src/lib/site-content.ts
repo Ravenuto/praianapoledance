@@ -330,6 +330,19 @@ export function mergeContent(stored: unknown): SiteContent {
   if (!Array.isArray(out['classTypes']) || (out['classTypes'] as unknown[]).length === 0) {
     out['classTypes'] = DEFAULT_CONTENT.classTypes;
   }
+  // imagens: caminhos de dev (/src/assets/...) ou vazios voltam para o bundle padrão
+  const imgs = isObject(out['images']) ? (out['images'] as Record<string, unknown>) : {};
+  const fixImg = (v: unknown, fallback: string) => {
+    const s = typeof v === "string" ? v.trim() : "";
+    if (!s || s === "default" || s.startsWith("/src/assets/") || s.startsWith("src/assets/")) {
+      return fallback;
+    }
+    return s;
+  };
+  out['images'] = {
+    hero: fixImg(imgs['hero'], studioImg),
+    logo: fixImg(imgs['logo'], logoImg),
+  };
   return out as SiteContent;
 }
 
