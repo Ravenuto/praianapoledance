@@ -206,6 +206,51 @@ function AccessTab({ onError }: { onError: (m: string | null) => void }) {
 }
 
 
+const TAB_ANCHOR: Partial<Record<TabKey, string>> = {
+  modalidades: "modalidades",
+  horarios: "horarios",
+  planos: "valores",
+  contato: "contato",
+};
+
+function LivePreview({ content, anchor }: { content: SiteContent; anchor: string }) {
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!box) return;
+    const t = setTimeout(() => {
+      const el = box.querySelector(`#${anchor}`) as HTMLElement | null;
+      if (el) box.scrollTop = Math.max(0, el.offsetTop * 0.55 - 16);
+    }, 120);
+    return () => clearTimeout(t);
+  }, [anchor]);
+
+  return (
+    <section className={card}>
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h2 className="font-serif text-xl italic text-ocean">Prévia ao vivo</h2>
+        <span className="text-[11px] uppercase tracking-widest text-mist">Atualiza enquanto você edita</span>
+      </div>
+      <div
+        ref={boxRef}
+        className="h-[520px] overflow-auto rounded-2xl ring-1 ring-ocean/15 bg-white"
+        onClickCapture={(e) => {
+          const el = (e.target as HTMLElement).closest("a");
+          if (el) e.preventDefault();
+        }}
+      >
+        <div
+          style={{ transform: "scale(0.55)", transformOrigin: "top left", width: "181.8%" }}
+          className="pointer-events-none"
+        >
+          <PraianaSite content={content} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AdminPage() {
   const navigate = useNavigate();
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
@@ -671,6 +716,8 @@ function AdminPage() {
         )}
 
         {tab === "acessos" && <AccessTab onError={setError} />}
+
+        {TAB_ANCHOR[tab] && <LivePreview content={content} anchor={TAB_ANCHOR[tab]!} />}
 
         {tab !== "preview" && tab !== "acessos" && (
 
