@@ -641,6 +641,15 @@ function AdminPage() {
         {/* CONTATO */}
         {tab === "contato" && (
           <section className={card}>
+            <h2 className="mb-4 font-serif text-xl italic text-ocean">Área da Aluna</h2>
+            <div className="mb-8 grid gap-4 rounded-2xl bg-ocean/5 p-4 sm:grid-cols-2">
+              <Field labelText="Link do app das alunas" value={content.studio.appUrl} onChange={(v) => update("studio", { ...content.studio, appUrl: v })} />
+              <Field labelText="Texto do botão" value={content.areaAluna.cta} onChange={(v) => update("areaAluna", { ...content.areaAluna, cta: v })} />
+              <Field labelText="Etiqueta" value={content.areaAluna.eyebrow} onChange={(v) => update("areaAluna", { ...content.areaAluna, eyebrow: v })} />
+              <Field labelText="Título" value={content.areaAluna.title} onChange={(v) => update("areaAluna", { ...content.areaAluna, title: v })} />
+              <Field labelText="Descrição" value={content.areaAluna.desc} onChange={(v) => update("areaAluna", { ...content.areaAluna, desc: v })} />
+            </div>
+
             <h2 className="mb-4 font-serif text-xl italic text-ocean">Contato e informações do studio</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field labelText="Nome do studio" value={content.studio.brandName} onChange={(v) => update("studio", { ...content.studio, brandName: v })} />
@@ -656,7 +665,6 @@ function AdminPage() {
               <Field labelText="Texto do Instagram" value={content.studio.instagramNote} onChange={(v) => update("studio", { ...content.studio, instagramNote: v })} />
               <Field labelText="E-mail" value={content.studio.email} onChange={(v) => update("studio", { ...content.studio, email: v })} />
               <Field labelText="Texto do e-mail" value={content.studio.emailNote} onChange={(v) => update("studio", { ...content.studio, emailNote: v })} />
-              <Field labelText="Link do app das alunas" value={content.studio.appUrl} onChange={(v) => update("studio", { ...content.studio, appUrl: v })} />
               <Field labelText="Balão flutuante do WhatsApp" value={content.studio.floatingWhatsText} onChange={(v) => update("studio", { ...content.studio, floatingWhatsText: v })} />
             </div>
           </section>
