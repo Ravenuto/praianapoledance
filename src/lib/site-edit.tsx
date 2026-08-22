@@ -105,3 +105,63 @@ export function EdImage({ which, children }: { which: "hero" | "logo"; children:
     </span>
   );
 }
+
+/** Envolve um link para permitir editar a URL no modo de edição. */
+export function EdLink({
+  path,
+  value,
+  children,
+}: {
+  path: string;
+  value: string;
+  children: ReactNode;
+}) {
+  const api = useEdit();
+  const [draft, setDraft] = useState<string | null>(null);
+
+  if (!api?.editing) return <>{children}</>;
+
+  return (
+    <span className="relative inline-block">
+      <span
+        onClickCapture={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setDraft(value ?? "");
+        }}
+        className="block cursor-pointer rounded-[inherit] outline-1 outline-dashed outline-gold/70"
+        title="Clique para editar o link"
+      >
+        {children}
+      </span>
+      {draft !== null && (
+        <span className="absolute left-0 top-full z-50 mt-2 flex w-[min(320px,80vw)] items-center gap-2 rounded-xl bg-white p-2 shadow-xl ring-1 ring-ocean/20">
+          <input
+            autoFocus
+            value={draft}
+            placeholder="https://..."
+            onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                api.setValue(path, draft);
+                setDraft(null);
+              }
+              if (e.key === "Escape") setDraft(null);
+            }}
+            className="min-w-0 flex-1 rounded-md bg-sand/60 px-2 py-1 text-xs text-ink outline-none"
+          />
+          <button
+            type="button"
+            onClick={() => {
+              api.setValue(path, draft);
+              setDraft(null);
+            }}
+            className="rounded-md bg-ocean px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-white"
+          >
+            Ok
+          </button>
+        </span>
+      )}
+    </span>
+  );
+}

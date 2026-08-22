@@ -7,7 +7,7 @@ import {
   useSiteContent,
   type SiteContent,
 } from "@/lib/site-content";
-import { Ed, EdImage, EditProvider, type EditApi } from "@/lib/site-edit";
+import { Ed, EdImage, EdLink, EditProvider, type EditApi } from "@/lib/site-edit";
 
 const NAV = [
   { label: "Início", href: "#home" },
@@ -123,12 +123,16 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-self-end">
           <ThemeToggle className="h-9 w-9" />
-          <a
-            href={studio.appUrl}
-            className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105 whitespace-nowrap"
-          >
-            Área da Aluna
-          </a>
+          <EdLink path="studio.appUrl" value={studio.appUrl}>
+            <a
+              href={studio.appUrl || undefined}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden md:inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sand hover:bg-deep transition-all hover:scale-105 whitespace-nowrap"
+            >
+              Área da Aluna
+            </a>
+          </EdLink>
           <button
             aria-label="Abrir menu"
             onClick={() => setOpen((o) => !o)}
@@ -149,7 +153,7 @@ function Navbar() {
                 {n.label}
               </a>
             ))}
-            <a href={studio.appUrl} className="mt-2 inline-flex items-center justify-center rounded-full bg-ocean px-4 py-3 text-xs font-semibold uppercase tracking-widest text-sand">
+            <a href={studio.appUrl || undefined} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center justify-center rounded-full bg-ocean px-4 py-3 text-xs font-semibold uppercase tracking-widest text-sand">
               Área da Aluna
             </a>
           </div>
@@ -488,13 +492,17 @@ function AreaAluna() {
             </p>
           </div>
           <div className="md:justify-self-end">
+            <EdLink path="studio.appUrl" value={studio.appUrl}>
             <a
-              href={studio.appUrl}
+              href={studio.appUrl || undefined}
+              target="_blank"
+              rel="noreferrer"
               className="group inline-flex items-center gap-3 rounded-full bg-gold text-ocean px-7 py-4 text-sm font-bold uppercase tracking-widest shadow-[0_20px_60px_-15px_rgba(245,166,35,0.6)] hover:scale-105 transition-transform"
             >
               <Ed path="areaAluna.cta" value={areaAluna.cta} />
               <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
             </a>
+            </EdLink>
           </div>
         </div>
       </div>
@@ -653,7 +661,7 @@ function Footer() {
             <ul className="space-y-2 text-sm">
               <li><a href={studio.whatsappUrl} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">WhatsApp</a></li>
               <li><a href={studio.instagramUrl} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">Instagram</a></li>
-              <li><a href={studio.appUrl} className="hover:text-gold transition-colors">Área da Aluna</a></li>
+              <li><a href={studio.appUrl || undefined} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">Área da Aluna</a></li>
               <li><Link to="/admin" className="hover:text-gold transition-colors">Administração</Link></li>
             </ul>
           </div>
