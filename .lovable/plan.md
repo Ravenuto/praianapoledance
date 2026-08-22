@@ -1,26 +1,16 @@
-# Por que as imagens sumiram
+# Editar o link da Área da Aluna
 
-## O que aconteceu
+Hoje o link do app existe no painel, mas está escondido no fim da aba **Contato** (campo "Link do app das alunas"), longe de onde você edita os textos da Área da Aluna. Na prévia clicável dá para trocar o texto, mas não o endereço do botão — por isso a sensação de que o link não é editável.
 
-O conteúdo do site é salvo no banco (tabela `site_content`). Hoje ele guarda para a logo e para a foto do studio os caminhos:
+## O que muda
 
-```text
-/src/assets/logo-praiana.png
-/src/assets/studio.png
-```
-
-Esses caminhos só funcionam no ambiente de desenvolvimento. No site publicado/preview compilado, as imagens ficam em endereços diferentes (com nome versionado), então esses dois caminhos não existem mais e o navegador não mostra nada.
-
-Ou seja: as imagens não foram apagadas — o banco está apontando para um endereço que não existe no site publicado.
-
-## Correção
-
-1. **Ignorar caminhos inválidos**: ao carregar o conteúdo, se a imagem gravada começar com `/src/assets/`, usar automaticamente a imagem padrão embutida no site (logo e foto atuais). Isso já resolve a exibição imediatamente, sem precisar salvar nada.
-2. **Impedir que volte a acontecer**: nunca gravar os caminhos das imagens padrão no banco. Ao salvar pelo painel, se a imagem for a padrão, guardar um marcador (`default`) em vez do caminho do arquivo.
-3. **Imagens enviadas por você continuam iguais**: as trocadas pelo painel são enviadas para o armazenamento do backend e têm link estável — essas não são afetadas.
+1. **Bloco próprio no painel**: criar um cartão "Área da Aluna" com os campos de texto (etiqueta, título, descrição, texto do botão) e, junto deles, o campo **Link do app**. Ficará na aba Contato, no topo, em vez do campo solto no meio dos dados de contato.
+2. **Edição pela prévia**: no modo de edição, clicar no botão "Acessar o app" (na seção Área da Aluna, no topo do site e no rodapé) abre um pequeno campo para colar/alterar o link, em vez de navegar para fora.
+3. **Comportamento do link no site**: o link do app passa a abrir em nova aba, e se estiver vazio o botão não navega para "#".
 
 ## Detalhes técnicos
 
-- `src/lib/site-content.ts`: em `mergeContent`, sanear `images.hero` / `images.logo` — valores vazios, `"default"` ou que comecem com `/src/assets/` passam a usar os imports `studioImg` / `logoImg`. Em `saveSiteContent`, converter de volta para `"default"` quando o valor for igual ao import padrão.
-- Nenhuma alteração de banco é necessária; o dado antigo passa a ser tratado como padrão.
-- Verificação: abrir a home e o painel `/admin` e confirmar que logo (header, hero, rodapé) e foto do studio aparecem, e que trocar uma imagem pelo painel e salvar continua funcionando.
+- `src/routes/_authenticated/admin.tsx`: mover/duplicar o `Field` de `studio.appUrl` para um novo grupo "Área da Aluna" junto dos campos de `content.areaAluna`.
+- `src/lib/site-edit.tsx`: novo componente `EdLink` (padrão do `Ed`, mas edita um caminho de URL e intercepta o clique quando `editing` está ativo).
+- `src/components/site/PraianaSite.tsx`: envolver os três links que usam `studio.appUrl` com `EdLink` e adicionar `target="_blank" rel="noreferrer"`.
+- Nenhuma mudança de banco de dados: `appUrl` já faz parte do conteúdo salvo.
