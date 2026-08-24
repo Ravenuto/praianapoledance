@@ -565,7 +565,17 @@ function mapSrc(raw: string | undefined, addressLabel: string): string | null {
     if (/^https?:\/\/[^\s]*google\.[^\s]*\/maps\/embed/i.test(url)) return url;
     if (/^https?:\/\//i.test(url)) {
       if (/output=embed/i.test(url)) return url;
-      return `https://www.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+      // link normal do Maps: tenta extrair coordenadas, ?q= ou /place/<nome>
+      const coords = url.match(/[@!](-?\d+\.\d+),(-?\d+\.\d+)/);
+      if (coords) return `https://www.google.com/maps?q=${coords[1]},${coords[2]}&z=17&output=embed`;
+      const q = url.match(/[?&]q=([^&]+)/);
+      if (q) return `https://www.google.com/maps?q=${q[1]}&output=embed`;
+      const place = url.match(/\/maps\/place\/([^/?]+)/);
+      if (place) return `https://www.google.com/maps?q=${place[1]}&output=embed`;
+      // links curtos (maps.app.goo.gl) não podem ser resolvidos: usa o endereço
+      return addressLabel
+        ? `https://www.google.com/maps?q=${encodeURIComponent(addressLabel)}&output=embed`
+        : null;
     }
     return `https://www.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
   }
