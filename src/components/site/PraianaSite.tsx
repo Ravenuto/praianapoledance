@@ -306,8 +306,6 @@ function Movimento() {
             <Ed path="movimento.text2" value={movimento.text2} multiline />
           </p>
         </div>
-
-        <div className="mt-14 h-px w-full bg-gradient-to-r from-transparent via-ocean/20 to-transparent" />
       </div>
     </section>
   );
