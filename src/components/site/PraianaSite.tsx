@@ -556,34 +556,6 @@ function AreaAluna() {
   );
 }
 
-/** Converte o que a admin colar (iframe, link do Maps, coordenadas) em uma URL de mapa incorporável. */
-function mapSrc(raw: string | undefined, addressLabel: string): string | null {
-  const value = (raw ?? "").trim();
-  if (value) {
-    const fromIframe = value.match(/src=["']([^"']+)["']/i);
-    const url = (fromIframe?.[1] ?? value).trim();
-    if (/^https?:\/\/[^\s]*google\.[^\s]*\/maps\/embed/i.test(url)) return url;
-    if (/^https?:\/\//i.test(url)) {
-      if (/output=embed/i.test(url)) return url;
-      // link normal do Maps: tenta extrair coordenadas, ?q= ou /place/<nome>
-      const coords = url.match(/[@!](-?\d+\.\d+),(-?\d+\.\d+)/);
-      if (coords) return `https://www.google.com/maps?q=${coords[1]},${coords[2]}&z=17&output=embed`;
-      const q = url.match(/[?&]q=([^&]+)/);
-      if (q) return `https://www.google.com/maps?q=${q[1]}&output=embed`;
-      const place = url.match(/\/maps\/place\/([^/?]+)/);
-      if (place) return `https://www.google.com/maps?q=${place[1]}&output=embed`;
-      // links curtos (maps.app.goo.gl) não podem ser resolvidos: usa o endereço
-      return addressLabel
-        ? `https://www.google.com/maps?q=${encodeURIComponent(addressLabel)}&output=embed`
-        : null;
-    }
-    return `https://www.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
-  }
-  if (addressLabel) {
-    return `https://www.google.com/maps?q=${encodeURIComponent(addressLabel)}&output=embed`;
-  }
-  return null;
-}
 
 function Contato() {
   const { studio, sections } = useContent();
@@ -599,7 +571,7 @@ function Contato() {
             <Ed path="sections.contatoTitle" value={sections.contatoTitle} />
           </h2>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 gap-5">
           {/* 1. Endereço */}
           <a
             href={studio.addressUrl}
@@ -684,19 +656,8 @@ function Contato() {
           </a>
         </div>
 
-        {mapSrc(studio.mapEmbedUrl, studio.addressLabel) && (
-          <div className="theme-light-locked reveal mt-8 overflow-hidden rounded-3xl ring-1 ring-ocean/10 bg-white">
-            <iframe
-              title={`Mapa — ${studio.addressLabel}`}
-              src={mapSrc(studio.mapEmbedUrl, studio.addressLabel)!}
-              className="w-full h-[300px] md:h-[380px] border-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        )}
       </div>
+
     </section>
   );
 }
