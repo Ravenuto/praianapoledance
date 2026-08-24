@@ -261,6 +261,7 @@ function AdminPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<TabKey>("preview");
+  const [dragFrom, setDragFrom] = useState<{ dayId: string; index: number } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const pendingImage = useRef<"hero" | "logo">("hero");
 
@@ -514,10 +515,21 @@ function AdminPage() {
                   + Adicionar dia
                 </button>
               </div>
+              <p className="mb-3 text-xs text-ink/50">
+                Arraste pela alça ⠿ (ou use as setas) para deixar na ordem que você quiser.
+              </p>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {content.schedule.map((day, i) => {
                   const setDay = (patch: Partial<typeof day>) =>
                     update("schedule", content.schedule.map((x, j) => (j === i ? { ...x, ...patch } : x)));
+                  const move = (from: number, to: number) => {
+                    if (to < 0 || to >= day.slots.length || from === to) return;
+                    const next = [...day.slots];
+                    const [moved] = next.splice(from, 1);
+                    if (!moved) return;
+                    next.splice(to, 0, moved);
+                    setDay({ slots: next });
+                  };
                   return (
                     <div key={day.id} className="rounded-2xl bg-ocean/5 p-4">
                       <input
@@ -527,15 +539,58 @@ function AdminPage() {
                       />
                       <div className="space-y-2">
                         {day.slots.map((s, k) => (
-                          <div key={k} className="flex items-center gap-2">
+                          <div
+                            key={k}
+                            draggable
+                            onDragStart={(e) => {
+                              setDragFrom({ dayId: day.id, index: k });
+                              e.dataTransfer.effectAllowed = "move";
+                            }}
+                            onDragOver={(e) => {
+                              if (dragFrom?.dayId === day.id) e.preventDefault();
+                            }}
+                            onDrop={(e) => {
+                              if (dragFrom?.dayId !== day.id) return;
+                              e.preventDefault();
+                              move(dragFrom.index, k);
+                              setDragFrom(null);
+                            }}
+                            onDragEnd={() => setDragFrom(null)}
+                            className={`flex items-center gap-1.5 rounded-xl bg-white/70 p-1 ${
+                              dragFrom?.dayId === day.id && dragFrom.index === k ? "opacity-50" : ""
+                            }`}
+                          >
+                            <span
+                              className="cursor-grab select-none px-1 text-sm text-ink/40"
+                              title="Arraste para reordenar"
+                              aria-hidden
+                            >
+                              ⠿
+                            </span>
+                            <div className="flex flex-col">
+                              <button
+                                className="text-[10px] leading-none text-ocean disabled:opacity-25"
+                                aria-label="Mover para cima"
+                                disabled={k === 0}
+                                onClick={() => move(k, k - 1)}
+                              >
+                                ▲
+                              </button>
+                              <button
+                                className="text-[10px] leading-none text-ocean disabled:opacity-25"
+                                aria-label="Mover para baixo"
+                                disabled={k === day.slots.length - 1}
+                                onClick={() => move(k, k + 1)}
+                              >
+                                ▼
+                              </button>
+                            </div>
                             <input
                               type="time"
                               value={s.time}
                               onChange={(e) =>
                                 setDay({
-                                  slots: sortSlots(
-                                    day.slots.map((x, m) => (m === k ? { ...x, time: e.target.value } : x)),
-                                  ),
+                                  slots: day.slots.map((x, m) => (m === k ? { ...x, time: e.target.value } : x)),
                                 })
                               }
                               className={`${field} w-28`}
@@ -562,22 +617,29 @@ function AdminPage() {
                         ))}
                         {day.slots.length === 0 && <p className="text-xs text-ink/40">Sem aulas neste dia.</p>}
                       </div>
-                      <div className="mt-3 flex items-center justify-between">
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
                         <button
                           className={btnGhost}
                           onClick={() =>
                             setDay({
-                              slots: sortSlots([
+                              slots: [
                                 ...day.slots,
                                 { time: "18:00", type: content.classTypes[0]?.id ?? "pole" },
-                              ]),
+                              ],
                             })
                           }
                         >
                           + Horário
                         </button>
                         <button
-                          className={btnDanger}
+                          className={btnGhost}
+                          disabled={day.slots.length < 2}
+                          onClick={() => setDay({ slots: sortSlots(day.slots) })}
+                        >
+                          Ordenar por horário
+                        </button>
+                        <button
+                          className={`${btnDanger} ml-auto`}
                           onClick={() => update("schedule", content.schedule.filter((_, j) => j !== i))}
                         >
                           Excluir dia

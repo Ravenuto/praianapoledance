@@ -277,12 +277,10 @@ function normalizeSchedule(value: unknown): DaySchedule[] {
         id: typeof d['id'] === "string" ? (d['id'] as string) : `dia-${i}`,
         name: typeof d['name'] === "string" ? (d['name'] as string) : `Dia ${i + 1}`,
         slots: Array.isArray(d['slots'])
-          ? sortSlots(
-              (d['slots'] as unknown[]).filter(isObject).map((s) => ({
-                time: String(s['time'] ?? "18:00"),
-                type: String(s['type'] ?? "pole"),
-              })),
-            )
+          ? (d['slots'] as unknown[]).filter(isObject).map((s) => ({
+              time: String(s['time'] ?? "18:00"),
+              type: String(s['type'] ?? "pole"),
+            }))
           : [],
       }));
   }
