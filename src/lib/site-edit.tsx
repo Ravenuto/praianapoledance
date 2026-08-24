@@ -86,7 +86,7 @@ export function Ed({
 }
 
 /** Overlay clicável sobre as imagens editáveis. */
-export function EdImage({ which, children }: { which: "hero" | "logo"; children: ReactNode }) {
+export function EdImage({ which, children }: { which: ImageKey; children: ReactNode }) {
   const api = useEdit();
   if (!api?.editing || !api.pickImage) return <>{children}</>;
   return (
