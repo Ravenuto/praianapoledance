@@ -62,6 +62,7 @@ export type SiteContent = {
     appUrl: string;
     addressLabel: string;
     addressUrl: string;
+    mapEmbedUrl: string;
     addressNote: string;
     floatingWhatsText: string;
   };
@@ -129,6 +130,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     appUrl: "#",
     addressLabel: "Rua das Ondas, 123",
     addressUrl: "https://maps.google.com/?q=Rua+das+Ondas+123",
+    mapEmbedUrl: "",
     addressNote: "",
     floatingWhatsText: "Bora marcar sua aula? 🌊",
   },

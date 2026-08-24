@@ -979,6 +979,7 @@ function AdminPage() {
               <Field labelText="Frase do rodapé" value={content.studio.tagline} onChange={(v) => update("studio", { ...content.studio, tagline: v })} />
               <Field labelText="Endereço" value={content.studio.addressLabel} onChange={(v) => update("studio", { ...content.studio, addressLabel: v })} />
               <Field labelText="Link do mapa" value={content.studio.addressUrl} onChange={(v) => update("studio", { ...content.studio, addressUrl: v })} />
+              <Field labelText="Link do mapa exibido no site (Google Maps: Compartilhar > Incorporar um mapa, ou cole o link normal)" value={content.studio.mapEmbedUrl} onChange={(v) => update("studio", { ...content.studio, mapEmbedUrl: v })} />
               <Field labelText="Complemento do endereço" value={content.studio.addressNote} onChange={(v) => update("studio", { ...content.studio, addressNote: v })} />
               <Field labelText="Link do WhatsApp" value={content.studio.whatsappUrl} onChange={(v) => update("studio", { ...content.studio, whatsappUrl: v })} />
               <Field labelText="Telefone exibido" value={content.studio.whatsappLabel} onChange={(v) => update("studio", { ...content.studio, whatsappLabel: v })} />
