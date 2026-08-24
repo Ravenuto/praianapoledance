@@ -282,6 +282,7 @@ function CropModal({
   const [dragging, setDragging] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
   const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
 
   useEffect(() => {
@@ -291,16 +292,25 @@ function CropModal({
     }
   }, [state]);
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !state) return;
+    const ro = new ResizeObserver((entries) => {
+      const cr = entries[0]?.contentRect;
+      if (cr) setContainerSize({ w: cr.width, h: cr.height });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [state]);
+
   if (!state) return null;
 
   const aspect = aspectForImage(state.which);
 
   const handleConfirm = () => {
-    const container = containerRef.current;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    const cropW = rect.width;
-    const cropH = rect.height;
+    const cropW = containerSize.w;
+    const cropH = containerSize.h;
+    if (!cropW || !cropH) return;
     const baseScale = Math.max(cropW / state.naturalWidth, cropH / state.naturalHeight);
     const totalScale = baseScale * zoom;
     const outScale = Math.min(2, Math.max(1, 1200 / cropW));
@@ -335,18 +345,11 @@ function CropModal({
     img.src = state.url;
   };
 
-  const imgStyle = () => {
-    const container = containerRef.current;
-    if (!container) return { width: 0, height: 0 };
-    const rect = container.getBoundingClientRect();
-    const baseScale = Math.max(rect.width / state.naturalWidth, rect.height / state.naturalHeight);
-    return {
-      width: state.naturalWidth * baseScale * zoom,
-      height: state.naturalHeight * baseScale * zoom,
-    };
-  };
-
-  const size = imgStyle();
+  const baseScale = containerSize.w && containerSize.h
+    ? Math.max(containerSize.w / state.naturalWidth, containerSize.h / state.naturalHeight)
+    : 1;
+  const imgW = state.naturalWidth * baseScale * zoom;
+  const imgH = state.naturalHeight * baseScale * zoom;
 
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-ink/70 p-4 backdrop-blur-sm">
