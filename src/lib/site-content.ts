@@ -144,7 +144,16 @@ export const DEFAULT_CONTENT: SiteContent = {
     footerCopyright: "© 2024 PRAIANA POLE STUDIO",
     footerNote: "FEITO COM AMOR",
   },
-  images: { hero: studioImg, logo: logoImg },
+  movimento: {
+    titleLead: "O",
+    titleHighlight: "movimento",
+    badge: "Sinfonia das marés",
+    text1:
+      "A liberdade flui no ritmo das marés. Na Praiana, enxergamos o pole dance como uma extensão da natureza: uma dança entre a força da terra e a fluidez da água.",
+    text2:
+      "Aqui, cada inversão é um novo horizonte e cada movimento é uma celebração da sua própria essência. Encontre o seu equilíbrio entre o céu e o mar.",
+  },
+  images: { hero: studioImg, logo: logoImg, movimento: movimentoImg },
   modalities: [
     {
       title: "Pole Dance",
