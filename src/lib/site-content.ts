@@ -260,6 +260,15 @@ function isObject(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
 }
 
+/** Ordena horários de forma crescente (HH:MM). */
+export function sortSlots(slots: Slot[]): Slot[] {
+  const key = (t: string) => {
+    const [h, m] = String(t ?? "").split(":");
+    return (Number(h) || 0) * 60 + (Number(m) || 0);
+  };
+  return [...slots].sort((a, b) => key(a.time) - key(b.time));
+}
+
 function normalizeSchedule(value: unknown): DaySchedule[] {
   if (Array.isArray(value)) {
     return value

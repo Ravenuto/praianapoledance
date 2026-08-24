@@ -355,7 +355,7 @@ function Horarios() {
                 </p>
               </div>
               <div className="space-y-2">
-                {day.slots.map((s, j) => {
+                {sortSlots(day.slots).map((s, j) => {
                   const c = meta(s.type);
                   return (
                     <div
