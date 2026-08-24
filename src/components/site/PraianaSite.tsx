@@ -599,7 +599,7 @@ function Contato() {
             <Ed path="sections.contatoTitle" value={sections.contatoTitle} />
           </h2>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 gap-5">
           {/* 1. Endereço */}
           <a
             href={studio.addressUrl}
@@ -684,19 +684,8 @@ function Contato() {
           </a>
         </div>
 
-        {mapSrc(studio.mapEmbedUrl, studio.addressLabel) && (
-          <div className="theme-light-locked reveal mt-8 overflow-hidden rounded-3xl ring-1 ring-ocean/10 bg-white">
-            <iframe
-              title={`Mapa — ${studio.addressLabel}`}
-              src={mapSrc(studio.mapEmbedUrl, studio.addressLabel)!}
-              className="w-full h-[300px] md:h-[380px] border-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        )}
       </div>
+
     </section>
   );
 }
