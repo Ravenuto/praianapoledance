@@ -261,6 +261,7 @@ function AdminPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<TabKey>("preview");
+  const [dragFrom, setDragFrom] = useState<{ dayId: string; index: number } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const pendingImage = useRef<"hero" | "logo">("hero");
 
