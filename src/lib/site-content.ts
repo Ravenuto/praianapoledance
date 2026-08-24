@@ -372,6 +372,7 @@ export function mergeContent(stored: unknown): SiteContent {
   out['images'] = {
     hero: fixImg(imgs['hero'], studioImg),
     logo: fixImg(imgs['logo'], logoImg),
+    movimento: fixImg(imgs['movimento'], movimentoImg),
   };
   return out as SiteContent;
 }
