@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import studioImg from "@/assets/studio.png";
 import logoImg from "@/assets/logo-praiana.png";
+import movimentoImg from "@/assets/movimento.jpg";
+
+export type ImageKey = "hero" | "logo" | "movimento";
 
 export type Slot = { time: string; type: string };
 export type DaySchedule = { id: string; name: string; slots: Slot[] };
