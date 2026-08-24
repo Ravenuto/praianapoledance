@@ -260,6 +260,15 @@ function isObject(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
 }
 
+/** Ordena horários de forma crescente (HH:MM). */
+export function sortSlots(slots: Slot[]): Slot[] {
+  const key = (t: string) => {
+    const [h, m] = String(t ?? "").split(":");
+    return (Number(h) || 0) * 60 + (Number(m) || 0);
+  };
+  return [...slots].sort((a, b) => key(a.time) - key(b.time));
+}
+
 function normalizeSchedule(value: unknown): DaySchedule[] {
   if (Array.isArray(value)) {
     return value
@@ -268,10 +277,12 @@ function normalizeSchedule(value: unknown): DaySchedule[] {
         id: typeof d['id'] === "string" ? (d['id'] as string) : `dia-${i}`,
         name: typeof d['name'] === "string" ? (d['name'] as string) : `Dia ${i + 1}`,
         slots: Array.isArray(d['slots'])
-          ? (d['slots'] as unknown[]).filter(isObject).map((s) => ({
-              time: String(s['time'] ?? "18:00"),
-              type: String(s['type'] ?? "pole"),
-            }))
+          ? sortSlots(
+              (d['slots'] as unknown[]).filter(isObject).map((s) => ({
+                time: String(s['time'] ?? "18:00"),
+                type: String(s['type'] ?? "pole"),
+              })),
+            )
           : [],
       }));
   }
@@ -281,10 +292,12 @@ function normalizeSchedule(value: unknown): DaySchedule[] {
       id: d.toLowerCase(),
       name: LEGACY_FULL[d] ?? d,
       slots: Array.isArray(value[d])
-        ? (value[d] as unknown[]).filter(isObject).map((s) => ({
-            time: String(s['time'] ?? "18:00"),
-            type: String(s['type'] ?? "pole"),
-          }))
+        ? sortSlots(
+            (value[d] as unknown[]).filter(isObject).map((s) => ({
+              time: String(s['time'] ?? "18:00"),
+              type: String(s['type'] ?? "pole"),
+            })),
+          )
         : [],
     }));
   }

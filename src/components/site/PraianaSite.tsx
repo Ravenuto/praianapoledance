@@ -4,6 +4,7 @@ import { MessageCircle, Instagram, Sun, Moon } from "lucide-react";
 import {
   DEFAULT_CONTENT,
   colorOf,
+  sortSlots,
   useSiteContent,
   type SiteContent,
 } from "@/lib/site-content";
@@ -355,7 +356,7 @@ function Horarios() {
                 </p>
               </div>
               <div className="space-y-2">
-                {day.slots.map((s, j) => {
+                {sortSlots(day.slots).map((s, j) => {
                   const c = meta(s.type);
                   return (
                     <div

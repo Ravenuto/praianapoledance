@@ -8,6 +8,7 @@ import {
   fetchSiteContent,
   saveSiteContent,
   setPath,
+  sortSlots,
   type ColorKey,
   type SiteContent,
 } from "@/lib/site-content";
@@ -531,7 +532,11 @@ function AdminPage() {
                               type="time"
                               value={s.time}
                               onChange={(e) =>
-                                setDay({ slots: day.slots.map((x, m) => (m === k ? { ...x, time: e.target.value } : x)) })
+                                setDay({
+                                  slots: sortSlots(
+                                    day.slots.map((x, m) => (m === k ? { ...x, time: e.target.value } : x)),
+                                  ),
+                                })
                               }
                               className={`${field} w-28`}
                             />
@@ -562,7 +567,10 @@ function AdminPage() {
                           className={btnGhost}
                           onClick={() =>
                             setDay({
-                              slots: [...day.slots, { time: "18:00", type: content.classTypes[0]?.id ?? "pole" }],
+                              slots: sortSlots([
+                                ...day.slots,
+                                { time: "18:00", type: content.classTypes[0]?.id ?? "pole" },
+                              ]),
                             })
                           }
                         >
