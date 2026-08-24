@@ -101,9 +101,9 @@ function Navbar() {
         }`}
       >
         <a href="#home" className="flex min-w-0 items-center gap-2.5 group">
-          <span className="shrink-0 relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110 dark:bg-white dark:shadow-[0_0_0_2px_white]">
+          <span className="shrink-0 relative flex h-11 w-11 items-center justify-center transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110">
             <EdImage which="logo">
-              <Logo className="h-full w-full object-cover" />
+              <Logo className="h-full w-full object-contain" />
             </EdImage>
           </span>
           <span className="min-w-0 truncate font-serif italic tracking-tight text-ocean text-[15px] sm:text-base md:text-lg">
@@ -252,9 +252,9 @@ function Hero() {
           {/* Floating logo */}
           <div className="absolute -top-6 -right-4 md:-right-8 z-10 animate-float-y">
             <div className="relative">
-              <div className="relative h-20 w-20 md:h-32 md:w-32 overflow-hidden rounded-full bg-sand dark:bg-white ring-2 ring-white/70 shadow-[0_18px_50px_-15px_rgba(17,53,92,0.45)] grid place-items-center">
+              <div className="relative h-20 w-20 md:h-32 md:w-32 grid place-items-center drop-shadow-[0_18px_35px_rgba(17,53,92,0.45)]">
                 <EdImage which="logo">
-                  <Logo className="h-full w-full object-cover" />
+                  <Logo className="h-full w-full object-contain" />
                 </EdImage>
               </div>
             </div>
@@ -681,8 +681,8 @@ function Footer() {
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-3">
-              <div className="h-14 w-14 overflow-hidden rounded-full bg-sand dark:bg-white grid place-items-center">
-                <Logo className="h-full w-full object-cover" />
+              <div className="h-14 w-14 grid place-items-center">
+                <Logo className="h-full w-full object-contain" />
               </div>
               <div>
                 <p className="font-serif text-2xl italic text-sand leading-tight">{studio.brandName}</p>
