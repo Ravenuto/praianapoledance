@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode, type KeyboardEvent } from "react";
 import type { ImageKey } from "@/lib/site-content";
 
 export type EditApi = {
@@ -15,6 +15,37 @@ export function EditProvider({ value, children }: { value: EditApi | null; child
 
 export const useEdit = () => useContext(EditCtx);
 
+/** Renderiza texto com quebras de parágrafo (\n\n) e quebras de linha (\n). */
+function Paragraphs({ text, className = "" }: { text: string; className?: string }) {
+  if (!text) return null;
+  const paragraphs = text.split("\n\n");
+  return (
+    <>
+      {paragraphs.map((para, i) => (
+        <p key={i} className={`${className} ${i > 0 ? "mt-4" : ""}`}>
+          {para.split("\n").map((line, j, arr) => (
+            <span key={j}>
+              {line}
+              {j < arr.length - 1 && <br />}
+            </span>
+          ))}
+        </p>
+      ))}
+    </>
+  );
+}
+
+/** Insere texto na posição do cursor de um textarea/input. */
+function insertAtCursor(input: HTMLTextAreaElement, text: string) {
+  const start = input.selectionStart ?? 0;
+  const end = input.selectionEnd ?? 0;
+  const before = input.value.slice(0, start);
+  const after = input.value.slice(end);
+  input.value = before + text + after;
+  input.selectionStart = input.selectionEnd = start + text.length;
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
 /** Texto do site: normal em produção, clicável para editar no painel. */
 export function Ed({
   path,
@@ -30,7 +61,10 @@ export function Ed({
   const api = useEdit();
   const [draft, setDraft] = useState<string | null>(null);
 
-  if (!api?.editing) return <>{value}</>;
+  if (!api?.editing) {
+    if (!multiline) return <>{value}</>;
+    return <Paragraphs text={value} className={className} />;
+  }
 
   if (draft !== null) {
     const commit = () => {
@@ -49,8 +83,23 @@ export function Ed({
         {...shared}
         rows={4}
         onChange={(e) => setDraft(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") setDraft(null);
+        onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            setDraft(null);
+            return;
+          }
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            insertAtCursor(e.currentTarget, "\n\n");
+            setDraft(e.currentTarget.value);
+            return;
+          }
+          if (e.key === "Enter" && e.shiftKey) {
+            e.preventDefault();
+            insertAtCursor(e.currentTarget, "\n");
+            setDraft(e.currentTarget.value);
+          }
         }}
       />
     ) : (
@@ -80,7 +129,7 @@ export function Ed({
       }}
       className={`cursor-text rounded-md outline-1 outline-dashed outline-gold/70 hover:bg-gold/25 ${className}`}
     >
-      {value || "clique para escrever"}
+      {multiline ? <Paragraphs text={value} className={className} /> : value || "clique para escrever"}
     </span>
   );
 }
