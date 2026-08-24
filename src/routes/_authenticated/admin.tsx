@@ -13,6 +13,7 @@ import {
   type ImageKey,
   type SiteContent,
 } from "@/lib/site-content";
+import { X, ZoomIn } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -253,6 +254,183 @@ function LivePreview({ content, anchor }: { content: SiteContent; anchor: string
   );
 }
 
+function aspectForImage(which: ImageKey): number {
+  if (which === "logo") return 1 / 1;
+  if (which === "hero") return 3 / 4;
+  if (which === "movimento") return 21 / 9;
+  return 4 / 3;
+}
+
+type CropState = {
+  which: ImageKey;
+  file: File;
+  url: string;
+  naturalWidth: number;
+  naturalHeight: number;
+};
+
+function CropModal({
+  state,
+  onCancel,
+  onConfirm,
+}: {
+  state: CropState | null;
+  onCancel: () => void;
+  onConfirm: (blob: Blob) => void;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dragging, setDragging] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
+  const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
+
+  useEffect(() => {
+    if (state) {
+      setZoom(1);
+      setPos({ x: 0, y: 0 });
+    }
+  }, [state]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !state) return;
+    const ro = new ResizeObserver((entries) => {
+      const cr = entries[0]?.contentRect;
+      if (cr) setContainerSize({ w: cr.width, h: cr.height });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [state]);
+
+  if (!state) return null;
+
+  const aspect = aspectForImage(state.which);
+
+  const handleConfirm = () => {
+    const cropW = containerSize.w;
+    const cropH = containerSize.h;
+    if (!cropW || !cropH) return;
+    const baseScale = Math.max(cropW / state.naturalWidth, cropH / state.naturalHeight);
+    const totalScale = baseScale * zoom;
+    const outScale = Math.min(2, Math.max(1, 1200 / cropW));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(cropW * outScale);
+    canvas.height = Math.round(cropH * outScale);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      ctx.drawImage(
+        img,
+        Math.max(0, -pos.x / totalScale),
+        Math.max(0, -pos.y / totalScale),
+        cropW / totalScale,
+        cropH / totalScale,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      canvas.toBlob(
+        (blob) => {
+          if (blob) onConfirm(blob);
+        },
+        "image/jpeg",
+        0.92
+      );
+    };
+    img.src = state.url;
+  };
+
+  const baseScale = containerSize.w && containerSize.h
+    ? Math.max(containerSize.w / state.naturalWidth, containerSize.h / state.naturalHeight)
+    : 1;
+  const imgW = state.naturalWidth * baseScale * zoom;
+  const imgH = state.naturalHeight * baseScale * zoom;
+
+  return (
+    <div className="fixed inset-0 z-[100] grid place-items-center bg-ink/70 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-2xl rounded-3xl bg-sand p-6 shadow-2xl ring-1 ring-ocean/10">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <h3 className="font-serif text-xl italic text-ocean">Ajustar imagem</h3>
+            <p className="text-xs text-ink/60">Arraste para posicionar. Aproxime com o slider.</p>
+          </div>
+          <button onClick={onCancel} className="rounded-full p-2 hover:bg-ocean/10 text-ink/60">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div
+          ref={containerRef}
+          className="relative mx-auto w-full overflow-hidden rounded-2xl bg-ocean/10 ring-1 ring-ocean/20 cursor-move"
+          style={{ aspectRatio: `${aspect}` }}
+          onMouseDown={(e) => {
+            setDragging(true);
+            dragStart.current = { x: e.clientX, y: e.clientY, posX: pos.x, posY: pos.y };
+          }}
+          onMouseMove={(e) => {
+            if (!dragging) return;
+            const dx = e.clientX - dragStart.current.x;
+            const dy = e.clientY - dragStart.current.y;
+            setPos({ x: dragStart.current.posX + dx, y: dragStart.current.posY + dy });
+          }}
+          onMouseUp={() => setDragging(false)}
+          onMouseLeave={() => setDragging(false)}
+          onTouchStart={(e) => {
+            const t = e.touches[0];
+            setDragging(true);
+            dragStart.current = { x: t.clientX, y: t.clientY, posX: pos.x, posY: pos.y };
+          }}
+          onTouchMove={(e) => {
+            if (!dragging) return;
+            const t = e.touches[0];
+            const dx = t.clientX - dragStart.current.x;
+            const dy = t.clientY - dragStart.current.y;
+            setPos({ x: dragStart.current.posX + dx, y: dragStart.current.posY + dy });
+          }}
+          onTouchEnd={() => setDragging(false)}
+        >
+          <img
+            src={state.url}
+            alt="Prévia para corte"
+            draggable={false}
+            className="absolute left-0 top-0 select-none"
+            style={{
+              width: imgW,
+              height: imgH,
+              transform: `translate(${pos.x}px, ${pos.y}px)`,
+              transformOrigin: "top left",
+            }}
+          />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/60 shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]" />
+        </div>
+
+        <div className="mt-5 flex items-center gap-3">
+          <ZoomIn className="h-4 w-4 text-mist" />
+          <input
+            type="range"
+            min={1}
+            max={3}
+            step={0.05}
+            value={zoom}
+            onChange={(e) => setZoom(Number(e.target.value))}
+            className="flex-1 accent-ocean"
+          />
+        </div>
+
+        <div className="mt-6 flex justify-end gap-3">
+          <button onClick={onCancel} className={btnGhost}>Cancelar</button>
+          <button onClick={handleConfirm} className={btn}>Confirmar</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AdminPage() {
   const navigate = useNavigate();
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
@@ -263,6 +441,7 @@ function AdminPage() {
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<TabKey>("preview");
   const [dragFrom, setDragFrom] = useState<{ dayId: string; index: number } | null>(null);
+  const [crop, setCrop] = useState<CropState | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const pendingImage = useRef<ImageKey>("hero");
 
@@ -304,10 +483,10 @@ function AdminPage() {
     setSaving(false);
   };
 
-  const uploadImage = async (which: ImageKey, file: File) => {
+  const uploadImage = async (which: ImageKey, blob: Blob) => {
     setError(null);
-    const path = `${which}-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
-    const { error: upErr } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
+    const path = `${which}-${Date.now()}.jpg`;
+    const { error: upErr } = await supabase.storage.from("site-images").upload(path, blob, { upsert: true, contentType: "image/jpeg" });
     if (upErr) return setError(upErr.message);
     const { data, error: urlErr } = await supabase.storage
       .from("site-images")
@@ -356,8 +535,36 @@ function AdminPage() {
         className="hidden"
         onChange={(e) => {
           const f = e.target.files?.[0];
-          if (f) void uploadImage(pendingImage.current, f);
+          if (f) {
+            const url = URL.createObjectURL(f);
+            const img = new Image();
+            img.onload = () => {
+              setCrop({
+                which: pendingImage.current,
+                file: f,
+                url,
+                naturalWidth: img.naturalWidth,
+                naturalHeight: img.naturalHeight,
+              });
+            };
+            img.src = url;
+          }
           e.target.value = "";
+        }}
+      />
+
+      <CropModal
+        state={crop}
+        onCancel={() => {
+          if (crop) URL.revokeObjectURL(crop.url);
+          setCrop(null);
+        }}
+        onConfirm={(blob) => {
+          if (!crop) return;
+          const which = crop.which;
+          URL.revokeObjectURL(crop.url);
+          setCrop(null);
+          void uploadImage(which, blob);
         }}
       />
 
