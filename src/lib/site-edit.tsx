@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
+import type { ImageKey } from "@/lib/site-content";
 
 export type EditApi = {
   editing: boolean;
