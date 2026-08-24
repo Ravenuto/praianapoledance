@@ -22,14 +22,14 @@ function Paragraphs({ text, className = "" }: { text: string; className?: string
   return (
     <>
       {paragraphs.map((para, i) => (
-        <p key={i} className={`${className} ${i > 0 ? "mt-4" : ""}`}>
+        <div key={i} className={`${className} ${i > 0 ? "mt-4" : ""}`}>
           {para.split("\n").map((line, j, arr) => (
             <span key={j}>
               {line}
               {j < arr.length - 1 && <br />}
             </span>
           ))}
-        </p>
+        </div>
       ))}
     </>
   );
