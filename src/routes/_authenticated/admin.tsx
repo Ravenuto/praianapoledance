@@ -531,7 +531,11 @@ function AdminPage() {
                               type="time"
                               value={s.time}
                               onChange={(e) =>
-                                setDay({ slots: day.slots.map((x, m) => (m === k ? { ...x, time: e.target.value } : x)) })
+                                setDay({
+                                  slots: sortSlots(
+                                    day.slots.map((x, m) => (m === k ? { ...x, time: e.target.value } : x)),
+                                  ),
+                                })
                               }
                               className={`${field} w-28`}
                             />
