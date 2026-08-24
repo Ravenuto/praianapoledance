@@ -774,6 +774,7 @@ export default function PraianaSite(props: { content?: SiteContent; edit?: EditA
           <Navbar />
           <main>
             <Hero />
+            <Movimento />
             <Modalidades />
             <Horarios />
             <Valores />
