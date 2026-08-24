@@ -77,7 +77,14 @@ export type SiteContent = {
     footerCopyright: string;
     footerNote: string;
   };
-  images: { hero: string; logo: string };
+  movimento: {
+    titleLead: string;
+    titleHighlight: string;
+    badge: string;
+    text1: string;
+    text2: string;
+  };
+  images: { hero: string; logo: string; movimento: string };
   modalities: Modality[];
   classTypes: ClassTypeDef[];
   schedule: DaySchedule[];
