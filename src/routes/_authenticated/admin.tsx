@@ -263,7 +263,7 @@ function AdminPage() {
   const [tab, setTab] = useState<TabKey>("preview");
   const [dragFrom, setDragFrom] = useState<{ dayId: string; index: number } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const pendingImage = useRef<"hero" | "logo">("hero");
+  const pendingImage = useRef<ImageKey>("hero");
 
   useEffect(() => {
     (async () => {
