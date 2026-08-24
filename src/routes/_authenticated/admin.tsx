@@ -543,9 +543,6 @@ function AdminPage() {
                 which: pendingImage.current,
                 file: f,
                 url,
-                scale: 1,
-                x: 0,
-                y: 0,
                 naturalWidth: img.naturalWidth,
                 naturalHeight: img.naturalHeight,
               });
