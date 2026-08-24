@@ -13,6 +13,7 @@ import {
   type ImageKey,
   type SiteContent,
 } from "@/lib/site-content";
+import { X, ZoomIn } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
