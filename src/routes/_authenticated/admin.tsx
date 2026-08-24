@@ -265,9 +265,6 @@ type CropState = {
   which: ImageKey;
   file: File;
   url: string;
-  scale: number;
-  x: number;
-  y: number;
   naturalWidth: number;
   naturalHeight: number;
 };
@@ -284,12 +281,12 @@ function CropModal({
   const containerRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [scale, setScale] = useState(1);
+  const [zoom, setZoom] = useState(1);
   const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
 
   useEffect(() => {
     if (state) {
-      setScale(1);
+      setZoom(1);
       setPos({ x: 0, y: 0 });
     }
   }, [state]);
@@ -304,6 +301,8 @@ function CropModal({
     const rect = container.getBoundingClientRect();
     const cropW = rect.width;
     const cropH = rect.height;
+    const baseScale = Math.max(cropW / state.naturalWidth, cropH / state.naturalHeight);
+    const totalScale = baseScale * zoom;
     const outScale = Math.min(2, Math.max(1, 1200 / cropW));
     const canvas = document.createElement("canvas");
     canvas.width = Math.round(cropW * outScale);
@@ -316,10 +315,10 @@ function CropModal({
     img.onload = () => {
       ctx.drawImage(
         img,
-        Math.max(0, -pos.x / scale),
-        Math.max(0, -pos.y / scale),
-        cropW / scale,
-        cropH / scale,
+        Math.max(0, -pos.x / totalScale),
+        Math.max(0, -pos.y / totalScale),
+        cropW / totalScale,
+        cropH / totalScale,
         0,
         0,
         canvas.width,
@@ -329,12 +328,25 @@ function CropModal({
         (blob) => {
           if (blob) onConfirm(blob);
         },
-        state.file.type || "image/jpeg",
+        "image/jpeg",
         0.92
       );
     };
     img.src = state.url;
   };
+
+  const imgStyle = () => {
+    const container = containerRef.current;
+    if (!container) return { width: 0, height: 0 };
+    const rect = container.getBoundingClientRect();
+    const baseScale = Math.max(rect.width / state.naturalWidth, rect.height / state.naturalHeight);
+    return {
+      width: state.naturalWidth * baseScale * zoom,
+      height: state.naturalHeight * baseScale * zoom,
+    };
+  };
+
+  const size = imgStyle();
 
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-ink/70 p-4 backdrop-blur-sm">
@@ -383,9 +395,11 @@ function CropModal({
             src={state.url}
             alt="Prévia para corte"
             draggable={false}
-            className="absolute left-0 top-0 h-full w-full object-cover select-none"
+            className="absolute left-0 top-0 select-none"
             style={{
-              transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
+              width: size.width,
+              height: size.height,
+              transform: `translate(${pos.x}px, ${pos.y}px)`,
               transformOrigin: "top left",
             }}
           />
@@ -399,8 +413,8 @@ function CropModal({
             min={1}
             max={3}
             step={0.05}
-            value={scale}
-            onChange={(e) => setScale(Number(e.target.value))}
+            value={zoom}
+            onChange={(e) => setZoom(Number(e.target.value))}
             className="flex-1 accent-ocean"
           />
         </div>
