@@ -556,6 +556,25 @@ function AreaAluna() {
   );
 }
 
+/** Converte o que a admin colar (iframe, link do Maps, coordenadas) em uma URL de mapa incorporável. */
+function mapSrc(raw: string | undefined, addressLabel: string): string | null {
+  const value = (raw ?? "").trim();
+  if (value) {
+    const fromIframe = value.match(/src=["']([^"']+)["']/i);
+    const url = (fromIframe?.[1] ?? value).trim();
+    if (/^https?:\/\/[^\s]*google\.[^\s]*\/maps\/embed/i.test(url)) return url;
+    if (/^https?:\/\//i.test(url)) {
+      if (/output=embed/i.test(url)) return url;
+      return `https://www.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+    }
+    return `https://www.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+  }
+  if (addressLabel) {
+    return `https://www.google.com/maps?q=${encodeURIComponent(addressLabel)}&output=embed`;
+  }
+  return null;
+}
+
 function Contato() {
   const { studio, sections } = useContent();
   return (
