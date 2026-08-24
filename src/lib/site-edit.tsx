@@ -3,7 +3,7 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 export type EditApi = {
   editing: boolean;
   setValue: (path: string, value: string) => void;
-  pickImage?: (which: "hero" | "logo") => void;
+  pickImage?: (which: ImageKey) => void;
 };
 
 const EditCtx = createContext<EditApi | null>(null);
