@@ -518,8 +518,39 @@ function AdminPage() {
         className="hidden"
         onChange={(e) => {
           const f = e.target.files?.[0];
-          if (f) void uploadImage(pendingImage.current, f);
+          if (f) {
+            const url = URL.createObjectURL(f);
+            const img = new Image();
+            img.onload = () => {
+              setCrop({
+                which: pendingImage.current,
+                file: f,
+                url,
+                scale: 1,
+                x: 0,
+                y: 0,
+                naturalWidth: img.naturalWidth,
+                naturalHeight: img.naturalHeight,
+              });
+            };
+            img.src = url;
+          }
           e.target.value = "";
+        }}
+      />
+
+      <CropModal
+        state={crop}
+        onCancel={() => {
+          if (crop) URL.revokeObjectURL(crop.url);
+          setCrop(null);
+        }}
+        onConfirm={(blob) => {
+          if (!crop) return;
+          const which = crop.which;
+          URL.revokeObjectURL(crop.url);
+          setCrop(null);
+          void uploadImage(which, blob);
         }}
       />
 
