@@ -4,6 +4,7 @@ import { MessageCircle, Instagram, Sun, Moon } from "lucide-react";
 import {
   DEFAULT_CONTENT,
   colorOf,
+  sortSlots,
   useSiteContent,
   type SiteContent,
 } from "@/lib/site-content";
