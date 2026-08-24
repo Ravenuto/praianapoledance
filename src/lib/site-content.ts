@@ -277,10 +277,12 @@ function normalizeSchedule(value: unknown): DaySchedule[] {
         id: typeof d['id'] === "string" ? (d['id'] as string) : `dia-${i}`,
         name: typeof d['name'] === "string" ? (d['name'] as string) : `Dia ${i + 1}`,
         slots: Array.isArray(d['slots'])
-          ? (d['slots'] as unknown[]).filter(isObject).map((s) => ({
-              time: String(s['time'] ?? "18:00"),
-              type: String(s['type'] ?? "pole"),
-            }))
+          ? sortSlots(
+              (d['slots'] as unknown[]).filter(isObject).map((s) => ({
+                time: String(s['time'] ?? "18:00"),
+                type: String(s['type'] ?? "pole"),
+              })),
+            )
           : [],
       }));
   }
@@ -290,10 +292,12 @@ function normalizeSchedule(value: unknown): DaySchedule[] {
       id: d.toLowerCase(),
       name: LEGACY_FULL[d] ?? d,
       slots: Array.isArray(value[d])
-        ? (value[d] as unknown[]).filter(isObject).map((s) => ({
-            time: String(s['time'] ?? "18:00"),
-            type: String(s['type'] ?? "pole"),
-          }))
+        ? sortSlots(
+            (value[d] as unknown[]).filter(isObject).map((s) => ({
+              time: String(s['time'] ?? "18:00"),
+              type: String(s['type'] ?? "pole"),
+            })),
+          )
         : [],
     }));
   }
