@@ -466,10 +466,10 @@ function AdminPage() {
     setSaving(false);
   };
 
-  const uploadImage = async (which: ImageKey, file: File) => {
+  const uploadImage = async (which: ImageKey, blob: Blob) => {
     setError(null);
-    const path = `${which}-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
-    const { error: upErr } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
+    const path = `${which}-${Date.now()}.jpg`;
+    const { error: upErr } = await supabase.storage.from("site-images").upload(path, blob, { upsert: true, contentType: "image/jpeg" });
     if (upErr) return setError(upErr.message);
     const { data, error: urlErr } = await supabase.storage
       .from("site-images")
