@@ -400,8 +400,8 @@ function CropModal({
             draggable={false}
             className="absolute left-0 top-0 select-none"
             style={{
-              width: size.width,
-              height: size.height,
+              width: imgW,
+              height: imgH,
               transform: `translate(${pos.x}px, ${pos.y}px)`,
               transformOrigin: "top left",
             }}
