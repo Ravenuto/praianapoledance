@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import studioImg from "@/assets/studio.png";
 import logoImg from "@/assets/logo-praiana.png";
+import movimentoImg from "@/assets/movimento.jpg";
+
+export type ImageKey = "hero" | "logo" | "movimento";
 
 export type Slot = { time: string; type: string };
 export type DaySchedule = { id: string; name: string; slots: Slot[] };
@@ -74,7 +77,14 @@ export type SiteContent = {
     footerCopyright: string;
     footerNote: string;
   };
-  images: { hero: string; logo: string };
+  movimento: {
+    titleLead: string;
+    titleHighlight: string;
+    badge: string;
+    text1: string;
+    text2: string;
+  };
+  images: { hero: string; logo: string; movimento: string };
   modalities: Modality[];
   classTypes: ClassTypeDef[];
   schedule: DaySchedule[];
@@ -134,7 +144,16 @@ export const DEFAULT_CONTENT: SiteContent = {
     footerCopyright: "© 2024 PRAIANA POLE STUDIO",
     footerNote: "FEITO COM AMOR",
   },
-  images: { hero: studioImg, logo: logoImg },
+  movimento: {
+    titleLead: "O",
+    titleHighlight: "movimento",
+    badge: "Sinfonia das marés",
+    text1:
+      "A liberdade flui no ritmo das marés. Na Praiana, enxergamos o pole dance como uma extensão da natureza: uma dança entre a força da terra e a fluidez da água.",
+    text2:
+      "Aqui, cada inversão é um novo horizonte e cada movimento é uma celebração da sua própria essência. Encontre o seu equilíbrio entre o céu e o mar.",
+  },
+  images: { hero: studioImg, logo: logoImg, movimento: movimentoImg },
   modalities: [
     {
       title: "Pole Dance",
@@ -353,6 +372,7 @@ export function mergeContent(stored: unknown): SiteContent {
   out['images'] = {
     hero: fixImg(imgs['hero'], studioImg),
     logo: fixImg(imgs['logo'], logoImg),
+    movimento: fixImg(imgs['movimento'], movimentoImg),
   };
   return out as SiteContent;
 }

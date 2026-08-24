@@ -1,9 +1,10 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
+import type { ImageKey } from "@/lib/site-content";
 
 export type EditApi = {
   editing: boolean;
   setValue: (path: string, value: string) => void;
-  pickImage?: (which: "hero" | "logo") => void;
+  pickImage?: (which: ImageKey) => void;
 };
 
 const EditCtx = createContext<EditApi | null>(null);
@@ -85,7 +86,7 @@ export function Ed({
 }
 
 /** Overlay clicável sobre as imagens editáveis. */
-export function EdImage({ which, children }: { which: "hero" | "logo"; children: ReactNode }) {
+export function EdImage({ which, children }: { which: ImageKey; children: ReactNode }) {
   const api = useEdit();
   if (!api?.editing || !api.pickImage) return <>{children}</>;
   return (

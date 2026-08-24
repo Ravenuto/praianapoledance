@@ -265,6 +265,54 @@ function Hero() {
   );
 }
 
+function Movimento() {
+  const { movimento, images } = useContent();
+  return (
+    <section id="movimento" className="relative px-6 pt-10 pb-16 sm:pb-20 overflow-hidden">
+      <SectionBlend background="linear-gradient(180deg, rgba(250,247,242,1) 0%, rgba(250,247,242,0.98) 55%, rgba(38,106,174,0.06) 100%)" />
+      <div className="relative max-w-6xl mx-auto">
+        <div className="reveal flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10">
+          <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl leading-[0.95] text-ocean">
+            <Ed path="movimento.titleLead" value={movimento.titleLead} />{" "}
+            <span className="italic text-gold">
+              <Ed path="movimento.titleHighlight" value={movimento.titleHighlight} />
+            </span>
+          </h2>
+          <div className="flex items-center gap-4 shrink-0">
+            <span className="hidden sm:block h-px w-20 md:w-28 bg-gold/60" />
+            <span className="text-[11px] uppercase tracking-[0.3em] text-ink/50">
+              <Ed path="movimento.badge" value={movimento.badge} />
+            </span>
+          </div>
+        </div>
+
+        <div className="reveal group relative w-full aspect-[4/3] sm:aspect-[21/9] md:aspect-[3/1] rounded-[28px] overflow-hidden shadow-[0_30px_80px_-24px_rgba(17,53,92,0.4)] ring-1 ring-white/40">
+          <EdImage which="movimento">
+            <img
+              src={images.movimento}
+              alt="Aluna em movimento no pole ao ar livre, silhueta contra o céu"
+              className="w-full h-full object-cover transition-transform duration-[2.5s] group-hover:scale-105"
+              loading="lazy"
+            />
+          </EdImage>
+          <div className="absolute inset-0 bg-gradient-to-t from-ocean/35 via-transparent to-transparent pointer-events-none" />
+        </div>
+
+        <div className="reveal grid md:grid-cols-2 gap-8 md:gap-16 mt-10">
+          <p className="text-base sm:text-lg text-ink/75 leading-relaxed">
+            <Ed path="movimento.text1" value={movimento.text1} multiline />
+          </p>
+          <p className="text-base sm:text-lg text-ink/75 leading-relaxed">
+            <Ed path="movimento.text2" value={movimento.text2} multiline />
+          </p>
+        </div>
+
+        <div className="mt-14 h-px w-full bg-gradient-to-r from-transparent via-ocean/20 to-transparent" />
+      </div>
+    </section>
+  );
+}
+
 function Modalidades() {
   const { modalities, sections } = useContent();
   return (
@@ -726,6 +774,7 @@ export default function PraianaSite(props: { content?: SiteContent; edit?: EditA
           <Navbar />
           <main>
             <Hero />
+            <Movimento />
             <Modalidades />
             <Horarios />
             <Valores />

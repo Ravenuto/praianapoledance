@@ -10,6 +10,7 @@ import {
   setPath,
   sortSlots,
   type ColorKey,
+  type ImageKey,
   type SiteContent,
 } from "@/lib/site-content";
 
@@ -263,7 +264,7 @@ function AdminPage() {
   const [tab, setTab] = useState<TabKey>("preview");
   const [dragFrom, setDragFrom] = useState<{ dayId: string; index: number } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const pendingImage = useRef<"hero" | "logo">("hero");
+  const pendingImage = useRef<ImageKey>("hero");
 
   useEffect(() => {
     (async () => {
@@ -303,7 +304,7 @@ function AdminPage() {
     setSaving(false);
   };
 
-  const uploadImage = async (which: "hero" | "logo", file: File) => {
+  const uploadImage = async (which: ImageKey, file: File) => {
     setError(null);
     const path = `${which}-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
     const { error: upErr } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
@@ -316,7 +317,7 @@ function AdminPage() {
     setStatus("Imagem carregada. Clique em salvar para publicar.");
   };
 
-  const pickImage = (which: "hero" | "logo") => {
+  const pickImage = (which: ImageKey) => {
     pendingImage.current = which;
     fileRef.current?.click();
   };
