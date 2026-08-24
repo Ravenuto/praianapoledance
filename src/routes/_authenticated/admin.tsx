@@ -10,6 +10,7 @@ import {
   setPath,
   sortSlots,
   type ColorKey,
+  type ImageKey,
   type SiteContent,
 } from "@/lib/site-content";
 
