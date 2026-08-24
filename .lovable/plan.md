@@ -1,14 +1,23 @@
-# Publicar o site Praiana
+# Melhorias no painel de edição
 
 ## Objetivo
-Tornar o site acessível publicamente no domínio Lovable e nos domínios customizados já configurados.
+Tornar a inserção de imagens e a edição de textos mais práticas no painel administrativo do site Praiana.
 
-## Verificações já feitas
-- Build: OK (último build sem erros).
-- Segurança: 2 avisos, nenhum crítico bloqueador:
-  - Funções `SECURITY DEFINER` do Supabase acessíveis a usuários autenticados (esperado para o fluxo de aprovação de admins).
-  - Vulnerabilidades reportadas em dependências TanStack (`react-router`, `react-start`, `router-plugin`).
+## O que será feito
 
-## Ação
-1. Executar a publicação via `preview_ui--publish`.
-2. Informar a URL publicada e lembrar que domínios customizados já estão configurados.
+### 1. Redimensionar/cortar imagens antes de salvar
+- Ao escolher uma imagem no computador, abrir um modal de corte antes do upload.
+- Permitir arrastar e ajustar a área visível da imagem.
+- Fazer o upload já com o tamanho e corte escolhidos.
+
+### 2. Enter confirma a edição de texto
+- Campos de uma linha: Enter salva e fecha o campo (mantém comportamento atual).
+- Campos de várias linhas: Enter cria nova linha; **Shift+Enter** salva e fecha o campo.
+- Escape continua cancelando a edição.
+
+## Arquivos envolvidos
+- `src/lib/site-edit.tsx` — ajuste no comportamento do Enter nos campos editáveis.
+- `src/routes/_authenticated/admin.tsx` — modal de crop e integração com o fluxo de upload de imagens.
+
+## Biblioteca sugerida
+- `react-image-crop` (leve, baseada em Canvas) ou solução nativa com Canvas para evitar dependências pesadas.
