@@ -482,7 +482,7 @@ function Valores() {
             return (
               <article
                 key={i}
-                className={`theme-light-locked reveal relative rounded-3xl p-5 flex flex-col backdrop-blur transition-all duration-500 md:hover:-translate-y-1.5 ${
+                className={`theme-light-locked reveal relative rounded-3xl p-5 flex-col backdrop-blur transition-all duration-500 md:hover:-translate-y-1.5 ${
                   hiddenOnMobile ? "hidden md:flex" : "flex"
                 } ${card}`}
                 style={{ animationDelay: `${i * 80}ms` }}
