@@ -363,7 +363,11 @@ function CropModal({
         <div className="mb-4 flex items-center justify-between">
           <div>
             <h3 className="font-serif text-xl italic text-ocean">Ajustar imagem</h3>
-            <p className="text-xs text-ink/60">Arraste para posicionar. Aproxime com o slider.</p>
+            <p className="text-xs text-ink/60">
+              {round
+                ? "Ajuste dentro do círculo. Arraste para posicionar e aproxime com o slider."
+                : "Arraste para posicionar. Aproxime com o slider."}
+            </p>
           </div>
           <button onClick={onCancel} className="rounded-full p-2 hover:bg-ocean/10 text-ink/60">
             <X className="h-5 w-5" />
