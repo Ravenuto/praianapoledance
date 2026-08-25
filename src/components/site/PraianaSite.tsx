@@ -286,15 +286,16 @@ function Movimento() {
           </div>
         </div>
 
-        <div className="reveal group relative w-full aspect-[4/3] sm:aspect-[21/9] md:aspect-[3/1] rounded-[28px] overflow-hidden shadow-[0_30px_80px_-24px_rgba(17,53,92,0.4)] ring-1 ring-white/40">
+        <div className="reveal group relative w-full sm:aspect-[21/9] md:aspect-[3/1] rounded-[28px] overflow-hidden shadow-[0_30px_80px_-24px_rgba(17,53,92,0.4)] ring-1 ring-white/40">
           <EdImage which="movimento">
             <img
               src={images.movimento}
               alt="Aluna em movimento no pole ao ar livre, silhueta contra o céu"
-              className="w-full h-full object-cover transition-transform duration-[2.5s] group-hover:scale-105"
+              className="w-full h-auto object-contain sm:h-full sm:object-cover transition-transform duration-[2.5s] group-hover:scale-105"
               loading="lazy"
             />
           </EdImage>
+
           <div className="absolute inset-0 bg-gradient-to-t from-ocean/35 via-transparent to-transparent pointer-events-none" />
         </div>
 
