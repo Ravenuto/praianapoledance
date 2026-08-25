@@ -6,15 +6,18 @@ O nome do plano ("12 aulas") usa a fonte serifada em **itálico** e negrito. Os 
 
 ## Ajuste
 
-Aplicar o mesmo estilo do nome do plano (serifada + itálico + negrito) a todos os números do site:
+Aplicar o mesmo estilo do nome do plano (serifada + itálico + negrito) a **todos** os números do site, sem exceção:
 
 - Preços dos planos (mensal e semestral)
 - Preços dos extras: aula avulsa, particular e experimental
 - Horários da grade semanal
-- Qualquer número solto restante (quantidade de aulas, valores em cartões)
+- Seção de contato: telefone/WhatsApp, número do endereço, CEP
+- Rodapé: ano do copyright e qualquer número exibido
+- Números em textos e cartões (quantidade de aulas, níveis, etc.)
 
 Assim todos os algarismos ficam com o mesmo desenho do "12" que você gostou.
 
 ## Detalhes técnicos
 
-Em `src/components/site/PraianaSite.tsx`, adicionar `italic` (e ajustar peso quando necessário) nos spans que hoje têm apenas `font-serif` para valores numéricos — linhas dos preços (`text-[28px] ... font-bold`), horários da grade (`font-serif font-semibold text-sm`) e os cartões de extras. Nenhuma mudança de conteúdo, cores ou layout.
+Em `src/components/site/PraianaSite.tsx`, aplicar `font-serif italic` (com peso adequado) a todos os elementos que exibem dígitos — preços, horários, cartões de contato, endereço e rodapé. Para textos mistos (ex.: "Rua X, 123"), envolver apenas os números num `<span>` estilizado, ou usar um pequeno helper que formata a string destacando os dígitos. Nenhuma mudança de conteúdo, cores ou layout.
+
