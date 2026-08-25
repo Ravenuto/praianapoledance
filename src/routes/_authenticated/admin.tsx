@@ -499,10 +499,10 @@ function CropModal({
           <input
             type="range"
             min={1}
-            max={3}
+            max={4}
             step={0.05}
             value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
+            onChange={(e) => applyZoom(Number(e.target.value))}
             className="flex-1 accent-ocean"
           />
         </div>
