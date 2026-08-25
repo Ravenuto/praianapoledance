@@ -13,6 +13,8 @@ export type Modality = { title: string; desc: string; level: string };
 export type Plan = {
   name: string;
   price: string;
+  /** Sufixo exibido ao lado do valor. Ex.: "/mês", "no cartão". */
+  unit?: string;
   per: string;
   desc: string;
   highlight: boolean;
