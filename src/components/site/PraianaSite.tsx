@@ -482,7 +482,7 @@ function Valores() {
             return (
               <article
                 key={i}
-                className={`theme-light-locked reveal relative rounded-3xl p-5 flex-col transition-all duration-500 md:hover:-translate-y-1.5 ${
+                className={`theme-light-locked relative rounded-3xl p-5 flex-col transition-all duration-500 md:hover:-translate-y-1.5 ${
                   hiddenOnMobile ? "hidden md:flex" : "flex"
                 } ${card}`}
                 style={{ animationDelay: `${i * 80}ms` }}
@@ -503,7 +503,7 @@ function Valores() {
                 </p>
                 <div className="mt-4">
                   <div className="flex items-baseline gap-1 flex-wrap">
-                    <span className="font-serif text-[30px] leading-none font-bold text-ink">
+                    <span className="font-display text-[28px] leading-none font-bold tracking-tight text-ink">
                       <Ed path={`plans.${i}.price`} value={p.price} />
                     </span>
                     <span className="text-[11px] text-ink/50">
@@ -529,7 +529,7 @@ function Valores() {
                   target="_blank"
                   rel="noreferrer"
                   className={`mt-4 md:mt-5 inline-flex items-center justify-center rounded-xl py-2 text-[11px] font-bold uppercase tracking-wide transition-all hover:scale-[1.02] ${
-                    semestral ? "border border-ocean text-ocean" : "bg-ocean text-sand"
+                    "bg-ocean text-sand"
                   }`}
                 >
                   <Ed path="sections.planCta" value={sections.planCta} />
@@ -565,7 +565,7 @@ function Valores() {
                   <Ed path={`extras.${i}.desc`} value={e.desc} />
                 </p>
               </div>
-              <span className="font-serif text-2xl text-ocean">
+              <span className="font-display text-xl font-semibold tracking-tight text-ocean">
                 <Ed path={`extras.${i}.price`} value={e.price} />
               </span>
             </div>
@@ -628,22 +628,22 @@ function Contato() {
             <Ed path="sections.contatoTitle" value={sections.contatoTitle} />
           </h2>
         </div>
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="grid sm:grid-cols-2 gap-4">
           {/* 1. Endereço */}
           <a
             href={studio.addressUrl}
             target="_blank"
             rel="noreferrer"
-            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-5 hover:bg-white hover:-translate-y-1 transition-all"
           >
-            <div className="w-12 h-12 rounded-2xl bg-mist/15 text-mist grid place-items-center mb-4 group-hover:bg-mist group-hover:text-sand transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-mist/15 text-mist grid place-items-center mb-4 group-hover:bg-mist group-hover:text-sand transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z" />
                 <circle cx="12" cy="10" r="2.5" />
               </svg>
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">Endereço</p>
-            <p className="mt-1 font-serif text-xl text-ocean leading-snug">
+            <p className="mt-1 font-serif text-lg text-ocean leading-snug">
               <Ed path="studio.addressLabel" value={studio.addressLabel} />
             </p>
             <p className="mt-1 text-sm text-ink/60">
@@ -656,14 +656,14 @@ function Contato() {
             href={studio.whatsappUrl}
             target="_blank"
             rel="noreferrer"
-            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-5 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "120ms" }}
           >
-            <div className="w-12 h-12 rounded-2xl bg-[#dcf5e3] text-[#1f9d55] grid place-items-center mb-4 group-hover:bg-[#25D366] group-hover:text-white transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-[#dcf5e3] text-[#1f9d55] grid place-items-center mb-4 group-hover:bg-[#25D366] group-hover:text-white transition-colors">
               <MessageCircle className="w-5 h-5" strokeWidth={2} />
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">WhatsApp</p>
-            <p className="mt-1 font-serif text-xl text-ocean">
+            <p className="mt-1 font-serif text-lg text-ocean">
               <Ed path="studio.whatsappLabel" value={studio.whatsappLabel} />
             </p>
             <p className="mt-1 text-sm text-ink/60">
@@ -676,14 +676,14 @@ function Contato() {
             href={studio.instagramUrl}
             target="_blank"
             rel="noreferrer"
-            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-5 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "240ms" }}
           >
-            <div className="w-12 h-12 rounded-2xl bg-[#f4d8de] text-[#a04760] grid place-items-center mb-4 group-hover:bg-[#d97a8a] group-hover:text-sand transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-[#f4d8de] text-[#a04760] grid place-items-center mb-4 group-hover:bg-[#d97a8a] group-hover:text-sand transition-colors">
               <Instagram className="w-5 h-5" strokeWidth={2} />
             </div>
             <p className="text-xs uppercase tracking-widest text-mist">Instagram</p>
-            <p className="mt-1 font-serif text-xl text-ocean">
+            <p className="mt-1 font-serif text-lg text-ocean">
               <Ed path="studio.instagramLabel" value={studio.instagramLabel} />
             </p>
             <p className="mt-1 text-sm text-ink/60">
@@ -694,10 +694,10 @@ function Contato() {
           {/* 4. Email */}
           <a
             href={`mailto:${studio.email}`}
-            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-7 hover:bg-white hover:-translate-y-1 transition-all"
+            className="theme-light-locked reveal group rounded-3xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 p-5 hover:bg-white hover:-translate-y-1 transition-all"
             style={{ animationDelay: "360ms" }}
           >
-            <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-gold/15 text-gold grid place-items-center mb-4 group-hover:bg-gold group-hover:text-ocean transition-colors">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="5" width="18" height="14" rx="2" />
                 <path d="M3 7l9 6 9-6" />
