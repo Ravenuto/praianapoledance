@@ -503,7 +503,7 @@ function Valores() {
                 </p>
                 <div className="mt-4">
                   <div className="flex items-baseline gap-1 flex-wrap">
-                    <span className="font-display text-[28px] leading-none font-bold tracking-tight text-ink">
+                    <span className="font-serif text-[28px] leading-none font-bold tracking-tight text-ink">
                       <Ed path={`plans.${i}.price`} value={p.price} />
                     </span>
                     <span className="text-[11px] text-ink/50">
