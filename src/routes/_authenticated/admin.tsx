@@ -261,6 +261,12 @@ function aspectForImage(which: ImageKey): number {
   return 4 / 3;
 }
 
+/** Imagens exibidas em formato redondo no site. */
+function isRoundImage(which: ImageKey): boolean {
+  return which === "logo";
+}
+
+
 type CropState = {
   which: ImageKey;
   file: File;
