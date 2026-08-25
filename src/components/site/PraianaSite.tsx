@@ -431,35 +431,60 @@ function Valores() {
   const { plans, extras, studio, sections } = useContent();
   const sharedIdx = Math.max(0, plans.findIndex((p) => p.highlight));
   const shared = plans[sharedIdx]?.benefits ?? [];
+  const [aba, setAba] = useState<"Mensal" | "Semestral">("Mensal");
+
+  const tagOf = (p: (typeof plans)[number]) =>
+    p.tag ?? (/^\s*\d+\s*x/i.test(p.price) ? "Semestral" : "Mensal");
+  const isSemestral = (p: (typeof plans)[number]) => /semestr/i.test(tagOf(p));
+  const hasSemestral = plans.some(isSemestral);
+
   return (
     <section id="valores" className="relative py-16 md:py-24 overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(245,166,35,0.08) 0%, rgba(250,247,242,0.96) 30%, rgba(91,141,184,0.07) 100%)" />
       <div className="relative max-w-6xl mx-auto">
-        <div className="px-6 text-center mb-10 md:mb-14 reveal">
+        <div className="px-6 text-center mb-8 md:mb-14 reveal">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">
             <Ed path="sections.valoresEyebrow" value={sections.valoresEyebrow} />
           </span>
           <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">
             <Ed path="sections.valoresTitle" value={sections.valoresTitle} />
           </h2>
-          <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-mist md:hidden">
-            Arraste para o lado e compare
-          </p>
         </div>
 
-        <div className="no-scrollbar flex md:grid md:grid-cols-3 gap-4 md:gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-6 md:px-0 pt-4 md:pt-2 pb-4 md:pb-0">
+        {hasSemestral && (
+          <div className="md:hidden px-6 mb-6 flex justify-center gap-2">
+            {(["Mensal", "Semestral"] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setAba(t)}
+                aria-pressed={aba === t}
+                className={`rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors ${
+                  aba === t ? "bg-ocean text-sand" : "border border-ocean/40 text-ocean"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 px-6 md:px-0 pt-3 md:pt-2">
           {plans.map((p, i) => {
-            const tag = p.tag ?? (/^\s*\d+\s*x/i.test(p.price) ? "Semestral" : "Mensal");
-            const semestral = /semestr/i.test(tag);
+            const tag = tagOf(p);
+            const semestral = isSemestral(p);
+            const hiddenOnMobile = hasSemestral && (semestral ? aba !== "Semestral" : aba !== "Mensal");
             const card = p.highlight
               ? "bg-white ring-2 ring-gold shadow-[0_18px_45px_-24px_rgba(245,166,35,0.6)]"
               : semestral
-                ? "bg-horizon/10 dark:bg-horizon/10 ring-1 ring-horizon/30"
+                ? "bg-white dark:bg-white ring-1 ring-ocean/30 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.3)]"
                 : "bg-white/85 dark:bg-white ring-1 ring-ocean/10 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.25)]";
             return (
               <article
                 key={i}
-                className={`theme-light-locked reveal relative snap-center shrink-0 w-[248px] md:w-auto rounded-3xl p-5 flex flex-col backdrop-blur transition-all duration-500 md:hover:-translate-y-1.5 ${card}`}
+                className={`theme-light-locked reveal relative rounded-3xl p-5 flex flex-col backdrop-blur transition-all duration-500 md:hover:-translate-y-1.5 ${
+                  hiddenOnMobile ? "hidden md:flex" : "flex"
+                } ${card}`}
                 style={{ animationDelay: `${i * 80}ms` }}
               >
                 {p.highlight && (
@@ -513,6 +538,7 @@ function Valores() {
             );
           })}
         </div>
+
 
 
         {shared.length > 0 && (
