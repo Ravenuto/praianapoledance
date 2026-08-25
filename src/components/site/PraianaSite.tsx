@@ -409,7 +409,7 @@ function Horarios() {
                       className={`group rounded-2xl ${c.bg} ring-1 ${c.ring} px-3 py-2.5 transition-all hover:scale-[1.03] cursor-default`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className={`font-semibold text-sm ${c.text}`}>{s.time}</span>
+                        <span className={`font-serif font-semibold text-sm ${c.text}`}>{s.time}</span>
                         <span className={`w-1.5 h-1.5 rounded-full ${c.dot}`} />
                       </div>
                       <p className={`text-[11px] font-medium mt-0.5 ${c.text} opacity-80`}>{c.short}</p>
