@@ -362,21 +362,30 @@ export function mergeContent(stored: unknown): SiteContent {
   if (!Array.isArray(out['classTypes']) || (out['classTypes'] as unknown[]).length === 0) {
     out['classTypes'] = DEFAULT_CONTENT.classTypes;
   }
-  // imagens: caminhos de dev (/src/assets/...) ou vazios voltam para o bundle padrão
+  // imagens: caminhos internos do bundle (/src/assets/... ou /assets/hash.png) ou vazios voltam para o padrão
   const imgs = isObject(out['images']) ? (out['images'] as Record<string, unknown>) : {};
-  const fixImg = (v: unknown, fallback: string) => {
-    const s = typeof v === "string" ? v.trim() : "";
-    if (!s || s === "default" || s.startsWith("/src/assets/") || s.startsWith("src/assets/")) {
-      return fallback;
-    }
-    return s;
-  };
   out['images'] = {
     hero: fixImg(imgs['hero'], studioImg),
     logo: fixImg(imgs['logo'], logoImg),
     movimento: fixImg(imgs['movimento'], movimentoImg),
   };
   return out as SiteContent;
+}
+
+function isBundledPath(s: string) {
+  if (!s || s === "default") return true;
+  const path = s.startsWith("http") ? (() => { try { return new URL(s).pathname; } catch { return s; } })() : s;
+  return (
+    path.startsWith("/src/assets/") ||
+    path.startsWith("src/assets/") ||
+    path.startsWith("/assets/") ||
+    path.startsWith("assets/")
+  );
+}
+
+function fixImg(v: unknown, fallback: string) {
+  const s = typeof v === "string" ? v.trim() : "";
+  return isBundledPath(s) ? fallback : s;
 }
 
 export async function fetchSiteContent(): Promise<SiteContent> {
@@ -390,14 +399,21 @@ export async function fetchSiteContent(): Promise<SiteContent> {
 }
 
 export async function saveSiteContent(content: SiteContent) {
+  const value = JSON.parse(JSON.stringify(content)) as Record<string, unknown>;
+  // nunca gravar caminhos gerados pelo build: eles mudam a cada publicação e quebram
+  const imgs = isObject(value['images']) ? (value['images'] as Record<string, unknown>) : {};
+  value['images'] = {
+    hero: isBundledPath(String(imgs['hero'] ?? "")) ? "default" : imgs['hero'],
+    logo: isBundledPath(String(imgs['logo'] ?? "")) ? "default" : imgs['logo'],
+    movimento: isBundledPath(String(imgs['movimento'] ?? "")) ? "default" : imgs['movimento'],
+  };
   const { error } = await supabase
     .from("site_content")
-    .upsert(
-      { key: CONTENT_KEY, value: JSON.parse(JSON.stringify(content)) },
-      { onConflict: "key" },
-    );
+    .upsert({ key: CONTENT_KEY, value: value as never }, { onConflict: "key" });
+
   if (error) throw error;
 }
+
 
 export function useSiteContent(enabled = true) {
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
