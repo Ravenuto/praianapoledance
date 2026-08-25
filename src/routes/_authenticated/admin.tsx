@@ -290,6 +290,7 @@ function CropModal({
   const [zoom, setZoom] = useState(1);
   const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
   const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
+  const wheelRef = useRef<(e: WheelEvent) => void>(() => {});
 
   useEffect(() => {
     if (state) {
@@ -297,6 +298,18 @@ function CropModal({
       setPos({ x: 0, y: 0 });
     }
   }, [state]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      wheelRef.current(e);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [state]);
+
 
   useEffect(() => {
     const el = containerRef.current;
