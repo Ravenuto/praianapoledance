@@ -412,7 +412,11 @@ function CropModal({
               transformOrigin: "top left",
             }}
           />
-          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/60 shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]" />
+          {round ? (
+            <div className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-inset ring-white/80 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)]" />
+          ) : (
+            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/60 shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]" />
+          )}
         </div>
 
         <div className="mt-5 flex items-center gap-3">
