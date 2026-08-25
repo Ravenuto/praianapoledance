@@ -447,7 +447,7 @@ function Valores() {
           </p>
         </div>
 
-        <div className="no-scrollbar flex md:grid md:grid-cols-3 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-6 md:px-0 pb-4 md:pb-0">
+        <div className="no-scrollbar flex md:grid md:grid-cols-3 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-6 md:px-0 pt-4 md:pt-2 pb-4 md:pb-0">
           {plans.map((p, i) => (
             <article
               key={i}
