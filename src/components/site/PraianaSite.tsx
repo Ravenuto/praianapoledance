@@ -495,7 +495,7 @@ function Valores() {
                 <span className={`text-[10px] font-bold uppercase tracking-[0.18em] ${semestral ? "text-ocean" : "text-mist"}`}>
                   <Ed path={`plans.${i}.tag`} value={tag} />
                 </span>
-                <h3 className="mt-1.5 font-serif text-xl font-bold italic text-ocean whitespace-nowrap">
+                <h3 className="mt-1.5 font-serif text-base sm:text-lg md:text-xl font-bold italic text-ocean text-balance leading-tight">
                   <Ed path={`plans.${i}.name`} value={p.name} />
                 </h3>
                 <p className="mt-1 text-[10px] leading-snug text-ink/50">
