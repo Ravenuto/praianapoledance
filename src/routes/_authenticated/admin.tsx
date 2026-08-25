@@ -469,7 +469,7 @@ function CropModal({
             const t = e.touches[0];
             const dx = t.clientX - dragStart.current.x;
             const dy = t.clientY - dragStart.current.y;
-            setPos({ x: dragStart.current.posX + dx, y: dragStart.current.posY + dy });
+            setPos(clampPos({ x: dragStart.current.posX + dx, y: dragStart.current.posY + dy }, zoom));
           }}
           onTouchEnd={() => setDragging(false)}
         >
