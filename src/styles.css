@@ -211,6 +211,7 @@
     background-color: var(--color-sand);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-variant-numeric: lining-nums;
   }
 }
 
