@@ -455,7 +455,7 @@ function CropModal({
             if (!dragging) return;
             const dx = e.clientX - dragStart.current.x;
             const dy = e.clientY - dragStart.current.y;
-            setPos({ x: dragStart.current.posX + dx, y: dragStart.current.posY + dy });
+            setPos(clampPos({ x: dragStart.current.posX + dx, y: dragStart.current.posY + dy }, zoom));
           }}
           onMouseUp={() => setDragging(false)}
           onMouseLeave={() => setDragging(false)}
