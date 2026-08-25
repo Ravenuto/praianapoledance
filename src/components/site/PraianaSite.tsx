@@ -563,7 +563,7 @@ function Valores() {
                   <Ed path={`extras.${i}.desc`} value={e.desc} />
                 </p>
               </div>
-              <span className="font-display text-xl font-semibold tracking-tight text-ocean">
+              <span className="font-serif text-xl font-semibold tracking-tight text-ocean">
                 <Ed path={`extras.${i}.price`} value={e.price} />
               </span>
             </div>
