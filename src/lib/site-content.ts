@@ -13,6 +13,8 @@ export type Modality = { title: string; desc: string; level: string };
 export type Plan = {
   name: string;
   price: string;
+  /** Sufixo exibido ao lado do valor. Ex.: "/mês", "no cartão". */
+  unit?: string;
   per: string;
   desc: string;
   highlight: boolean;
@@ -240,7 +242,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     {
       name: "4 Aulas",
       price: "R$ 230",
-      per: "R$ 57,50 por aula",
+      unit: "/mês",
+      per: "Plano mensal · R$ 57,50 por aula",
       desc: "Perfeito para começar com consistência",
       highlight: false,
       benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
@@ -248,7 +251,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     {
       name: "8 Aulas",
       price: "R$ 370",
-      per: "R$ 46,25 por aula",
+      unit: "/mês",
+      per: "Plano mensal · R$ 46,25 por aula",
       desc: "O mais escolhido pelas nossas alunas",
       highlight: true,
       benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
@@ -256,8 +260,36 @@ export const DEFAULT_CONTENT: SiteContent = {
     {
       name: "12 Aulas",
       price: "R$ 490",
-      per: "R$ 40,83 por aula",
+      unit: "/mês",
+      per: "Plano mensal · R$ 40,83 por aula",
       desc: "Para quem quer evolução acelerada",
+      highlight: false,
+      benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
+    },
+    {
+      name: "24 Aulas",
+      price: "6x R$ 210",
+      unit: "no cartão",
+      per: "Plano semestral",
+      desc: "Seis meses de prática garantidos",
+      highlight: false,
+      benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
+    },
+    {
+      name: "48 Aulas",
+      price: "6x R$ 340",
+      unit: "no cartão",
+      per: "Plano semestral",
+      desc: "Duas aulas por semana ao longo do semestre",
+      highlight: false,
+      benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
+    },
+    {
+      name: "72 Aulas",
+      price: "6x R$ 480",
+      unit: "no cartão",
+      per: "Plano semestral",
+      desc: "Frequência máxima, evolução completa",
       highlight: false,
       benefits: ["Todas as modalidades", "Todos os níveis", "Acesso ao app do estúdio"],
     },
@@ -351,6 +383,7 @@ export function mergeContent(stored: unknown): SiteContent {
     out['plans'] = plans.filter(isObject).map((p) => ({
       name: String(p['name'] ?? ""),
       price: String(p['price'] ?? ""),
+      unit: typeof p['unit'] === "string" ? (p['unit'] as string) : "/mês",
       per: String(p['per'] ?? ""),
       desc: String(p['desc'] ?? ""),
       highlight: Boolean(p['highlight']),

@@ -429,51 +429,58 @@ function Horarios() {
 
 function Valores() {
   const { plans, extras, studio, sections } = useContent();
+  const sharedIdx = Math.max(0, plans.findIndex((p) => p.highlight));
+  const shared = plans[sharedIdx]?.benefits ?? [];
   return (
-    <section id="valores" className="relative py-24 px-6 overflow-hidden">
+    <section id="valores" className="relative py-16 md:py-24 overflow-hidden">
       <SectionBlend background="linear-gradient(180deg, rgba(245,166,35,0.08) 0%, rgba(250,247,242,0.96) 30%, rgba(91,141,184,0.07) 100%)" />
       <div className="relative max-w-6xl mx-auto">
-        <div className="text-center mb-14 reveal">
+        <div className="px-6 text-center mb-10 md:mb-14 reveal">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-mist">
             <Ed path="sections.valoresEyebrow" value={sections.valoresEyebrow} />
           </span>
           <h2 className="mt-3 font-serif text-4xl md:text-5xl italic text-ocean">
             <Ed path="sections.valoresTitle" value={sections.valoresTitle} />
           </h2>
+          <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-mist md:hidden">
+            Arraste para o lado e compare
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="no-scrollbar flex md:grid md:grid-cols-3 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-6 md:px-0 pt-4 md:pt-2 pb-4 md:pb-0">
           {plans.map((p, i) => (
             <article
               key={i}
-              className={`reveal relative rounded-[36px] p-8 flex flex-col transition-all duration-500 hover:-translate-y-3 ${
+              className={`reveal relative snap-center shrink-0 w-[260px] md:w-auto rounded-[2rem] p-6 flex flex-col transition-all duration-500 md:hover:-translate-y-2 ${
                 p.highlight
-                  ? "theme-light-locked bg-ocean text-sand shadow-[0_30px_80px_-20px_rgba(38,106,174,0.55)] ring-1 ring-ocean md:scale-105"
+                  ? "theme-light-locked bg-ocean text-sand shadow-[0_24px_60px_-24px_rgba(38,106,174,0.55)] ring-1 ring-ocean"
                   : "theme-light-locked bg-white/80 dark:bg-white backdrop-blur ring-1 ring-ocean/10 shadow-[0_10px_40px_-20px_rgba(38,106,174,0.2)]"
               }`}
-              style={{ animationDelay: `${i * 120}ms` }}
+              style={{ animationDelay: `${i * 90}ms` }}
             >
               {p.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-gold text-ocean animate-float-y">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-gold text-ocean">
                   ✦ Mais popular
                 </span>
               )}
-              <span className={`text-xs font-semibold uppercase tracking-[0.25em] ${p.highlight ? "text-gold" : "text-mist"}`}>
-                <Ed path={`plans.${i}.name`} value={p.name} />
-              </span>
-              <div className="mt-3 flex items-baseline gap-2">
-                <span className={`font-serif text-5xl font-semibold ${p.highlight ? "text-sand" : "text-ocean"}`}>
-                  <Ed path={`plans.${i}.price`} value={p.price} />
-                </span>
-                <span className={`text-sm ${p.highlight ? "text-sand/60" : "text-ink/50"}`}>/mês</span>
-              </div>
-              <span className={`mt-2 inline-block self-start px-3 py-1 rounded-full text-[11px] font-medium ${p.highlight ? "bg-gold/20 text-gold" : "bg-mist/15 text-mist"}`}>
+              <span className={`text-[10px] font-semibold uppercase tracking-[0.22em] ${p.highlight ? "text-gold" : "text-mist"}`}>
                 <Ed path={`plans.${i}.per`} value={p.per} />
               </span>
-              <p className={`mt-5 pb-5 border-b text-sm ${p.highlight ? "text-sand/80 border-sand/15" : "text-ink/65 border-ocean/10"}`}>
+              <h3 className={`mt-2 font-serif text-2xl italic ${p.highlight ? "text-sand" : "text-ocean"}`}>
+                <Ed path={`plans.${i}.name`} value={p.name} />
+              </h3>
+              <div className="mt-1 flex items-baseline gap-1.5 flex-wrap">
+                <span className={`font-serif text-4xl font-semibold ${p.highlight ? "text-sand" : "text-ocean"}`}>
+                  <Ed path={`plans.${i}.price`} value={p.price} />
+                </span>
+                <span className={`text-xs ${p.highlight ? "text-sand/60" : "text-ink/50"}`}>
+                  <Ed path={`plans.${i}.unit`} value={p.unit ?? "/mês"} />
+                </span>
+              </div>
+              <p className={`mt-4 text-[13px] leading-relaxed ${p.highlight ? "text-sand/80" : "text-ink/65"}`}>
                 <Ed path={`plans.${i}.desc`} value={p.desc} multiline />
               </p>
-              <ul className="mt-5 space-y-3 text-sm flex-1">
+              <ul className={`mt-5 space-y-2.5 text-sm flex-1 hidden md:block ${p.highlight ? "" : ""}`}>
                 {p.benefits.map((f, k) => (
                   <li key={k} className="flex items-start gap-3">
                     <span className={`mt-0.5 w-5 h-5 shrink-0 rounded-full grid place-items-center text-xs ${p.highlight ? "bg-gold/25 text-gold" : "bg-ocean/10 text-ocean"}`}>
@@ -489,7 +496,7 @@ function Valores() {
                 href={studio.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className={`mt-7 inline-flex items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-semibold transition-all hover:scale-[1.02] ${p.highlight ? "bg-gold text-ocean" : "bg-ocean text-sand"}`}
+                className={`mt-6 md:mt-7 inline-flex items-center justify-center gap-2 rounded-2xl py-3 text-[13px] font-semibold transition-all hover:scale-[1.02] ${p.highlight ? "bg-gold text-ocean" : "bg-ocean text-sand"}`}
               >
                 <Ed path="sections.planCta" value={sections.planCta} /> <span aria-hidden>→</span>
               </a>
@@ -497,7 +504,20 @@ function Valores() {
           ))}
         </div>
 
-        <div className="mt-8 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+        {shared.length > 0 && (
+          <div className="md:hidden px-6 mt-2 reveal">
+            <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 border-t border-ocean/10 pt-5">
+              {shared.map((f, k) => (
+                <span key={k} className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-ink/70">
+                  <span className="text-gold" aria-hidden>✓</span>
+                  <Ed path={`plans.${sharedIdx}.benefits.${k}`} value={f} />
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="px-6 mt-8 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {extras.map((e, i) => (
             <div key={i} className="theme-light-locked reveal flex items-center justify-between rounded-2xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 px-5 py-4 hover:bg-white transition-colors">
               <div>
