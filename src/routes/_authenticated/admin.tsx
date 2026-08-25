@@ -504,8 +504,10 @@ function AdminPage() {
 
   const uploadImage = async (which: ImageKey, blob: Blob) => {
     setError(null);
-    const path = `${which}-${Date.now()}.jpg`;
-    const { error: upErr } = await supabase.storage.from("site-images").upload(path, blob, { upsert: true, contentType: "image/jpeg" });
+    const type = blob.type || "image/jpeg";
+    const ext = type === "image/png" ? "png" : "jpg";
+    const path = `${which}-${Date.now()}.${ext}`;
+    const { error: upErr } = await supabase.storage.from("site-images").upload(path, blob, { upsert: true, contentType: type });
     if (upErr) return setError(upErr.message);
     const { data, error: urlErr } = await supabase.storage
       .from("site-images")
