@@ -447,62 +447,73 @@ function Valores() {
           </p>
         </div>
 
-        <div className="no-scrollbar flex md:grid md:grid-cols-3 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-6 md:px-0 pt-4 md:pt-2 pb-4 md:pb-0">
-          {plans.map((p, i) => (
-            <article
-              key={i}
-              className={`reveal relative snap-center shrink-0 w-[260px] md:w-auto rounded-[2rem] p-6 flex flex-col transition-all duration-500 md:hover:-translate-y-2 ${
-                p.highlight
-                  ? "theme-light-locked bg-ocean text-sand shadow-[0_24px_60px_-24px_rgba(38,106,174,0.55)] ring-1 ring-ocean"
-                  : "theme-light-locked bg-white/80 dark:bg-white backdrop-blur ring-1 ring-ocean/10 shadow-[0_10px_40px_-20px_rgba(38,106,174,0.2)]"
-              }`}
-              style={{ animationDelay: `${i * 90}ms` }}
-            >
-              {p.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-gold text-ocean">
-                  ✦ Mais popular
-                </span>
-              )}
-              <span className={`text-[10px] font-semibold uppercase tracking-[0.22em] ${p.highlight ? "text-gold" : "text-mist"}`}>
-                <Ed path={`plans.${i}.per`} value={p.per} />
-              </span>
-              <h3 className={`mt-2 font-serif text-2xl italic ${p.highlight ? "text-sand" : "text-ocean"}`}>
-                <Ed path={`plans.${i}.name`} value={p.name} />
-              </h3>
-              <div className="mt-1 flex items-baseline gap-1.5 flex-wrap">
-                <span className={`font-serif text-4xl font-semibold ${p.highlight ? "text-sand" : "text-ocean"}`}>
-                  <Ed path={`plans.${i}.price`} value={p.price} />
-                </span>
-                <span className={`text-xs ${p.highlight ? "text-sand/60" : "text-ink/50"}`}>
-                  <Ed path={`plans.${i}.unit`} value={p.unit ?? "/mês"} />
-                </span>
-              </div>
-              <p className={`mt-4 text-[13px] leading-relaxed ${p.highlight ? "text-sand/80" : "text-ink/65"}`}>
-                <Ed path={`plans.${i}.desc`} value={p.desc} multiline />
-              </p>
-              <ul className={`mt-5 space-y-2.5 text-sm flex-1 hidden md:block ${p.highlight ? "" : ""}`}>
-                {p.benefits.map((f, k) => (
-                  <li key={k} className="flex items-start gap-3">
-                    <span className={`mt-0.5 w-5 h-5 shrink-0 rounded-full grid place-items-center text-xs ${p.highlight ? "bg-gold/25 text-gold" : "bg-ocean/10 text-ocean"}`}>
-                      ✓
-                    </span>
-                    <span className={p.highlight ? "text-sand/90" : "text-ink/75"}>
-                      <Ed path={`plans.${i}.benefits.${k}`} value={f} />
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={studio.whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={`mt-6 md:mt-7 inline-flex items-center justify-center gap-2 rounded-2xl py-3 text-[13px] font-semibold transition-all hover:scale-[1.02] ${p.highlight ? "bg-gold text-ocean" : "bg-ocean text-sand"}`}
+        <div className="no-scrollbar flex md:grid md:grid-cols-3 gap-4 md:gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-6 md:px-0 pt-4 md:pt-2 pb-4 md:pb-0">
+          {plans.map((p, i) => {
+            const tag = p.tag ?? (/^\s*\d+\s*x/i.test(p.price) ? "Semestral" : "Mensal");
+            const semestral = /semestr/i.test(tag);
+            const card = p.highlight
+              ? "bg-white ring-2 ring-gold shadow-[0_18px_45px_-24px_rgba(245,166,35,0.6)]"
+              : semestral
+                ? "bg-horizon/10 dark:bg-horizon/10 ring-1 ring-horizon/30"
+                : "bg-white/85 dark:bg-white ring-1 ring-ocean/10 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.25)]";
+            return (
+              <article
+                key={i}
+                className={`theme-light-locked reveal relative snap-center shrink-0 w-[248px] md:w-auto rounded-3xl p-5 flex flex-col backdrop-blur transition-all duration-500 md:hover:-translate-y-1.5 ${card}`}
+                style={{ animationDelay: `${i * 80}ms` }}
               >
-                <Ed path="sections.planCta" value={sections.planCta} /> <span aria-hidden>→</span>
-              </a>
-            </article>
-          ))}
+                {p.highlight && (
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-gold text-ocean">
+                    Mais popular
+                  </span>
+                )}
+                <span className={`text-[10px] font-bold uppercase tracking-[0.18em] ${semestral ? "text-ocean" : "text-mist"}`}>
+                  <Ed path={`plans.${i}.tag`} value={tag} />
+                </span>
+                <h3 className="mt-1 font-serif text-lg italic text-ocean">
+                  <Ed path={`plans.${i}.name`} value={p.name} />
+                </h3>
+                <p className="mt-1 text-[11px] leading-snug text-ink/55">
+                  <Ed path={`plans.${i}.desc`} value={p.desc} multiline />
+                </p>
+                <div className="mt-4">
+                  <div className="flex items-baseline gap-1 flex-wrap">
+                    <span className="font-serif text-[28px] leading-none font-semibold text-ink">
+                      <Ed path={`plans.${i}.price`} value={p.price} />
+                    </span>
+                    <span className="text-[11px] text-ink/50">
+                      <Ed path={`plans.${i}.unit`} value={p.unit ?? "/mês"} />
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[10px] uppercase tracking-wide text-ink/45">
+                    <Ed path={`plans.${i}.per`} value={p.per} />
+                  </p>
+                </div>
+                <ul className="mt-4 space-y-2 text-[12px] flex-1 hidden md:block">
+                  {p.benefits.map((f, k) => (
+                    <li key={k} className="flex items-start gap-2">
+                      <span className="mt-[3px] text-gold text-[11px]" aria-hidden>✓</span>
+                      <span className="text-ink/70">
+                        <Ed path={`plans.${i}.benefits.${k}`} value={f} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={studio.whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`mt-4 md:mt-5 inline-flex items-center justify-center rounded-xl py-2 text-[11px] font-bold uppercase tracking-wide transition-all hover:scale-[1.02] ${
+                    semestral ? "border border-ocean text-ocean" : "bg-ocean text-sand"
+                  }`}
+                >
+                  <Ed path="sections.planCta" value={sections.planCta} />
+                </a>
+              </article>
+            );
+          })}
         </div>
+
 
         {shared.length > 0 && (
           <div className="md:hidden px-6 mt-2 reveal">

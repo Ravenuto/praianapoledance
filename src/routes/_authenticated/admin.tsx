@@ -871,7 +871,7 @@ function AdminPage() {
                 onClick={() =>
                   update("plans", [
                     ...content.plans,
-                    { name: "Novo plano", price: "R$ 0", unit: "/mês", per: "", desc: "", highlight: false, benefits: [] },
+                    { name: "Novo plano", price: "R$ 0", unit: "/mês", tag: "Mensal", per: "", desc: "", highlight: false, benefits: [] },
                   ])
                 }
               >
@@ -888,8 +888,10 @@ function AdminPage() {
                       <Field labelText="Nome" value={p.name} onChange={(v) => set({ name: v })} />
                       <Field labelText="Valor" value={p.price} onChange={(v) => set({ price: v })} />
                       <Field labelText="Sufixo do valor (ex.: /mês, no cartão)" value={p.unit ?? "/mês"} onChange={(v) => set({ unit: v })} />
-                      <Field labelText="Etiqueta (ex.: Plano mensal)" value={p.per} onChange={(v) => set({ per: v })} />
+                      <Field labelText="Etiqueta (Mensal / Semestral)" value={p.tag ?? ""} onChange={(v) => set({ tag: v })} />
+                      <Field labelText="Detalhe do valor (ex.: R$ 57,50 por aula)" value={p.per} onChange={(v) => set({ per: v })} />
                       <Field labelText="Descrição" value={p.desc} onChange={(v) => set({ desc: v })} />
+
 
                     </div>
                     <div className="mt-4">

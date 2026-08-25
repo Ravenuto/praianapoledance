@@ -15,7 +15,10 @@ export type Plan = {
   price: string;
   /** Sufixo exibido ao lado do valor. Ex.: "/mês", "no cartão". */
   unit?: string;
+  /** Etiqueta de periodicidade exibida no topo do cartão. Ex.: "Mensal", "Semestral". */
+  tag?: string;
   per: string;
+
   desc: string;
   highlight: boolean;
   benefits: string[];
@@ -384,6 +387,13 @@ export function mergeContent(stored: unknown): SiteContent {
       name: String(p['name'] ?? ""),
       price: String(p['price'] ?? ""),
       unit: typeof p['unit'] === "string" ? (p['unit'] as string) : "/mês",
+      tag:
+        typeof p['tag'] === "string" && (p['tag'] as string).trim()
+          ? (p['tag'] as string)
+          : /^\s*\d+\s*x/i.test(String(p['price'] ?? ""))
+            ? "Semestral"
+            : "Mensal",
+
       per: String(p['per'] ?? ""),
       desc: String(p['desc'] ?? ""),
       highlight: Boolean(p['highlight']),
