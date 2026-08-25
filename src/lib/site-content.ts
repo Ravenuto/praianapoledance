@@ -409,7 +409,8 @@ export async function saveSiteContent(content: SiteContent) {
   };
   const { error } = await supabase
     .from("site_content")
-    .upsert({ key: CONTENT_KEY, value }, { onConflict: "key" });
+    .upsert({ key: CONTENT_KEY, value: value as never }, { onConflict: "key" });
+
   if (error) throw error;
 }
 
