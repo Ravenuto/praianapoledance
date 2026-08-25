@@ -15,7 +15,10 @@ export type Plan = {
   price: string;
   /** Sufixo exibido ao lado do valor. Ex.: "/mês", "no cartão". */
   unit?: string;
+  /** Etiqueta de periodicidade exibida no topo do cartão. Ex.: "Mensal", "Semestral". */
+  tag?: string;
   per: string;
+
   desc: string;
   highlight: boolean;
   benefits: string[];
