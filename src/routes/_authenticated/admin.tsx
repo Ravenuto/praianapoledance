@@ -871,7 +871,7 @@ function AdminPage() {
                 onClick={() =>
                   update("plans", [
                     ...content.plans,
-                    { name: "Novo plano", price: "R$ 0", unit: "/mês", per: "", desc: "", highlight: false, benefits: [] },
+                    { name: "Novo plano", price: "R$ 0", unit: "/mês", tag: "Mensal", per: "", desc: "", highlight: false, benefits: [] },
                   ])
                 }
               >
