@@ -261,6 +261,12 @@ function aspectForImage(which: ImageKey): number {
   return 4 / 3;
 }
 
+/** Imagens exibidas em formato redondo no site. */
+function isRoundImage(which: ImageKey): boolean {
+  return which === "logo";
+}
+
+
 type CropState = {
   which: ImageKey;
   file: File;
@@ -306,6 +312,7 @@ function CropModal({
   if (!state) return null;
 
   const aspect = aspectForImage(state.which);
+  const round = isRoundImage(state.which);
 
   const handleConfirm = () => {
     const cropW = containerSize.w;
@@ -357,7 +364,11 @@ function CropModal({
         <div className="mb-4 flex items-center justify-between">
           <div>
             <h3 className="font-serif text-xl italic text-ocean">Ajustar imagem</h3>
-            <p className="text-xs text-ink/60">Arraste para posicionar. Aproxime com o slider.</p>
+            <p className="text-xs text-ink/60">
+              {round
+                ? "Ajuste dentro do círculo. Arraste para posicionar e aproxime com o slider."
+                : "Arraste para posicionar. Aproxime com o slider."}
+            </p>
           </div>
           <button onClick={onCancel} className="rounded-full p-2 hover:bg-ocean/10 text-ink/60">
             <X className="h-5 w-5" />
@@ -366,7 +377,9 @@ function CropModal({
 
         <div
           ref={containerRef}
-          className="relative mx-auto w-full overflow-hidden rounded-2xl bg-ocean/10 ring-1 ring-ocean/20 cursor-move"
+          className={`relative mx-auto w-full overflow-hidden bg-ocean/10 ring-1 ring-ocean/20 cursor-move ${
+            round ? "max-w-sm rounded-full" : "rounded-2xl"
+          }`}
           style={{ aspectRatio: `${aspect}` }}
           onMouseDown={(e) => {
             setDragging(true);
@@ -406,7 +419,13 @@ function CropModal({
               transformOrigin: "top left",
             }}
           />
-          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/60 shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]" />
+          <div
+            className={`pointer-events-none absolute inset-0 ring-2 ring-inset ${
+              round
+                ? "rounded-full ring-white/80 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)]"
+                : "rounded-2xl ring-white/60 shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]"
+            }`}
+          />
         </div>
 
         <div className="mt-5 flex items-center gap-3">
