@@ -383,6 +383,7 @@ export function mergeContent(stored: unknown): SiteContent {
     out['plans'] = plans.filter(isObject).map((p) => ({
       name: String(p['name'] ?? ""),
       price: String(p['price'] ?? ""),
+      unit: typeof p['unit'] === "string" ? (p['unit'] as string) : "/mês",
       per: String(p['per'] ?? ""),
       desc: String(p['desc'] ?? ""),
       highlight: Boolean(p['highlight']),
