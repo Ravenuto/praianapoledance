@@ -475,14 +475,14 @@ function Valores() {
             const semestral = isSemestral(p);
             const hiddenOnMobile = hasSemestral && (semestral ? aba !== "Semestral" : aba !== "Mensal");
             const card = p.highlight
-              ? "bg-gradient-to-b from-gold/[0.08] via-gold/[0.03] to-white ring-2 ring-gold shadow-[0_18px_45px_-24px_rgba(245,166,35,0.6)]"
+              ? "bg-white dark:bg-white ring-2 ring-gold shadow-[0_18px_45px_-24px_rgba(245,166,35,0.55)]"
               : semestral
                 ? "bg-white dark:bg-white ring-1 ring-ocean/30 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.3)]"
-                : "bg-white/85 dark:bg-white ring-1 ring-ocean/10 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.25)]";
+                : "bg-white dark:bg-white ring-1 ring-ocean/10 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.25)]";
             return (
               <article
                 key={i}
-                className={`theme-light-locked reveal relative rounded-3xl p-5 flex-col backdrop-blur transition-all duration-500 md:hover:-translate-y-1.5 ${
+                className={`theme-light-locked reveal relative rounded-3xl p-5 flex-col transition-all duration-500 md:hover:-translate-y-1.5 ${
                   hiddenOnMobile ? "hidden md:flex" : "flex"
                 } ${card}`}
                 style={{ animationDelay: `${i * 80}ms` }}
@@ -556,7 +556,7 @@ function Valores() {
 
         <div className="px-6 mt-8 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {extras.map((e, i) => (
-            <div key={i} className="theme-light-locked reveal flex items-center justify-between rounded-2xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 px-5 py-4 hover:bg-white transition-colors">
+            <div key={i} className="theme-light-locked reveal flex items-center justify-between rounded-2xl bg-white dark:bg-white ring-1 ring-ocean/10 px-5 py-4 transition-shadow hover:shadow-[0_10px_35px_-22px_rgba(38,106,174,0.35)]">
               <div>
                 <p className="font-semibold text-ink">
                   <Ed path={`extras.${i}.name`} value={e.name} />
