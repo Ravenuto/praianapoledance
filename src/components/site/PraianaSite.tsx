@@ -475,7 +475,7 @@ function Valores() {
             const semestral = isSemestral(p);
             const hiddenOnMobile = hasSemestral && (semestral ? aba !== "Semestral" : aba !== "Mensal");
             const card = p.highlight
-              ? "bg-white ring-2 ring-gold shadow-[0_18px_45px_-24px_rgba(245,166,35,0.6)]"
+              ? "bg-gradient-to-b from-gold/[0.08] via-gold/[0.03] to-white ring-2 ring-gold shadow-[0_18px_45px_-24px_rgba(245,166,35,0.6)]"
               : semestral
                 ? "bg-white dark:bg-white ring-1 ring-ocean/30 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.3)]"
                 : "bg-white/85 dark:bg-white ring-1 ring-ocean/10 shadow-[0_10px_35px_-22px_rgba(38,106,174,0.25)]";
@@ -495,15 +495,15 @@ function Valores() {
                 <span className={`text-[10px] font-bold uppercase tracking-[0.18em] ${semestral ? "text-ocean" : "text-mist"}`}>
                   <Ed path={`plans.${i}.tag`} value={tag} />
                 </span>
-                <h3 className="mt-1 font-serif text-lg italic text-ocean">
+                <h3 className="mt-1.5 font-serif text-xl font-bold italic text-ocean whitespace-nowrap">
                   <Ed path={`plans.${i}.name`} value={p.name} />
                 </h3>
-                <p className="mt-1 text-[11px] leading-snug text-ink/55">
+                <p className="mt-1 text-[10px] leading-snug text-ink/50">
                   <Ed path={`plans.${i}.desc`} value={p.desc} multiline />
                 </p>
                 <div className="mt-4">
                   <div className="flex items-baseline gap-1 flex-wrap">
-                    <span className="font-serif text-[28px] leading-none font-semibold text-ink">
+                    <span className="font-serif text-[30px] leading-none font-bold text-ink">
                       <Ed path={`plans.${i}.price`} value={p.price} />
                     </span>
                     <span className="text-[11px] text-ink/50">
