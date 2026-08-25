@@ -312,6 +312,7 @@ function CropModal({
   if (!state) return null;
 
   const aspect = aspectForImage(state.which);
+  const round = isRoundImage(state.which);
 
   const handleConfirm = () => {
     const cropW = containerSize.w;
