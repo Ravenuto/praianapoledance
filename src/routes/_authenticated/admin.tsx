@@ -372,7 +372,9 @@ function CropModal({
 
         <div
           ref={containerRef}
-          className="relative mx-auto w-full overflow-hidden rounded-2xl bg-ocean/10 ring-1 ring-ocean/20 cursor-move"
+          className={`relative mx-auto w-full overflow-hidden bg-ocean/10 ring-1 ring-ocean/20 cursor-move ${
+            round ? "max-w-sm rounded-full" : "rounded-2xl"
+          }`}
           style={{ aspectRatio: `${aspect}` }}
           onMouseDown={(e) => {
             setDragging(true);
