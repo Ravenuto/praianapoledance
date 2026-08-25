@@ -528,9 +528,7 @@ function Valores() {
                   href={studio.whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className={`mt-4 md:mt-5 inline-flex items-center justify-center rounded-xl py-2 text-[11px] font-bold uppercase tracking-wide transition-all hover:scale-[1.02] ${
-                    "bg-ocean text-sand"
-                  }`}
+                  className="mt-4 md:mt-5 inline-flex items-center justify-center rounded-xl py-2 text-[11px] font-bold uppercase tracking-wide transition-all hover:scale-[1.02] bg-ocean text-sand"
                 >
                   <Ed path="sections.planCta" value={sections.planCta} />
                 </a>
