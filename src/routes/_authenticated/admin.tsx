@@ -327,11 +327,51 @@ function CropModal({
   const aspect = aspectForImage(state.which);
   const round = isRoundImage(state.which);
 
+  const baseScale = containerSize.w && containerSize.h
+    ? Math.max(containerSize.w / state.naturalWidth, containerSize.h / state.naturalHeight)
+    : 1;
+  const sizeAt = (z: number) => ({
+    w: state.naturalWidth * baseScale * z,
+    h: state.naturalHeight * baseScale * z,
+  });
+  const imgW = sizeAt(zoom).w;
+  const imgH = sizeAt(zoom).h;
+
+  const clampPos = (p: { x: number; y: number }, z: number) => {
+    const { w, h } = sizeAt(z);
+    const minX = Math.min(0, containerSize.w - w);
+    const minY = Math.min(0, containerSize.h - h);
+    return {
+      x: Math.min(0, Math.max(minX, p.x)),
+      y: Math.min(0, Math.max(minY, p.y)),
+    };
+  };
+
+  /** Aplica zoom mantendo fixo o ponto de ancoragem (centro por padrão). */
+  const applyZoom = (next: number, anchor?: { x: number; y: number }) => {
+    const z = Math.min(4, Math.max(1, next));
+    const a = anchor ?? { x: containerSize.w / 2, y: containerSize.h / 2 };
+    const k = z / zoom;
+    const nextPos = { x: a.x - (a.x - pos.x) * k, y: a.y - (a.y - pos.y) * k };
+    setZoom(z);
+    setPos(clampPos(nextPos, z));
+  };
+
+  wheelRef.current = (e: WheelEvent) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 100 : 1);
+    applyZoom(zoom * Math.exp(-dy * 0.0015), {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   const handleConfirm = () => {
     const cropW = containerSize.w;
     const cropH = containerSize.h;
     if (!cropW || !cropH) return;
-    const baseScale = Math.max(cropW / state.naturalWidth, cropH / state.naturalHeight);
     const totalScale = baseScale * zoom;
     const outScale = Math.min(2, Math.max(1, 1200 / cropW));
     const canvas = document.createElement("canvas");
@@ -354,6 +394,24 @@ function CropModal({
         canvas.width,
         canvas.height
       );
+      if (round) {
+        ctx.globalCompositeOperation = "destination-in";
+        ctx.beginPath();
+        ctx.arc(
+          canvas.width / 2,
+          canvas.height / 2,
+          Math.min(canvas.width, canvas.height) / 2,
+          0,
+          Math.PI * 2
+        );
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalCompositeOperation = "source-over";
+        canvas.toBlob((blob) => {
+          if (blob) onConfirm(blob);
+        }, "image/png");
+        return;
+      }
       canvas.toBlob(
         (blob) => {
           if (blob) onConfirm(blob);
@@ -365,11 +423,6 @@ function CropModal({
     img.src = state.url;
   };
 
-  const baseScale = containerSize.w && containerSize.h
-    ? Math.max(containerSize.w / state.naturalWidth, containerSize.h / state.naturalHeight)
-    : 1;
-  const imgW = state.naturalWidth * baseScale * zoom;
-  const imgH = state.naturalHeight * baseScale * zoom;
 
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-ink/70 p-4 backdrop-blur-sm">
