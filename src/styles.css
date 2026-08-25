@@ -102,10 +102,10 @@
   --color-ink: var(--brand-ink);
   --color-deep: var(--brand-deep);
 
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-script: "Petit Formal Script", cursive;
-  --font-display: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "PraianaNums", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "PraianaNums", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "PraianaNums", "Petit Formal Script", cursive;
+  --font-display: "PraianaNums", "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 
