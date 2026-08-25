@@ -556,7 +556,7 @@ function Valores() {
 
         <div className="px-6 mt-8 grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {extras.map((e, i) => (
-            <div key={i} className="theme-light-locked reveal flex items-center justify-between rounded-2xl bg-white/70 dark:bg-white backdrop-blur ring-1 ring-ocean/10 px-5 py-4 hover:bg-white transition-colors">
+            <div key={i} className="theme-light-locked reveal flex items-center justify-between rounded-2xl bg-white dark:bg-white ring-1 ring-ocean/10 px-5 py-4 transition-shadow hover:shadow-[0_10px_35px_-22px_rgba(38,106,174,0.35)]">
               <div>
                 <p className="font-semibold text-ink">
                   <Ed path={`extras.${i}.name`} value={e.name} />
