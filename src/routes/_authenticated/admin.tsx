@@ -489,7 +489,6 @@ function CropModal({
               width: imgW,
               height: imgH,
               transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`,
-              objectFit: "fill",
             }}
           />
           <div
