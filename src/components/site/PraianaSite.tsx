@@ -103,7 +103,7 @@ function Navbar() {
         <a href="#home" className="flex min-w-0 items-center gap-2.5 group">
           <span className="shrink-0 relative flex h-11 w-11 items-center justify-center transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110">
             <EdImage which="logo">
-              <Logo className="h-full w-full object-contain" />
+              <Logo className="h-full w-full rounded-full object-cover" />
             </EdImage>
           </span>
           <span className="min-w-0 truncate font-serif italic tracking-tight text-ocean text-[15px] sm:text-base md:text-lg">
@@ -254,7 +254,7 @@ function Hero() {
             <div className="relative">
               <div className="relative h-20 w-20 md:h-32 md:w-32 grid place-items-center drop-shadow-[0_18px_35px_rgba(17,53,92,0.45)]">
                 <EdImage which="logo">
-                  <Logo className="h-full w-full object-contain" />
+                  <Logo className="h-full w-full rounded-full object-cover" />
                 </EdImage>
               </div>
             </div>
@@ -727,7 +727,7 @@ function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <div className="h-14 w-14 grid place-items-center">
-                <Logo className="h-full w-full object-contain" />
+                <Logo className="h-full w-full rounded-full object-cover" />
               </div>
               <div>
                 <p className="font-serif text-2xl italic text-sand leading-tight">{studio.brandName}</p>

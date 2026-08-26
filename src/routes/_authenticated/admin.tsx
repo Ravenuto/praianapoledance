@@ -339,11 +339,11 @@ function CropModal({
 
   const clampPos = (p: { x: number; y: number }, z: number) => {
     const { w, h } = sizeAt(z);
-    const minX = Math.min(0, containerSize.w - w);
-    const minY = Math.min(0, containerSize.h - h);
+    const maxX = Math.max(0, (w - containerSize.w) / 2);
+    const maxY = Math.max(0, (h - containerSize.h) / 2);
     return {
-      x: Math.min(0, Math.max(minX, p.x)),
-      y: Math.min(0, Math.max(minY, p.y)),
+      x: Math.min(maxX, Math.max(-maxX, p.x)),
+      y: Math.min(maxY, Math.max(-maxY, p.y)),
     };
   };
 
@@ -351,8 +351,15 @@ function CropModal({
   const applyZoom = (next: number, anchor?: { x: number; y: number }) => {
     const z = Math.min(4, Math.max(1, next));
     const a = anchor ?? { x: containerSize.w / 2, y: containerSize.h / 2 };
+    const centeredAnchor = {
+      x: a.x - containerSize.w / 2,
+      y: a.y - containerSize.h / 2,
+    };
     const k = z / zoom;
-    const nextPos = { x: a.x - (a.x - pos.x) * k, y: a.y - (a.y - pos.y) * k };
+    const nextPos = {
+      x: centeredAnchor.x - (centeredAnchor.x - pos.x) * k,
+      y: centeredAnchor.y - (centeredAnchor.y - pos.y) * k,
+    };
     setZoom(z);
     setPos(clampPos(nextPos, z));
   };
@@ -385,8 +392,8 @@ function CropModal({
     img.onload = () => {
       ctx.drawImage(
         img,
-        Math.max(0, -pos.x / totalScale),
-        Math.max(0, -pos.y / totalScale),
+        Math.max(0, (imgW / 2 - cropW / 2 - pos.x) / totalScale),
+        Math.max(0, (imgH / 2 - cropH / 2 - pos.y) / totalScale),
         cropW / totalScale,
         cropH / totalScale,
         0,
@@ -477,12 +484,12 @@ function CropModal({
             src={state.url}
             alt="Prévia para corte"
             draggable={false}
-            className="absolute left-0 top-0 select-none"
+            className="absolute left-1/2 top-1/2 max-w-none select-none"
             style={{
               width: imgW,
               height: imgH,
-              transform: `translate(${pos.x}px, ${pos.y}px)`,
-              transformOrigin: "top left",
+              transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`,
+              objectFit: "fill",
             }}
           />
           <div
