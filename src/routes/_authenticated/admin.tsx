@@ -290,6 +290,7 @@ function CropModal({
   const [zoom, setZoom] = useState(1);
   const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
   const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
+  const pinchStart = useRef<{ distance: number; zoom: number } | null>(null);
   const wheelRef = useRef<(e: WheelEvent) => void>(() => {});
 
   useEffect(() => {
@@ -450,7 +451,7 @@ function CropModal({
 
         <div
           ref={containerRef}
-          className={`relative mx-auto w-full overflow-hidden bg-ocean/10 ring-1 ring-ocean/20 cursor-move ${
+          className={`relative mx-auto w-full touch-none overflow-hidden bg-ocean/10 ring-1 ring-ocean/20 cursor-move ${
             round ? "max-w-sm rounded-full" : "rounded-2xl"
           }`}
           style={{ aspectRatio: `${aspect}` }}
@@ -467,18 +468,40 @@ function CropModal({
           onMouseUp={() => setDragging(false)}
           onMouseLeave={() => setDragging(false)}
           onTouchStart={(e) => {
+            if (e.touches.length === 2) {
+              const [a, b] = [e.touches[0], e.touches[1]];
+              pinchStart.current = {
+                distance: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY),
+                zoom,
+              };
+              setDragging(false);
+              return;
+            }
             const t = e.touches[0];
             setDragging(true);
             dragStart.current = { x: t.clientX, y: t.clientY, posX: pos.x, posY: pos.y };
           }}
           onTouchMove={(e) => {
+            if (e.touches.length === 2 && pinchStart.current) {
+              const [a, b] = [e.touches[0], e.touches[1]];
+              const distance = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+              const rect = containerRef.current?.getBoundingClientRect();
+              applyZoom(pinchStart.current.zoom * (distance / pinchStart.current.distance), rect ? {
+                x: (a.clientX + b.clientX) / 2 - rect.left,
+                y: (a.clientY + b.clientY) / 2 - rect.top,
+              } : undefined);
+              return;
+            }
             if (!dragging) return;
             const t = e.touches[0];
             const dx = t.clientX - dragStart.current.x;
             const dy = t.clientY - dragStart.current.y;
             setPos(clampPos({ x: dragStart.current.posX + dx, y: dragStart.current.posY + dy }, zoom));
           }}
-          onTouchEnd={() => setDragging(false)}
+          onTouchEnd={() => {
+            setDragging(false);
+            pinchStart.current = null;
+          }}
         >
           <img
             src={state.url}
