@@ -621,7 +621,14 @@ function AdminPage() {
     });
   };
 
-  const setValue = (path: string, value: string) => setContent((c) => setPath(c, path, value));
+  const setValue = (path: string, value: string) => {
+    const titleMatch = /^modalities\.(\d+)\.title$/.exec(path);
+    if (titleMatch) {
+      editModality(Number(titleMatch[1]), { title: value });
+      return;
+    }
+    setContent((c) => setPath(c, path, value));
+  };
 
   const save = async () => {
     setSaving(true);
