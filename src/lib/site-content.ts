@@ -9,7 +9,7 @@ export type ImageKey = "hero" | "logo" | "movimento";
 export type Slot = { time: string; type: string };
 export type DaySchedule = { id: string; name: string; slots: Slot[] };
 export type ClassTypeDef = { id: string; label: string; short: string; color: ColorKey };
-export type Modality = { title: string; desc: string; level: string };
+export type Modality = { title: string; desc: string; level: string; classTypeId?: string };
 export type Plan = {
   name: string;
   price: string;
@@ -379,6 +379,7 @@ export function mergeContent(stored: unknown): SiteContent {
       title: String(m['title'] ?? ""),
       desc: String(m['desc'] ?? ""),
       level: typeof m['level'] === "string" ? (m['level'] as string) : "Todos os níveis",
+      ...(typeof m['classTypeId'] === "string" ? { classTypeId: m['classTypeId'] } : {}),
     }));
   }
   const plans = out['plans'];

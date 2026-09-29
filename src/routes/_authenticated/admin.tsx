@@ -582,6 +582,45 @@ function AdminPage() {
   const update = <K extends keyof SiteContent>(key: K, value: SiteContent[K]) =>
     setContent((c) => ({ ...c, [key]: value }));
 
+  const addModality = () => {
+    const id = crypto.randomUUID();
+    setContent((c) => ({
+      ...c,
+      modalities: [...c.modalities, { title: "Nova modalidade", desc: "", level: "Todos os níveis", classTypeId: id }],
+      classTypes: [...c.classTypes, { id, label: "Nova modalidade", short: "Nova", color: "teal" }],
+    }));
+  };
+
+  const editModality = (index: number, patch: Partial<SiteContent["modalities"][number]>) => {
+    setContent((c) => {
+      const modality = c.modalities[index];
+      if (!modality) return c;
+      return {
+        ...c,
+        modalities: c.modalities.map((m, i) => i === index ? { ...m, ...patch } : m),
+        classTypes: patch.title !== undefined && modality.classTypeId
+          ? c.classTypes.map((t) => t.id === modality.classTypeId ? { ...t, label: patch.title ?? t.label } : t)
+          : c.classTypes,
+      };
+    });
+  };
+
+  const removeModality = (index: number) => {
+    setContent((c) => {
+      const modality = c.modalities[index];
+      if (!modality) return c;
+      const inUse = c.schedule.some((day) => day.slots.some((slot) => slot.type === modality.classTypeId));
+      return {
+        ...c,
+        modalities: c.modalities.filter((_, i) => i !== index),
+        // An in-use type becomes independent, so existing classes keep their names and colors.
+        classTypes: modality.classTypeId && !inUse
+          ? c.classTypes.filter((t) => t.id !== modality.classTypeId)
+          : c.classTypes,
+      };
+    });
+  };
+
   const setValue = (path: string, value: string) => setContent((c) => setPath(c, path, value));
 
   const save = async () => {
@@ -743,12 +782,7 @@ function AdminPage() {
               <h2 className="font-serif text-xl italic text-ocean">Modalidades</h2>
               <button
                 className={btnGhost}
-                onClick={() =>
-                  update("modalities", [
-                    ...content.modalities,
-                    { title: "Nova modalidade", desc: "", level: "Todos os níveis" },
-                  ])
-                }
+                onClick={addModality}
               >
                 + Adicionar
               </button>
@@ -756,7 +790,7 @@ function AdminPage() {
             <div className="space-y-4">
               {content.modalities.map((m, i) => {
                 const set = (patch: Partial<typeof m>) =>
-                  update("modalities", content.modalities.map((x, j) => (j === i ? { ...x, ...patch } : x)));
+                  editModality(i, patch);
                 return (
                   <div key={i} className="space-y-3 rounded-2xl bg-ocean/5 p-4">
                     <div className="grid gap-3 sm:grid-cols-2">
@@ -766,7 +800,7 @@ function AdminPage() {
                     <Field textarea labelText="Descrição" value={m.desc} onChange={(v) => set({ desc: v })} />
                     <button
                       className={btnDanger}
-                      onClick={() => update("modalities", content.modalities.filter((_, j) => j !== i))}
+                      onClick={() => removeModality(i)}
                     >
                       Remover modalidade
                     </button>
@@ -817,7 +851,17 @@ function AdminPage() {
                       </label>
                       <button
                         className={`${btnDanger} pb-2`}
-                        onClick={() => update("classTypes", content.classTypes.filter((_, j) => j !== i))}
+                        onClick={() => {
+                          if (content.schedule.some((day) => day.slots.some((slot) => slot.type === t.id))) {
+                            setError("Remova esta aula dos horários antes de excluir seu tipo.");
+                            return;
+                          }
+                          setContent((c) => ({
+                            ...c,
+                            classTypes: c.classTypes.filter((type) => type.id !== t.id),
+                            modalities: c.modalities.map((m) => m.classTypeId === t.id ? { ...m, classTypeId: undefined } : m),
+                          }));
+                        }}
                       >
                         Remover
                       </button>
