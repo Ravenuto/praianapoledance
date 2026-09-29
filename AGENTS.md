@@ -1,0 +1,1 @@
+Keep newly created modalities linked to schedule class types by optional stable `classTypeId`; retain in-use types when deleting modalities so existing schedule entries remain valid.
